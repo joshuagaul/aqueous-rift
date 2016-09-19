@@ -1,0 +1,42 @@
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+
+repositories {
+    mavenCentral()
+}
+
+version = '1.0'
+defaultTasks 'jar'
+
+dependencies {
+    compile fileTree(dir: 'lib', include: '*.jar')
+}
+
+jar {
+    description = 'Creates the executable jar file for the project'
+    manifest {
+        attributes( 'Implementation-Title': 'Aqueous Team Project Gradle',
+                    'Implementation-version': version,
+                    'Main-Class': 'login.LoginScreen',
+                    'Class-Path': configurations.compile.files.join(" ")
+                  )
+    }
+    println 'Creates jar'
+}
+
+task compileTest(dependsOn: compileTestJava) {
+    description = 'Java compile test'
+    println 'CompileTest'
+}
+
+compileJava << {
+    println 'CopileJave'
+}
+
+javadoc << {
+    println 'Javadoc'
+}
+
+clean << {
+    println 'Clean'
+}
