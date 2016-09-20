@@ -10,14 +10,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginScreen extends Application {
+public class RegisterScreen extends Application {
     public static void main(String[] args) {
         launch(args);
     }
     public Parent root;
     @Override
     public void start(Stage stage) throws Exception {
-        root = FXMLLoader.load(LoginScreen.class.getResource("../view/LoginScreen.fxml"));
+        root = FXMLLoader.load(LoginScreen.class.getResource("../view/RegisterScreen.fxml"));
         stage.setTitle("ConnectH2O");
         stage.setScene(new Scene(root, 720, 512));
         stage.show();

@@ -7,10 +7,15 @@ import javafx.scene.text.Text;
 
 public class LoginController {
     @FXML 
-    private Text invalidlogin;
+    private Text error;
     @FXML 
     protected void handleInvalidLogin(ActionEvent event) {
-        invalidlogin.setText("Invalid username or password. Please try again.");
+        error.setText("Invalid username or password. Please try again.");
+    }
+
+    @FXML
+    protected void handleUsernameInUse(ActionEvent event) {
+        error.setText("Username is already in use. Please choose another username.");
     }
 
     @FXML

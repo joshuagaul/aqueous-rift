@@ -53,14 +53,14 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label id="idpw" text="Username" GridPane.rowIndex="4" />
-                <Label id="idpw" text="Password" GridPane.rowIndex="5" />
+                <Label id="userinfo" text="Username" GridPane.rowIndex="4" />
+                <Label id="userinfo" text="Password" GridPane.rowIndex="5" />
                 <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" text="&gt;&gt; Forgot my password" GridPane.columnSpan="2" GridPane.rowIndex="7" />
                 <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" text="&gt;&gt; Create an account" GridPane.columnSpan="2" GridPane.rowIndex="8" />
                 <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 <PasswordField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleInvalidLogin" prefHeight="37.0" prefWidth="104.0" text="&gt;&gt; Login" translateX="20.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                <Text fx:id="invalidlogin" strokeType="OUTSIDE" strokeWidth="0.0" translateX="20.0" wrappingWidth="193.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                <Text fx:id="error" strokeType="OUTSIDE" strokeWidth="0.0" translateX="20.0" wrappingWidth="193.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                 <Text id="logo" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectH2O" GridPane.rowIndex="1" />
                 <Text id="tagline" strokeType="OUTSIDE" strokeWidth="0.0" text="Cleaner, Smarter, Better." GridPane.rowIndex="2" />
                 <Text id="copyright" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 1.0 © 2016 Aqueous Rift. All rights reserved." GridPane.rowIndex="10" />
