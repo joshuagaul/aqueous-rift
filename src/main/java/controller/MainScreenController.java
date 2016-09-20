@@ -27,7 +27,6 @@ public class MainScreenController {
     @FXML
     private void handleCloseMenu() {
         System.exit(0);
-
     }
 
     /**

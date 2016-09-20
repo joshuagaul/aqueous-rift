@@ -14,8 +14,8 @@ public class LoginScreen extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         root = FXMLLoader.load(LoginScreen.class.getResource("../view/LoginScreen.fxml"));
-        stage.setTitle("Login Screen");
-        stage.setScene(new Scene(root, 300, 275));
+        stage.setTitle("ConnectH2O");
+        stage.setScene(new Scene(root, 720, 512));
         stage.show();
     }
 }
