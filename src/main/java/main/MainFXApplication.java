@@ -1,8 +1,8 @@
 package main;
 
-//import controller.CourseOverviewController;
+import controller.LoginController;
 import controller.MainScreenController;
-//import controller.StudentEditController;
+import controller.RegisterController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-//import model.Student;
+import model.User;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -26,122 +26,132 @@ import java.util.logging.Logger;
  *
  */
 public class MainFXApplication extends Application {
-    /**  the java logger for this class */
-    private static final Logger LOGGER =Logger.getLogger("MainFXApplication");
+    /**
+     * the java logger for this class
+     */
+    private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
 
-    /** the main container for the application window */
+    /**
+     * the main container for the application window
+     */
     private Stage mainScreen;
 
-    /** the main layout for the main window */
+    /**
+     * the main layout for the main window
+     */
     private BorderPane rootLayout;
 
     @Override
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
         initRootLayout(mainScreen);
-        //showCourseOverview(mainScreen);
+        showLoginDialog(mainScreen);
     }
 
     /**
      * return a reference to the main window stage
+     *
      * @return reference to main stage
-     * */
-    public Stage getMainScreen() { return mainScreen;}
+     */
+    public Stage getMainScreen() {
+        return mainScreen;
+    }
 
 
     /**
      * Initialize the main screen for the application.  Most other views will be shown in this screen.
      *
-     * @param mainScreen  the main Stage window of the application
+     * @param mainScreen the main Stage window of the application
      */
-     private void initRootLayout(Stage mainScreen) {
-         try {
-             // Load root layout from fxml file.
-             FXMLLoader loader = new FXMLLoader();
-             loader.setLocation(MainFXApplication.class.getResource("../view/MainScreen.fxml"));
-             rootLayout = loader.load();
+    private void initRootLayout(Stage mainScreen) {
+        try {
+            // Load root layout from fxml file.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainFXApplication.class.getResource("../view/MainScreen.fxml"));
+            rootLayout = loader.load();
 
-             // Give the controller access to the main app.
-             MainScreenController controller = loader.getController();
-             controller.setMainApp(this);
+            // Give the controller access to the main app.
+            MainScreenController controller = loader.getController();
+            controller.setMainApp(this);
 
-             // Set the Main App title
-             mainScreen.setTitle("Course Registration");
+            // Set the Main App title
+            mainScreen.setTitle("Course Registration");
 
-             // Show the scene containing the root layout.
-             Scene scene = new Scene(rootLayout);
-             mainScreen.setScene(scene);
-             mainScreen.show();
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
+            mainScreen.setScene(scene);
+            mainScreen.show();
 
 
-         } catch (IOException e) {
-             //error on load, so log it
-             LOGGER.log(Level.SEVERE, "Failed to find the fxml file for MainScreen!!");
-             e.printStackTrace();
-         }
-     }
+        } catch (IOException e) {
+            //error on load, so log it
+            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for MainScreen!!");
+            e.printStackTrace();
+        }
+    }
 
 
     /**
      * Setup our default application view that is shown on application startup
      * This is displayed in the startup window
-     *
+     * <p>
      * precondition - the main stage is already initialized and showing (initRootLayout has been called)
      * postcondition - the view is initialized and displayed
      *
-     * @param mainScreen  the main stage to show this view in
+     * @param mainScreen the main stage to show this view in
      */
-/*    private void showCourseOverview(Stage mainScreen) {
+    private void showLoginDialog(Stage mainScreen) {
         try {
-            // Load course overview.
+            // Load loginPage
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getResource("../view/CourseOverview.fxml"));
-            AnchorPane courseOverview = loader.load();
+            loader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
+            AnchorPane showLoginDialog = loader.load();
 
             // Set person overview into the center of root layout.
-            rootLayout.setCenter(courseOverview);
+            rootLayout.setCenter(showLoginDialog);
 
             // Give the controller access to the main app.
-            CourseOverviewController controller = loader.getController();
+            LoginController controller = loader.getController();
             controller.setMainApp(this);
 
         } catch (IOException e) {
             //error on load, so log it
-            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for CourseOverview!!");
+            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for LoginScreen!!");
             e.printStackTrace();
         }
 
     }
 
+
+
     /**
-     * Opens a dialog to edit details for the specified student. If the user
+     * Opens a dialog to register for a new user. If the user
      * clicks OK, the changes are saved into the provided person object and true
      * is returned.
      *
-     * We can also open the dialog to add a completely new student if we pass null in
-     *
-     * @param student the person object to be edited, or null for a new student
+     * //@param user new user object to be registered, or null for a new student
      * @return true if the user clicked OK, false otherwise.
      */
- /*   public boolean showStudentAddDialog(Student student) {
+
+
+    public boolean showRegisterDialog(User user) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getResource("../view/StudentEditDialog.fxml"));
+            loader.setLocation(MainFXApplication.class.getResource("../view/RegisterScreen.fxml"));
             AnchorPane page = loader.load();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit Student");
+            dialogStage.setTitle("Create an Account");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(mainScreen);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
             // Set the person into the controller.
-            StudentEditController controller = loader.getController();
+            RegisterController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setStudent(student);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -153,7 +163,7 @@ public class MainFXApplication extends Application {
             return false;
         }
     }
-*/
+
     public static void main(String[] args) {
         launch(args);
     }

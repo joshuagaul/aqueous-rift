@@ -32,15 +32,26 @@ public class MainScreenController {
     /**
      * About menu item event handler
      */
+
     @FXML
     private void handleAboutMenu() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("M3 Individual Project");
+        alert.setTitle("ConnectH2O");
         alert.setHeaderText("About");
-        alert.setContentText("Student Registration with code from Marco Jakob\nWebsite: http://code.makery.ch");
-
+        alert.setContentText("Update : This is a project for CS2340. Someone update this please");
         alert.showAndWait();
 
     }
+
+    @FXML
+    private void handleContactMenu() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ConnectH2O");
+        alert.setHeaderText("Contact");
+        alert.setContentText("someone update this: This program is made by: \n\nGraham McAllister\nAhJin Noh\nJoshua Gaul\nKwangHee Kim\nAakanksha Patel");
+        alert.showAndWait();
+
+    }
+
 
 }
