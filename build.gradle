@@ -15,9 +15,9 @@ dependencies {
 jar {
     description = 'Creates the executable jar file for the project'
     manifest {
-        attributes( 'Implementation-Title': 'Aqueous Team Project Gradle',
+        attributes( 'Implementation-Title': 'Aqueous Rift',
                     'Implementation-version': version,
-                    'Main-Class': 'login.LoginScreen',
+                    'Main-Class': 'main.MainFXApplication',
                     'Class-Path': configurations.compile.files.join(" ")
                   )
     }
@@ -30,7 +30,7 @@ task compileTest(dependsOn: compileTestJava) {
 }
 
 compileJava << {
-    println 'CopileJave'
+    println 'CompileJave'
 }
 
 javadoc << {

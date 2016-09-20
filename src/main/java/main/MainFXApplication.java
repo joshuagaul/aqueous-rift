@@ -54,32 +54,32 @@ public class MainFXApplication extends Application {
      *
      * @param mainScreen  the main Stage window of the application
      */
-    private void initRootLayout(Stage mainScreen) {
-        try {
-            // Load root layout from fxml file.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getResource("../view/MainScreen.fxml"));
-            rootLayout = loader.load();
+     private void initRootLayout(Stage mainScreen) {
+         try {
+             // Load root layout from fxml file.
+             FXMLLoader loader = new FXMLLoader();
+             loader.setLocation(MainFXApplication.class.getResource("../view/MainScreen.fxml"));
+             rootLayout = loader.load();
 
-            // Give the controller access to the main app.
-            MainScreenController controller = loader.getController();
-            controller.setMainApp(this);
+             // Give the controller access to the main app.
+             MainScreenController controller = loader.getController();
+             controller.setMainApp(this);
 
-            // Set the Main App title
-            mainScreen.setTitle("Course Registration");
+             // Set the Main App title
+             mainScreen.setTitle("Course Registration");
 
-            // Show the scene containing the root layout.
-            Scene scene = new Scene(rootLayout);
-            mainScreen.setScene(scene);
-            mainScreen.show();
+             // Show the scene containing the root layout.
+             Scene scene = new Scene(rootLayout);
+             mainScreen.setScene(scene);
+             mainScreen.show();
 
 
-        } catch (IOException e) {
-            //error on load, so log it
-            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for MainScreen!!");
-            e.printStackTrace();
-        }
-    }
+         } catch (IOException e) {
+             //error on load, so log it
+             LOGGER.log(Level.SEVERE, "Failed to find the fxml file for MainScreen!!");
+             e.printStackTrace();
+         }
+     }
 
 
     /**
