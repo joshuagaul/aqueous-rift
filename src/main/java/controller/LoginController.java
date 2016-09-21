@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -47,7 +48,15 @@ public class LoginController {
        } else if (event.getSource() == findpassword) {
            mainApplication.showFindPasswordScreen();
        } else if (event.getSource() == login) {
-           System.out.println("temp msg: lets the user log in after checking validation");
+
+
+           //temporary alert
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
+           alert.setTitle("ConnectH2O");
+           alert.setHeaderText("Login");
+           alert.setContentText("This feature has not been implemented yet.");
+           alert.showAndWait();
+
            // allows log in if ----    if(checkValid());
        }
     }
