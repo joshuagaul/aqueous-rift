@@ -32,7 +32,7 @@ public class MainFXApplication extends Application {
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
         initRootLayout(mainScreen);
-        showLoginScreen();
+        //showLoginScreen();
     }
 
     /**
@@ -53,7 +53,7 @@ public class MainFXApplication extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getResource("../view/MainScreen.fxml"));
+            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/MainScreen.fxml"));
             rootLayout = loader.load();
 
             // Give the controller access to the main app.
@@ -86,8 +86,8 @@ public class MainFXApplication extends Application {
         try {
             // Load loginPage
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
-            AnchorPane showLoginScreen = loader.load();
+            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/MainScreen.fxml"));
+            BorderPane showLoginScreen = loader.load();
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(showLoginScreen);
@@ -111,7 +111,7 @@ public class MainFXApplication extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getResource("../view/RegisterScreen.fxml"));
+            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/RegisterScreen.fxml"));
             AnchorPane showRegisterPage = loader.load();
 
             // Set person overview into the center of root layout.
@@ -131,7 +131,7 @@ public class MainFXApplication extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getResource("../view/FindPasswordScreen.fxml"));
+            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/FindPasswordScreen.fxml"));
             AnchorPane showFindPasswordScreen = loader.load();
 
             // Set person overview into the center of root layout.

@@ -40,3 +40,9 @@ javadoc << {
 clean << {
     println 'Clean'
 }
+
+sourceSets {
+    main {
+        resources.srcDirs = ["src/main/java"]
+    }
+}
