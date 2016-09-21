@@ -6,18 +6,21 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import main.MainFXApplication;
+
+import java.io.IOException;
 
 
 public class RegisterController {
+    private MainFXApplication mainApplication;
+    @FXML
+    private Button cancel;
 
-    private Stage dialogStage;
-    //private User user;
-    private boolean okClicked = false;
+    @FXML
+    private Button ok;
 
     @FXML
     private TextField username;
@@ -40,21 +43,49 @@ public class RegisterController {
     @FXML
     private TextField pnumber;
 
-    public boolean isOkClicked() {
-        return okClicked;
-    }
 
-    public void setDialogStage(Stage stage) {
-        dialogStage = stage;
-    }
     /**
-     * Called when the user clicks back.
+     * Button handler for creating an account page.
+     * Clicking OK button will store new user information and create an account.
+     * Clicking Cancel button will redirect to the default (login) page.
+     *
+     * @param event the button user clicks.
      */
     @FXML
-    private void handleCancelPressed() {dialogStage.close();   // close stage, not exit :/
+    private void handleButtonClicked(ActionEvent event) throws IOException {
+       if (event.getSource()==cancel) {
+           mainApplication.showLoginScreen();
+       } else if (event.getSource()==ok){
+           System.out.println("temp msg: register user after clicking ok");
+           mainApplication.showLoginScreen();
+       }
     }
 
+    // Give the controller access to the main app.
+    public void setMainApp(MainFXApplication mainFXApplication) {
+        mainApplication = mainFXApplication;
+    }
+
+///////////////////////extra stuff///////////////////////////////////
+
+    /**
+     * Displays an error message if username is already in use. ??
+     *
+     * @param event string of input username to be compared with stored data.
+     */
+
+/*
+    @FXML
+    protected void handleUsernameInUse(ActionEvent event) {
+        //if (event == already in file) { ...display below text}
+        error.setText("Username is already in use. Please choose another username.");
+    }
+    */
+
+    /*
     private boolean isInputValid() {
+
+
         String errorMessage = "";
         if (username.getText() == null || username.getText().length() == 0) {
             errorMessage += "No valid username!\n";
@@ -98,26 +129,8 @@ public class RegisterController {
             return false;
         }
     }
-/*
-    @FXML
-    private void handleOKPressed() {
-        if (isInputValid()) {
-            user.setUsername(username.getText());
-            user.setPassword(password.getPassword());
-            user.setFname(fname.getText());
-            user.setLname(lname.getText());
-            user.setEmail(email.getText());
-            user.setPnumber(pnumber.getText());
-            if (prefix.getText() != null){
-                user.setPrefix(prefix.getText());
-                }
 
-            okClicked = true;
-            dialogStage.close();
-        }
-    }
-*/
-
+    */
 
 
 
