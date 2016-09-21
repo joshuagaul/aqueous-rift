@@ -32,7 +32,7 @@ public class MainFXApplication extends Application {
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
         initRootLayout(mainScreen);
-        //showLoginScreen();
+        showLoginScreen();
     }
 
     /**
@@ -68,6 +68,9 @@ public class MainFXApplication extends Application {
             mainScreen.setScene(scene);
             mainScreen.show();
 
+            mainScreen.setResizable(false);
+            mainScreen.sizeToScene();
+
 
         } catch (IOException e) {
             //error on load, so log it
@@ -86,8 +89,8 @@ public class MainFXApplication extends Application {
         try {
             // Load loginPage
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/MainScreen.fxml"));
-            BorderPane showLoginScreen = loader.load();
+            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/LoginScreen.fxml"));
+            AnchorPane showLoginScreen = loader.load();
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(showLoginScreen);
