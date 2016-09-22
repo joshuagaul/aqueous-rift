@@ -6,6 +6,7 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -56,8 +57,13 @@ public class RegisterController {
        if (event.getSource()==cancel) {
            mainApplication.showLoginScreen();
        } else if (event.getSource()==ok){
-           System.out.println("temp msg: register user after clicking ok");
-           mainApplication.showLoginScreen();
+
+           //temporary alert
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
+           alert.setTitle("ConnectH2O");
+           alert.setHeaderText("Create an Account");
+           alert.setContentText("This feature has not been implemented yet.");
+           alert.showAndWait();
        }
     }
 

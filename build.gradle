@@ -47,3 +47,7 @@ sourceSets {
         resources.srcDirs = ["src/main/java"]
     }
 }
+
+checkstyle {
+    toolVersion = '6.18'
+}
