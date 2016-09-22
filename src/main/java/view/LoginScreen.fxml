@@ -46,8 +46,8 @@
                 <Label id="userinfo" text="Password" GridPane.rowIndex="5" />
                 <Button fx:id="findpassword" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="35.0" prefWidth="250.0" text="&gt;&gt; Forgot my password" GridPane.columnSpan="2" GridPane.rowIndex="7" />
                 <Button fx:id="createAccount" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="35.0" prefWidth="250.0" text="&gt;&gt; Create an account" GridPane.columnSpan="2" GridPane.rowIndex="8" />
-                <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <PasswordField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <TextField fx:id="username" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <PasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 <Button fx:id="login" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="37.0" prefWidth="104.0" text="&gt;&gt; Login" translateX="20.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                 <Text fx:id="error" strokeType="OUTSIDE" strokeWidth="0.0" translateX="20.0" wrappingWidth="193.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                 <Text id="logo" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectH2O" GridPane.rowIndex="1" />

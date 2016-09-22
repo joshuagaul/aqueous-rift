@@ -150,6 +150,9 @@ public class MainFXApplication extends Application {
         }
     }
 
+    public void showMainScreen() {
+        //
+    }
 
     public static void main(String[] args) {
         launch(args);

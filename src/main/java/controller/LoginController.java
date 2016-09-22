@@ -48,14 +48,14 @@ public class LoginController {
        } else if (event.getSource() == findpassword) {
            mainApplication.showFindPasswordScreen();
        } else if (event.getSource() == login) {
-
-
-           //temporary alert
-           Alert alert = new Alert(Alert.AlertType.INFORMATION);
-           alert.setTitle("ConnectH2O");
-           alert.setHeaderText("Login");
-           alert.setContentText("This feature has not been implemented yet.");
-           alert.showAndWait();
+          if (checkValid()) {
+               mainApplication.showMainScreen();
+          } else {
+               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+               alert.setTitle("ConnectH2O");
+               alert.setHeaderText("Login Failed");
+               alert.showAndWait();
+          }
 
            // allows log in if ----    if(checkValid());
        }
@@ -64,9 +64,9 @@ public class LoginController {
     /**
      * Check if username/password are correct
      */
-
+    @FXML
     protected boolean checkValid () {
-        if (username.getText().equals("stored username") && password.getText().equals("stored pw")){
+        if (username.getText().equals("user") && password.getText().equals("pass")){
             return true;
         } else{
             error.setText("Invalid username or password. Please try again.");
