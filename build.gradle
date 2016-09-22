@@ -6,7 +6,7 @@ repositories {
 }
 
 version = '1.0'
-defaultTasks 'jar'
+defaultTasks 'jar', 'check'
 
 dependencies {
     compile fileTree(dir: 'lib', include: '*.jar')
