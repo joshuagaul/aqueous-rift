@@ -82,7 +82,6 @@ public class MainFXApplication extends Application {
      * More details in LoginController.java
      *
      */
-
     public void showLoginScreen() {
         try {
             // Load loginPage
@@ -195,8 +194,6 @@ public class MainFXApplication extends Application {
 
 
     public static void main(String[] args) {
-        Connection con = new Connection();
-        con.sendTest("Hello, world!");
         launch(args);
     }
 }

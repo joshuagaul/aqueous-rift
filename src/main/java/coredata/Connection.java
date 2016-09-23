@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 public class Connection {
 
     private static final String DATABASE_URL = "https://aqueous-rift.firebaseio.com/";
-    private static DatabaseReference db;
+    private DatabaseReference db;
 
     public Connection() {
         // Initialize the app with a service account, granting admin privileges
@@ -24,16 +24,13 @@ public class Connection {
             System.out.println(error);
         }
 
-
-
         // The app only has access as defined in the Security Rules
         db = FirebaseDatabase
             .getInstance()
-            .getReference("/some_resource");
+            .getReference();
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //String res = dataSnapshot.getValue();
                 System.out.println(dataSnapshot);
             }
 
@@ -44,9 +41,27 @@ public class Connection {
         });
     }
 
-    public void sendTest(String message) {
-        System.out.println(message);
-        db.setValue(message);
+    //General methods for CRUD operations to be used for any domain (user, map data, etc)
+
+    //set() / setValue() are equivalent
+    //update() updates keys w/o replacing data
+    //push() adds a list of data, and generates unique keys for each
+    //ref.child()
+    //Delete by reference.set(null)
+
+    /**
+    * Sets the path to data map
+    * @param key - the key to search in DB
+    */
+    public void setReference(String key) {
+        db = db.child(key);
     }
 
+    /**
+    * Gets the current databaseReference
+    * @return databaseReference - DB object to execute on
+    */
+    public DatabaseReference getReference() {
+        return db;
+    }
 }

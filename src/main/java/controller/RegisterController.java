@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import main.MainFXApplication;
+import coredata.UserDataObject;
+import model.User;
 
 import java.io.IOException;
 
@@ -58,12 +60,11 @@ public class RegisterController {
            mainApplication.showWelcomeScreen();
        } else if (event.getSource()==ok){
 
-           //temporary alert
-           Alert alert = new Alert(Alert.AlertType.INFORMATION);
-           alert.setTitle("ConnectH2O");
-           alert.setHeaderText("Create an Account");
-           alert.setContentText("This feature has not been implemented yet.");
-           alert.showAndWait();
+           //Hard-coded new User
+           User testUser = new User("password", "email@mail.com", "XXX-XXX-XXXX", "4");
+           testUser.setName("New", "User");
+           UserDataObject userDAO = new UserDataObject();
+           userDAO.addSingleUser(testUser, "testUserName");
        }
     }
 
