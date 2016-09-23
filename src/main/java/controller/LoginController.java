@@ -16,7 +16,8 @@ public class LoginController {
 
     @FXML
     private Button createAccount;
-
+    @FXML
+    private Button back;
     @FXML
     private Button findpassword;
 
@@ -47,9 +48,11 @@ public class LoginController {
            mainApplication.showRegisterScreen();
        } else if (event.getSource() == findpassword) {
            mainApplication.showFindPasswordScreen();
-       } else if (event.getSource() == login) {
+       } else if (event.getSource() == back){
+           mainApplication.showWelcomeScreen();
+       }else if (event.getSource() == login) {
           if (checkValid()) {
-               mainApplication.showMainScreen();
+               mainApplication.showAppScreen();
           } else {
                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                alert.setTitle("ConnectH2O");

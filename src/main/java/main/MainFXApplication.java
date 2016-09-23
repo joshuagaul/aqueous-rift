@@ -1,9 +1,6 @@
 package main;
 
-import controller.LoginController;
-import controller.MainScreenController;
-import controller.RegisterController;
-import controller.FindPasswordController;
+import controller.*;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +30,7 @@ public class MainFXApplication extends Application {
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
         initRootLayout(mainScreen);
-        showLoginScreen();
+        showWelcomeScreen();
     }
 
     /**
@@ -151,9 +148,51 @@ public class MainFXApplication extends Application {
         }
     }
 
-    public void showMainScreen() {
-        //
+    public void showWelcomeScreen() {
+        try {
+            // Load loginPage
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/WelcomeScreen.fxml"));
+            AnchorPane showWelcomeScreen = loader.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(showWelcomeScreen);
+
+            // Give the controller access to the main app.
+            WelcomeScreenController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            //error on load, so log it
+            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for WelcomeScreen!!");
+            e.printStackTrace();
+        }
     }
+
+
+    public void showAppScreen() {
+        try {
+
+
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/AppScreen.fxml"));
+            AnchorPane showAppScreen = loader.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(showAppScreen);
+
+            // Give the controller access to the main app.
+            AppScreenController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for AppScreen!!");
+            e.printStackTrace();
+        }
+    }
+
+
 
     public static void main(String[] args) {
         Connection con = new Connection();

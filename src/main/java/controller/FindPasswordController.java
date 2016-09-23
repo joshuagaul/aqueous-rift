@@ -43,7 +43,7 @@ public class FindPasswordController {
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
         if (event.getSource() == cancel) {
-            mainApplication.showLoginScreen();
+            mainApplication.showWelcomeScreen();
         } else if (event.getSource() == ok) {
 
             //temporary alert
