@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.User;
-import coredata.Connection;
+import coredata.ConnectionFactory;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -194,6 +194,7 @@ public class MainFXApplication extends Application {
 
 
     public static void main(String[] args) {
+        ConnectionFactory.initializeFireBase();
         launch(args);
     }
 }

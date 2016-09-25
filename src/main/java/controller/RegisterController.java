@@ -30,6 +30,7 @@ public class RegisterController {
 
     @FXML
     private PasswordField password;
+    //TODO Tabbing out of the passwordField doesn't work
 
     @FXML
     private TextField fname;
@@ -59,12 +60,11 @@ public class RegisterController {
        if (event.getSource()==cancel) {
            mainApplication.showWelcomeScreen();
        } else if (event.getSource()==ok){
-
-           //Hard-coded new User
-           User testUser = new User("password", "email@mail.com", "XXX-XXX-XXXX", "4");
-           testUser.setName("New", "User");
+           User testUser = new User(password.getText(), email.getText(), pnumber.getText(), "4", fname.getText(), lname.getText(), prefix.getText());
            UserDataObject userDAO = new UserDataObject();
-           userDAO.addSingleUser(testUser, "testUserName");
+           userDAO.addSingleUser(testUser, username.getText());
+
+           //TODO Notify success / go to another page / etc
        }
     }
 

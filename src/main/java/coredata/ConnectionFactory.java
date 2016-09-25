@@ -7,12 +7,12 @@ import com.google.firebase.database.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class Connection {
+public class ConnectionFactory {
 
     private static final String DATABASE_URL = "https://aqueous-rift.firebaseio.com/";
-    private DatabaseReference db;
+    private static DatabaseReference db;
 
-    public Connection() {
+    public static void initializeFireBase() {
         // Initialize the app with a service account, granting admin privileges
         try {
             FirebaseOptions options = new FirebaseOptions.Builder()
@@ -61,7 +61,7 @@ public class Connection {
     * Gets the current databaseReference
     * @return databaseReference - DB object to execute on
     */
-    public DatabaseReference getReference() {
-        return db;
+    public static DatabaseReference getReference(String key) {
+        return db.child(key);
     }
 }
