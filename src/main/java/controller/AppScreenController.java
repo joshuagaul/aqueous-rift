@@ -19,10 +19,7 @@ public class AppScreenController {
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
         if (event.getSource() == logout) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ConnectH2O");
-            alert.setHeaderText("~~~~~HEY AAKI HAVE FUN~~~~ - AJ");
-            alert.showAndWait();
+            mainApplication.showWelcomeScreen();
         }
     }
     // Give the controller access to the main app.
