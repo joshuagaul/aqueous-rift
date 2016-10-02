@@ -30,7 +30,6 @@ import java.io.IOException;
      *
      * @param event the button user clicks.
      */
-
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
         if (event.getSource() == loginpage) {

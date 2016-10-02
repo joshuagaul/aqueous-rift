@@ -11,6 +11,8 @@ defaultTasks 'clean', 'jar', 'check'
 dependencies {
     compile fileTree(dir: 'lib', include: '*.jar')
     compile 'com.google.firebase:firebase-server-sdk:3.0.1'
+    testCompile 'junit:junit:4.12'
+    testCompile group: "org.loadui", name: "testFx", version: "3.1.2"
 }
 
 jar {
@@ -31,7 +33,7 @@ task compileTest(dependsOn: compileTestJava) {
 }
 
 compileJava << {
-    println 'CompileJave'
+    println 'CompileJava'
 }
 
 javadoc << {

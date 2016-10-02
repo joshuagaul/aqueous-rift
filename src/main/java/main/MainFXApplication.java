@@ -191,6 +191,10 @@ public class MainFXApplication extends Application {
         }
     }
 
+    public BorderPane getRootLayout() {
+        return rootLayout;
+    }
+
 
 
     public static void main(String[] args) {
