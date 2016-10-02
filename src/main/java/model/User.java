@@ -1,55 +1,90 @@
 package model;
 
-import model.Name;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
-/**
- * Created by ahjin on 9/20/2016.
- */
 public class User {
 
-    private Name _name;
-    private StringProperty _password;
-    private StringProperty _email;
-    private StringProperty _phoneNum;
-    private StringProperty _userId;
+    private Name name;
+    private StringProperty password;
+    private StringProperty email;
+    private StringProperty phoneNum;
+    private StringProperty userId;
 
-
-    public User(String password, String email, String phoneNum, String userId, String firstName, String lastName, String prefix) {
-        _password = new SimpleStringProperty();
-        _password.set(password);
-        _email = new SimpleStringProperty();
-        _email.set(email);
-        _phoneNum = new SimpleStringProperty();
-        _phoneNum.set(phoneNum);
-        _userId = new SimpleStringProperty();
-        _userId.set(userId);
-        _name = new Name(firstName, lastName, prefix);
+    /**
+     * User object constructor
+     * @param   password - new user password
+     * @param   email - new user email
+     * @param   phoneNum - new user phone number
+     * @param   userId - new user ID
+     * @param   firstName - new user first name
+     * @param   lastName - new user last name
+     * @param   prefix - new user prefix (ie. Mr, Mrs, etc)
+     */
+    public User(String password, String email, String phoneNum, String userId,
+            String firstName, String lastName, String prefix) {
+        this.password = new SimpleStringProperty();
+        this.password.set(password);
+        this.email = new SimpleStringProperty();
+        this.email.set(email);
+        this.phoneNum = new SimpleStringProperty();
+        this.phoneNum.set(phoneNum);
+        this.userId = new SimpleStringProperty();
+        this.userId.set(userId);
+        this.name = new Name(firstName, lastName, prefix);
     }
 
-    public User(String password, String email, String phoneNum, String userId, String firstName, String lastName) {
+    /**
+     * User object constructor w/o prefix
+     * @param   password - new user password
+     * @param   email - new user email
+     * @param   phoneNum - new user phone number
+     * @param   userId - new user ID
+     * @param   firstName - new user first name
+     * @param   lastName - new user last name
+     */
+    public User(String password, String email, String phoneNum, String userId,
+            String firstName, String lastName) {
         this(password, email, phoneNum, userId, firstName, lastName, "");
     }
 
+    /**
+     * getter
+     * @return Name
+     */
     public Name getName() {
-        return _name;
+        return name;
     }
 
+    /**
+     * getter
+     * @return password
+     */
     public String getPassword() {
-        return _password.get();
+        return password.get();
     }
 
+    /**
+     * getter
+     * @return email
+     */
     public String getEmail() {
-        return _email.get();
+        return email.get();
     }
 
+    /**
+     * getter
+     * @return email
+     */
     public String getPhoneNum() {
-        return _phoneNum.get();
+        return phoneNum.get();
     }
 
+    /**
+     * getter
+     * @return email
+     */
     public String getUserId() {
-        return _userId.get();
+        return userId.get();
     }
 }
