@@ -10,6 +10,7 @@ public class User {
     private StringProperty email;
     private StringProperty phoneNum;
     private StringProperty userId;
+    private StringProperty userType;
 
     /**
      * User object constructor
@@ -20,9 +21,10 @@ public class User {
      * @param   firstName - new user first name
      * @param   lastName - new user last name
      * @param   prefix - new user prefix (ie. Mr, Mrs, etc)
+     * @param   userType - new user type (general user, manager, admin, worker)
      */
     public User(String password, String email, String phoneNum, String userId,
-            String firstName, String lastName, String prefix) {
+            String firstName, String lastName, String prefix, String userType) {
         this.password = new SimpleStringProperty();
         this.password.set(password);
         this.email = new SimpleStringProperty();
@@ -32,6 +34,10 @@ public class User {
         this.userId = new SimpleStringProperty();
         this.userId.set(userId);
         this.name = new Name(firstName, lastName, prefix);
+        this.userType = new SimpleStringProperty();
+        this.userType.set(userType);
+
+
     }
 
     /**
@@ -45,7 +51,7 @@ public class User {
      */
     public User(String password, String email, String phoneNum, String userId,
             String firstName, String lastName) {
-        this(password, email, phoneNum, userId, firstName, lastName, "");
+        this(password, email, phoneNum, userId, firstName, lastName, "", "");
     }
 
     private User() {
@@ -90,5 +96,14 @@ public class User {
      */
     public String getUserId() {
         return userId.get();
+    }
+
+
+    /**
+     * getter
+     * @return userType
+     */
+    public String getUserType() {
+        return userType.get();
     }
 }

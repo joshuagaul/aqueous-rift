@@ -17,6 +17,8 @@ public class AppScreenController {
     private MainFXApplication mainApplication;
     @FXML
     private Button logout;
+    @FXML
+    private Button editProfile;
 
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
@@ -30,6 +32,8 @@ public class AppScreenController {
             } else {
                 alert.close();
             }
+        } else if (event.getSource()==editProfile){
+            mainApplication.showEditProfileScreen();
         }
     }
     // Give the controller access to the main app.

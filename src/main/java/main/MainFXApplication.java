@@ -192,6 +192,31 @@ public class MainFXApplication extends Application {
         }
     }
 
+    public void showEditProfileScreen() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/EditProfileScreen.fxml"));
+            AnchorPane showEditProfileScreen = loader.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(showEditProfileScreen);
+
+            // Give the controller access to the main app.
+            EditProfileController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for EditProfileScreen!!");
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
     public BorderPane getRootLayout() {
         return rootLayout;
     }

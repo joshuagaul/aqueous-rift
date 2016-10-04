@@ -4,15 +4,15 @@ package controller;
  * Created by ahjin on 9/19/2016.
  */
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import main.MainFXApplication;
 import coredata.UserDataObject;
 import model.User;
+import model.UserType;
 
 import java.io.IOException;
 
@@ -46,6 +46,19 @@ public class RegisterController {
 
     @FXML
     private TextField pnumber;
+    @FXML
+    private ComboBox<UserType> usertype = new ComboBox<UserType>();
+    private final ObservableList<UserType> userType = FXCollections.observableArrayList(
+            UserType.GeneralUser,
+            UserType.Manager,
+            UserType.Admin,
+            UserType.Worker);
+
+    @FXML
+    private void initialize() {
+        usertype.setItems(userType);
+        usertype.setValue((UserType.GeneralUser));
+    }
 
 
     /**
@@ -61,7 +74,7 @@ public class RegisterController {
            mainApplication.showWelcomeScreen();
        } else if (event.getSource()==ok){
            //TODO Get rid of or randomize/increment userId
-           User testUser = new User(password.getText(), email.getText(), pnumber.getText(), "4", fname.getText(), lname.getText(), prefix.getText());
+           User testUser = new User(password.getText(), email.getText(), pnumber.getText(), "4", fname.getText(), lname.getText(), prefix.getText(), usertype.getValue().toString());
            UserDataObject userDAO = UserDataObject.getInstance();
            userDAO.addSingleUser(testUser, username.getText());
 

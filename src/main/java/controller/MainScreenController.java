@@ -9,7 +9,6 @@ import javafx.scene.control.Alert;
  *
  */
 public class MainScreenController {
-
     /** reference back to mainApplication if needed */
     private MainFXApplication mainApplication;
 

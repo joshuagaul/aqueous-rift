@@ -21,5 +21,6 @@
          </image>
       </ImageView>
       <Button fx:id="logout" layoutX="294.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleButtonClicked" text="LOGOUT" />
+      <Button fx:id="editProfile" contentDisplay="CENTER" layoutX="257.0" layoutY="199.0" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="37.0" prefWidth="174.0" text="EDIT PROFILE" />
    </children>
 </AnchorPane>
