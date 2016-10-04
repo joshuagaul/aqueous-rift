@@ -98,7 +98,6 @@ public class User {
         return userId.get();
     }
 
-
     /**
      * getter
      * @return userType

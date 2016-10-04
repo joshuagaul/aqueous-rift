@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 public class MainFXApplication extends Application {
     //the java logger for this class
     private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
+    private static User currentUser;
 
     //the main container for the application window
     private Stage mainScreen;
@@ -212,16 +213,17 @@ public class MainFXApplication extends Application {
         }
     }
 
+    public User getCurrentUser() {
+        return currentUser;
+    }
 
-
-
-
+    public void setCurrentUser(User u) {
+        currentUser = u;
+    }
 
     public BorderPane getRootLayout() {
         return rootLayout;
     }
-
-
 
     public static void main(String[] args) {
         //Instantiate/Initialize singletons and static classes

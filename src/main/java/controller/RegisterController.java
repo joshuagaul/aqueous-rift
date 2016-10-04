@@ -79,6 +79,7 @@ public class RegisterController {
            userDAO.addSingleUser(testUser, username.getText());
 
            //TODO Notify success / go to another page / etc
+           mainApplication.showWelcomeScreen();
        }
     }
 

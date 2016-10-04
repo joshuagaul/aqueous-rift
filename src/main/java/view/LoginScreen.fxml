@@ -50,7 +50,7 @@
                 <PasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 <Button fx:id="login" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="37.0" prefWidth="104.0" text="&gt;&gt; Login" translateX="20.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                 <Text fx:id="error" strokeType="OUTSIDE" strokeWidth="0.0" translateX="20.0" wrappingWidth="193.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                <Text id="logo" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectH2O" GridPane.rowIndex="1" />
+                <Text id="logo" strokeType="OUTSIDE" strokeWidth="0.0" text="Aqueous Rift" GridPane.rowIndex="1" />
                 <Text id="tagline" strokeType="OUTSIDE" strokeWidth="0.0" text="Cleaner, Smarter, Better." GridPane.rowIndex="2" />
                 <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="60.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <image>

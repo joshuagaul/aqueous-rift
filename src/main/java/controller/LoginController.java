@@ -59,7 +59,7 @@ public class LoginController {
                mainApplication.showAppScreen();
           } else {
                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-               alert.setTitle("ConnectH2O");
+               alert.setTitle("Aqueous Rift");
                alert.setHeaderText("Login Failed");
                alert.showAndWait();
           }
@@ -73,17 +73,17 @@ public class LoginController {
      */
     @FXML
     protected boolean checkValid () {
-        if (username.getText().equals("user") && password.getText().equals("pass")) {
-            return true;
-        }
-               /*
         String user = username.getText();
         if (userDAO.userExists(user)) {
             //Check login information
             User queriedUser = userDAO.getUser(user);
             System.out.println(queriedUser.getPassword());
-            return queriedUser.getPassword().equals(password.getText());
-        }*/ else {
+            if (queriedUser.getPassword().equals(password.getText())) {
+                mainApplication.setCurrentUser(queriedUser);
+                return true;
+            }
+            return false;
+        } else {
             error.setText("Invalid username or password. Please try again.");
             return false;
         }
@@ -92,7 +92,7 @@ public class LoginController {
 
     // Give the controller access to the main app.
     public void setMainApp(MainFXApplication mainFXApplication) {
-        mainApplication = mainFXApplication;
+        this.mainApplication = mainFXApplication;
     }
 
 }

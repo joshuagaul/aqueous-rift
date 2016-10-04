@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import main.MainFXApplication;
 import coredata.UserDataObject;
 import model.UserType;
-import model.User;;
+import model.User;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -81,7 +81,15 @@ public class EditProfileController {
             alert.setHeaderText("Are you sure you want to update above information?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
-                mainApplication.showAppScreen();
+                //TODO I don't think they should be able to edit username (if we want that, will need to change data structure)
+                //Create new user with the current user's userID and userType
+                UserDataObject userDAO = UserDataObject.getInstance();
+                User prevUserInfo = mainApplication.getCurrentUser();
+                String uId = prevUserInfo.getUserId();
+                String userType = prevUserInfo.getUserType();
+                User editedUser = new User(password.getText(), email.getText(), pnumber.getText(), uId, fname.getText(), lname.getText(), prefix.getText(), userType);
+                userDAO.editSingleUser(editedUser, username.getText());
+                mainApplication.showWelcomeScreen();
             } else {
                 alert.close();
             }
@@ -90,7 +98,7 @@ public class EditProfileController {
 
     // Give the controller access to the main app.
     public void setMainApp(MainFXApplication mainFXApplication) {
-        mainApplication = mainFXApplication;
+        this.mainApplication = mainFXApplication;
     }
 
 

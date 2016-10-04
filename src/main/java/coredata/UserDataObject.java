@@ -65,7 +65,6 @@ public class UserDataObject {
                 int newSize = size.incrementAndGet();
                 System.out.println("Added " + dataSnapshot.getKey()
                     + ", count is " + newSize);
-                System.out.println(size);
                 //update users here
                 updateUsers(dataSnapshot.getKey(), newSize);
                 updateUserList(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
@@ -73,15 +72,17 @@ public class UserDataObject {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot,
                     String prevChildKey) {
+                System.out.println("Edited " + dataSnapshot.getKey()
+                    + ", count is " + size);
                 // updateUsers(dataSnapshot.getKey(), newSize);
                 // updateUserList(dataSnapshot.getValue(User.class));
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                User removedUser = dataSnapshot.getValue(User.class);
-                System.out.println("The user "
-                    + removedUser.getUserId() + " has been deleted");
+                // User removedUser = dataSnapshot.getValue(User.class);
+                // System.out.println("The user "
+                //     + removedUser.getUserId() + " has been deleted");
             }
 
             @Override
@@ -144,6 +145,10 @@ public class UserDataObject {
 
     public User getUser(String username) {
         return userMap.get(username);
+    }
+
+    public void editSingleUser(User userToAdd, String userName) {
+        addSingleUser(userToAdd, userName);
     }
 
     /**
