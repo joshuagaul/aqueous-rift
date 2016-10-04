@@ -48,9 +48,13 @@ public class User {
         this(password, email, phoneNum, userId, firstName, lastName, "");
     }
 
+    private User() {
+        //For FireBase
+    }
+
     /**
      * getter
-     * @return Name
+     * @return name
      */
     public Name getName() {
         return name;
@@ -74,7 +78,7 @@ public class User {
 
     /**
      * getter
-     * @return email
+     * @return phone number
      */
     public String getPhoneNum() {
         return phoneNum.get();
@@ -82,7 +86,7 @@ public class User {
 
     /**
      * getter
-     * @return email
+     * @return userId
      */
     public String getUserId() {
         return userId.get();

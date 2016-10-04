@@ -60,8 +60,9 @@ public class RegisterController {
        if (event.getSource()==cancel) {
            mainApplication.showWelcomeScreen();
        } else if (event.getSource()==ok){
+           //TODO Get rid of or randomize/increment userId
            User testUser = new User(password.getText(), email.getText(), pnumber.getText(), "4", fname.getText(), lname.getText(), prefix.getText());
-           UserDataObject userDAO = new UserDataObject();
+           UserDataObject userDAO = UserDataObject.getInstance();
            userDAO.addSingleUser(testUser, username.getText());
 
            //TODO Notify success / go to another page / etc

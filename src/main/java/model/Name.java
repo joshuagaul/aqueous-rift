@@ -26,4 +26,32 @@ public class Name {
     public Name(String firstName, String lastName) {
         this(firstName, lastName, "");
     }
+
+    public Name() {
+        //for firebase?
+    }
+
+    /**
+     * Public getter
+     * @return firstName
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Public getter
+     * @return lastName
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Public getter
+     * @return prefix
+     */
+    public String getPrefix() {
+        return prefix;
+    }
 }

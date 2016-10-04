@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.User;
 import coredata.ConnectionFactory;
+import coredata.UserDataObject;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -198,7 +199,9 @@ public class MainFXApplication extends Application {
 
 
     public static void main(String[] args) {
+        //Instantiate/Initialize singletons and static classes
         ConnectionFactory.initializeFireBase();
+        UserDataObject userDAO = UserDataObject.getInstance();
         launch(args);
     }
 }

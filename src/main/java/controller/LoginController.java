@@ -4,15 +4,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import main.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import java.io.IOException;
 
+import main.MainFXApplication;
+import coredata.UserDataObject;
+import model.User;
+
 public class LoginController {
     /** a link back to the main application class */
     private MainFXApplication mainApplication;
+    private UserDataObject userDAO = UserDataObject.getInstance();
 
     @FXML
     private Button createAccount;
@@ -69,9 +73,13 @@ public class LoginController {
      */
     @FXML
     protected boolean checkValid () {
-        if (username.getText().equals("user") && password.getText().equals("pass")){
-            return true;
-        } else{
+        String user = username.getText();
+        if (userDAO.userExists(user)) {
+            //Check login information
+            User queriedUser = userDAO.getUser(user);
+            System.out.println(queriedUser.getPassword());
+            return queriedUser.getPassword().equals(password.getText());
+        } else {
             error.setText("Invalid username or password. Please try again.");
             return false;
         }

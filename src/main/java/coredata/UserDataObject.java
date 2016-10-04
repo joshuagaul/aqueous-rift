@@ -25,8 +25,12 @@ package coredata;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.GenericTypeIndicator;
 import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import model.User;
@@ -34,12 +38,19 @@ import model.User;
 public class UserDataObject {
 
     private Set<String> usernames = new HashSet<>();
+    private Map<String, User> userMap = new HashMap<>();
     private AtomicInteger size = new AtomicInteger();
+    private static final UserDataObject INSTANCE = new UserDataObject();
 
     /**
-     * Constructor for the UserDataObject
+     * Private constructor for the UserDataObject to implement
+     * the Singleton pattern
      */
-    public UserDataObject() {
+    private UserDataObject() {
+        if (INSTANCE != null) {
+            throw new IllegalStateException("Already instantiated the"
+                + "UserDataObject.  Please getInstance().");
+        }
         DatabaseReference users = getUsers();
         DatabaseReference userList = getUserList();
         //Add listeners to update usernames and size when added
@@ -57,17 +68,19 @@ public class UserDataObject {
                 System.out.println(size);
                 //update users here
                 updateUsers(dataSnapshot.getKey(), newSize);
+                updateUserList(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot,
                     String prevChildKey) {
-
+                // updateUsers(dataSnapshot.getKey(), newSize);
+                // updateUserList(dataSnapshot.getValue(User.class));
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 User removedUser = dataSnapshot.getValue(User.class);
-                System.out.println("The blog post titled "
+                System.out.println("The user "
                     + removedUser.getUserId() + " has been deleted");
             }
 
@@ -83,6 +96,14 @@ public class UserDataObject {
                     + databaseError.getMessage());
             }
         });
+    }
+
+    /**
+     * Returns the singleton instance
+     * @return UserDataObject singleton
+     */
+    public static UserDataObject getInstance() {
+        return INSTANCE;
     }
 
     /**
@@ -113,6 +134,19 @@ public class UserDataObject {
     }
 
     /**
+     * Determines if the queried userName is in the database
+     * @param  userName The username to query
+     * @return          True if the user exists in the database
+     */
+    public Boolean userExists(String userName) {
+        return usernames.contains(userName);
+    }
+
+    public User getUser(String username) {
+        return userMap.get(username);
+    }
+
+    /**
      * Helper method from an add callback to userList
      * @param  username - key to update
      * @param  count - the new count of usernames
@@ -124,5 +158,19 @@ public class UserDataObject {
         users.child("/" + username).setValue(true);
         //Update local storage
         usernames.add(username);
+    }
+
+    private void updateUserList(String username, Map<String, Object> objUser) {
+        //Hacky solution to copy Object into User because of problems with
+        //Firebase Object mapping
+        Map<String, String> nameObj = (HashMap<String, String>) objUser.get("name");
+        String firstName = (String) nameObj.get("firstName");
+        String lastName = (String) nameObj.get("lastName");
+        String prefix = (String) nameObj.get("prefix");
+        String password = (String) objUser.get("password");
+        String email = (String) objUser.get("email");
+        String phoneNum = (String) objUser.get("phoneNum");
+        User user = new User(password, email, phoneNum, "4", firstName, lastName, prefix);
+        userMap.put(username, user);
     }
 }
