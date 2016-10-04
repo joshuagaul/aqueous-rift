@@ -74,7 +74,7 @@ public class EditProfileController {
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
         if (event.getSource()==cancel) {
-            mainApplication.showWelcomeScreen();
+            mainApplication.showAppScreen();
         } else if (event.getSource()==ok){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirm Profile Update");
