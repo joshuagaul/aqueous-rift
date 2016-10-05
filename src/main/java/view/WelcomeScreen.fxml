@@ -42,7 +42,7 @@
                 <Button fx:id="loginpage" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="35.0" prefWidth="250.0" text="&gt;&gt; Login " GridPane.columnSpan="2" GridPane.rowIndex="7" />
                 <Button fx:id="createAccount" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="35.0" prefWidth="250.0" text="&gt;&gt; Create an account" GridPane.columnSpan="2" GridPane.rowIndex="8" />
                 <Text fx:id="error" strokeType="OUTSIDE" strokeWidth="0.0" translateX="20.0" wrappingWidth="193.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                <Text id="logo" strokeType="OUTSIDE" strokeWidth="0.0" text="ConnectH2O" GridPane.rowIndex="1" />
+                <Text id="logo" strokeType="OUTSIDE" strokeWidth="0.0" text="Aqueous Rift" GridPane.rowIndex="1" />
                 <Text id="tagline" strokeType="OUTSIDE" strokeWidth="0.0" text="Cleaner, Smarter, Better." GridPane.rowIndex="2" />
                 <Text id="copyright" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 1.0 © 2016 Aqueous Rift. All rights reserved." GridPane.rowIndex="10" />
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" translateX="60.0" GridPane.columnIndex="1" GridPane.rowIndex="1">

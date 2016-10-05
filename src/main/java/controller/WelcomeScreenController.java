@@ -1,19 +1,18 @@
+/**
+ * Created by AhJin Noh on 9/22/2016.
+ */
 package controller;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import main.MainFXApplication;
 
 import java.io.IOException;
-
 /**
- * Created by ahjin on 9/22/2016.
+ * Controller for welcome screen page.
  */
-    public class WelcomeScreenController {
-    /**
-     * a link back to the main application class
-     */
+public class WelcomeScreenController {
+
     private MainFXApplication mainApplication;
 
     @FXML
@@ -23,11 +22,11 @@ import java.io.IOException;
     private Button createAccount;
 
     /**
-     * Button handler for login page.
-     * Clicking "Create an Account" will redirect to Register page.
-     * Clicking "Forgot My Password" will redirect to Finding password page.
-     * Clicking "Login" will redirect to main application.
-     *
+     * Button handler for welcome page.
+     * Clicking "Login" will redirect to Login page.
+     * Clicking "Register" will redirect to creating account page.
+     * .
+     *@throws IOException throws an exception if fxml is not found.
      * @param event the button user clicks.
      */
     @FXML
@@ -39,10 +38,12 @@ import java.io.IOException;
         }
     }
 
-    // Give the controller access to the main app.
+    /**
+     * Gives the controller access to mainApplication.
+     *
+     * @param mainFXApplication mainFXApplication
+     */
     public void setMainApp(MainFXApplication mainFXApplication) {
         mainApplication = mainFXApplication;
     }
-
-
 }
