@@ -16,9 +16,10 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * Runs the main application and and switches the pages.
+ **/
 public class MainFXApplication extends Application {
-    //the java logger for this class
     private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private static User currentUser;
 
@@ -45,185 +46,189 @@ public class MainFXApplication extends Application {
     }
 
     /**
-     * Initialize the main screen for the application.  Most other views will be shown in this screen.
+     * initialize the main screen which will also have other pages.
      *
-     * @param mainScreen the main Stage window of the application
+     * @param mainScreen screen to be displayed.
+     * @throws IOException throws an exception if fxml is not found.
      */
     private void initRootLayout(Stage mainScreen) {
         try {
-            // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/MainScreen.fxml"));
+            loader.setLocation(MainFXApplication.class.
+                    getClassLoader().getResource("view/MainScreen.fxml"));
             rootLayout = loader.load();
-
-            // Give the controller access to the main app.
             MainScreenController controller = loader.getController();
             controller.setMainApp(this);
-
             // Set the Main App title
             mainScreen.setTitle("Aqueous Rift");
-
-            // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             mainScreen.setScene(scene);
             mainScreen.show();
-
             mainScreen.setResizable(false);
             mainScreen.sizeToScene();
-
-
         } catch (IOException e) {
             //error on load, so log it
-            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for MainScreen!!");
+            LOGGER.log(Level.SEVERE, "Failed to find "
+                    + "the fxml file for MainScreen!!");
             e.printStackTrace();
         }
     }
 
     /**
-     * Shows login page - this will be the default screen when the app starts.
-     * More details in LoginController.java
+     * sets the screen to login page.
      *
+     * @throws IOException throws an exception if fxml is not found.
      */
     public void showLoginScreen() {
         try {
-            // Load loginPage
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/LoginScreen.fxml"));
+            loader.setLocation(MainFXApplication.class.
+                    getClassLoader().getResource("view/LoginScreen.fxml"));
             AnchorPane showLoginScreen = loader.load();
-
-            // Set person overview into the center of root layout.
             rootLayout.setCenter(showLoginScreen);
-
-            // Give the controller access to the main app.
             LoginController controller = loader.getController();
             controller.setMainApp(this);
-
         } catch (IOException e) {
-            //error on load, so log it
-            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for LoginScreen!!");
+            LOGGER.log(Level.SEVERE, "Failed to find "
+                    + "the fxml file for LoginScreen!!");
             e.printStackTrace();
         }
     }
 
     /**
-     * Shows page for creating a new account.
-     * More details in RegisterController.java
+     * sets the screen to registration page.
+     *
+     * @throws IOException throws an exception if fxml is not found.
      */
     public void showRegisterScreen() {
         try {
-            // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/RegisterScreen.fxml"));
+            loader.setLocation(MainFXApplication.class.
+                    getClassLoader().getResource("view/RegisterScreen.fxml"));
             AnchorPane showRegisterPage = loader.load();
-
-            // Set person overview into the center of root layout.
             rootLayout.setCenter(showRegisterPage);
-
-            // Give the controller access to the main app.
             RegisterController controller = loader.getController();
             controller.setMainApp(this);
-
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for RegisterScreen!!");
+            LOGGER.log(Level.SEVERE, "Failed to find "
+                    + "the fxml file for RegisterScreen!!");
             e.printStackTrace();
         }
     }
 
+    /**
+     * sets the screen to find password page.
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
     public void showFindPasswordScreen() {
         try {
-            // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/FindPasswordScreen.fxml"));
+            loader.setLocation(MainFXApplication.class.
+                    getClassLoader().getResource(
+                            "view/FindPasswordScreen.fxml"));
             AnchorPane showFindPasswordScreen = loader.load();
-
-            // Set person overview into the center of root layout.
             rootLayout.setCenter(showFindPasswordScreen);
-
-            // Give the controller access to the main app.
             FindPasswordController controller = loader.getController();
             controller.setMainApp(this);
-
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for RegisterScreen!!");
+            LOGGER.log(Level.SEVERE, "Failed to find"
+                    + "the fxml file for RegisterScreen!!");
             e.printStackTrace();
         }
     }
 
+    /**
+     * sets the screen to welcome screen.
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
     public void showWelcomeScreen() {
         try {
-            // Load loginPage
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/WelcomeScreen.fxml"));
+            loader.setLocation(MainFXApplication.class.
+                    getClassLoader().getResource("view/WelcomeScreen.fxml"));
             AnchorPane showWelcomeScreen = loader.load();
-
-            // Set person overview into the center of root layout.
             rootLayout.setCenter(showWelcomeScreen);
-
-            // Give the controller access to the main app.
             WelcomeScreenController controller = loader.getController();
             controller.setMainApp(this);
-
         } catch (IOException e) {
-            //error on load, so log it
-            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for WelcomeScreen!!");
+            LOGGER.log(Level.SEVERE, "Failed to find the"
+                    + "fxml file for WelcomeScreen!!");
             e.printStackTrace();
         }
     }
 
-
+    /**
+     * sets the screen to main app page.
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
     public void showAppScreen() {
         try {
-
-
-            // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/AppScreen.fxml"));
+            loader.setLocation(MainFXApplication.class.
+                    getClassLoader().getResource("view/AppScreen.fxml"));
             AnchorPane showAppScreen = loader.load();
-
-            // Set person overview into the center of root layout.
             rootLayout.setCenter(showAppScreen);
-
-            // Give the controller access to the main app.
             AppScreenController controller = loader.getController();
             controller.setMainApp(this);
-
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for AppScreen!!");
+            LOGGER.log(Level.SEVERE, "Failed to "
+                    + "find the fxml file for AppScreen!!");
             e.printStackTrace();
         }
     }
 
+    /**
+     * sets the screen to editing profile page.
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
     public void showEditProfileScreen() {
         try {
-            // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.getClassLoader().getResource("view/EditProfileScreen.fxml"));
+            loader.setLocation(MainFXApplication.class.
+                    getClassLoader().getResource(
+                            "view/EditProfileScreen.fxml"));
             AnchorPane showEditProfileScreen = loader.load();
-
-            // Set person overview into the center of root layout.
             rootLayout.setCenter(showEditProfileScreen);
-
-            // Give the controller access to the main app.
             EditProfileController controller = loader.getController();
             controller.setMainApp(this);
-
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to find the fxml file for EditProfileScreen!!");
+            LOGGER.log(Level.SEVERE, "Failed to find "
+                    + "the fxml file for EditProfileScreen!!");
             e.printStackTrace();
         }
     }
 
+    /**
+     * gets the current userinfo
+     * @return current User using the app
+     */
     public User getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     * sets the current user when logged in
+     * @param u user currently using the app
+     */
     public void setCurrentUser(User u) {
         currentUser = u;
     }
 
+    /**
+     * @return border pane of the main screen
+     */
     public BorderPane getRootLayout() {
         return rootLayout;
     }
+
+    /**
+     * runs the program.
+     * @param args runs the program.
+     */
 
     public static void main(String[] args) {
         //Instantiate/Initialize singletons and static classes

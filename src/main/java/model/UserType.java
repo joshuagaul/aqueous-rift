@@ -1,15 +1,21 @@
 package model;
 
 /**
- * Created by Ahjin on 9/15/2016.
+ * Created by Ahjin Noh on 9/15/2016.
  */
+
+/**
+ * enum class of user types
+ **/
+
 public enum UserType {
-    GeneralUser( "User"),
+    GeneralUser("User"),
     Admin("Admin"),
     Worker("Worker"),
     Manager("Manager");
 
     private String role = "User";
+
     /**
      * Constructor for the enumeration
      *
@@ -18,9 +24,11 @@ public enum UserType {
     UserType(String role) {
         this.role = role;
     }
+
     /**
-     *
      * @return the display string representation of the user type
      */
-    public String toString() { return role; }
+    public String toString() {
+        return role;
+    }
 }

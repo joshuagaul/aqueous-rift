@@ -1,22 +1,24 @@
 package controller;
 
 /**
- * Created by ahjin on 9/19/2016.
- */
+ * Created by AhJin Noh on 9/19/2016.
+ * THIS IS AN EXTRA PAGE.
+ **/
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import main.MainFXApplication;
-
 import java.io.IOException;
 
-
+/**
+ * Controller class for finding password page.
+ */
 public class FindPasswordController {
     private MainFXApplication mainApplication;
+
     @FXML
     private Button cancel;
 
@@ -35,18 +37,19 @@ public class FindPasswordController {
     /**
      * Button handler for find password page.
      * Clicking OK button will compare user input with stored data.
-     *  If the input matches the data, user's password will be shown on screen.
-     * Clicking Cancel button will redirect to the default (login) page.
+     * If the input matches the data, user's password will be [...]
+     * //TODO password will be displayed or emailed?
+     * Clicking Cancel button will redirect to the welcome page.
      *
+     * @throws IOException throws an exception if fxml file is not found.
      * @param event the button user clicks.
      */
+
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
         if (event.getSource() == cancel) {
             mainApplication.showWelcomeScreen();
         } else if (event.getSource() == ok) {
-
-            //temporary alert
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Aqueous Rift");
             alert.setHeaderText("Find Password");
@@ -55,7 +58,11 @@ public class FindPasswordController {
         }
     }
 
-    // Give the controller access to the main app.
+    /**
+     * Gives the controller access to mainApplication.
+     *
+     * @param mainFXApplication mainFXApplication
+     */
     public void setMainApp(MainFXApplication mainFXApplication) {
         mainApplication = mainFXApplication;
     }

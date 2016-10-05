@@ -1,7 +1,7 @@
 package controller;
 
 /**
- * Created by ahjin on 9/19/2016.
+ * Created by AhJin Noh on 9/19/2016.
  */
 
 import javafx.collections.FXCollections;
@@ -13,13 +13,17 @@ import main.MainFXApplication;
 import coredata.UserDataObject;
 import model.UserType;
 import model.User;
-
-import java.io.IOException;
 import java.util.Optional;
 
+import java.io.IOException;
 
+/**
+ * Controller class for editing profile screen.
+ */
 public class EditProfileController {
+
     private MainFXApplication mainApplication;
+
     @FXML
     private Button cancel;
 
@@ -31,7 +35,6 @@ public class EditProfileController {
 
     @FXML
     private PasswordField password;
-    //TODO Tabbing out of the passwordField doesn't work
 
     @FXML
     private TextField fname;
@@ -50,44 +53,53 @@ public class EditProfileController {
 
     @FXML
     private ComboBox<UserType> usertype = new ComboBox<UserType>();
-    private final ObservableList<UserType> userType = FXCollections.observableArrayList(
+
+    private final ObservableList<UserType> userType
+            = FXCollections.observableArrayList(
             UserType.GeneralUser,
             UserType.Manager,
             UserType.Admin,
             UserType.Worker);
 
-
+    /**
+     * Initializes items (combobox)
+     */
     @FXML
     private void initialize() {
         usertype.setItems(userType);
         usertype.setValue((UserType.GeneralUser));
     }
 
-
     /**
-     * Button handler for creating an account page.
-     * Clicking OK button will store new user information and create an account.
-     * Clicking Cancel button will redirect to the default (login) page.
+     * Button handler for editing profile page.
+     * Clicking OK button will ask for confirmation,
+     * then update the information.
+     * Clicking Cancel button will close the alert.
      *
+     * @throws IOException throws an exception if fxml file is not found.
      * @param event the button user clicks.
      */
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
-        if (event.getSource()==cancel) {
+        if (event.getSource() == cancel) {
             mainApplication.showAppScreen();
-        } else if (event.getSource()==ok){
+        } else if (event.getSource() == ok) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirm Profile Update");
-            alert.setHeaderText("Are you sure you want to update above information?");
+            alert.setHeaderText("Are you sure you want to"
+                    + "update above information?");
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK){
-                //TODO I don't think they should be able to edit username (if we want that, will need to change data structure)
+            if (result.get() == ButtonType.OK) {
+                //TODO Make username not changeable
+                //TODO Do not accept null values!
                 //Create new user with the current user's userID and userType
                 UserDataObject userDAO = UserDataObject.getInstance();
                 User prevUserInfo = mainApplication.getCurrentUser();
                 String uId = prevUserInfo.getUserId();
                 String userType = prevUserInfo.getUserType();
-                User editedUser = new User(password.getText(), email.getText(), pnumber.getText(), uId, fname.getText(), lname.getText(), prefix.getText(), userType);
+                User editedUser = new User(password.getText(), email.getText(),
+                        pnumber.getText(), uId, fname.getText(),
+                        lname.getText(), prefix.getText(), userType);
                 userDAO.editSingleUser(editedUser, username.getText());
                 mainApplication.showWelcomeScreen();
             } else {
@@ -96,10 +108,13 @@ public class EditProfileController {
         }
     }
 
-    // Give the controller access to the main app.
+    /**
+     * Gives the controller access to mainApplication.
+     *
+     * @param mainFXApplication mainFXApplication
+     */
     public void setMainApp(MainFXApplication mainFXApplication) {
-        this.mainApplication = mainFXApplication;
+        mainApplication = mainFXApplication;
     }
-
 
 }
