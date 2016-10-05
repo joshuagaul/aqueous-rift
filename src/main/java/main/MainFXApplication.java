@@ -1,7 +1,12 @@
 package main;
 
-import controller.*;
-
+import controller.AppScreenController;
+import controller.EditProfileController;
+import controller.FindPasswordController;
+import controller.LoginController;
+import controller.MainScreenController;
+import controller.RegisterController;
+import controller.WelcomeScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +16,6 @@ import javafx.stage.Stage;
 import model.User;
 import coredata.ConnectionFactory;
 import coredata.UserDataObject;
-
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

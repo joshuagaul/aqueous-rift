@@ -27,8 +27,11 @@ public class Name {
         this(firstName, lastName, "");
     }
 
+    /**
+     * No Args constructor for firebase
+     */
     public Name() {
-        //for firebase?
+
     }
 
     /**

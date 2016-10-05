@@ -1,20 +1,21 @@
 package controller;
 
-/**
- * Created by AhJin Noh on 9/19/2016.
- */
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import main.MainFXApplication;
 import coredata.UserDataObject;
 import model.UserType;
 import model.User;
+import model.Name;
 import java.util.Optional;
-
 import java.io.IOException;
 
 /**
@@ -97,9 +98,10 @@ public class EditProfileController {
                 User prevUserInfo = mainApplication.getCurrentUser();
                 String uId = prevUserInfo.getUserId();
                 String userType = prevUserInfo.getUserType();
+                Name name = new Name(fname.getText(), lname.getText(),
+                    prefix.getText());
                 User editedUser = new User(password.getText(), email.getText(),
-                        pnumber.getText(), uId, fname.getText(),
-                        lname.getText(), prefix.getText(), userType);
+                    pnumber.getText(), uId, name, userType);
                 userDAO.editSingleUser(editedUser, username.getText());
                 mainApplication.showWelcomeScreen();
             } else {

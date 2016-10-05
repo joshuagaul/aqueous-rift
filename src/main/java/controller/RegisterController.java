@@ -1,17 +1,17 @@
 package controller;
 
-/**
- * Created by AhJin Noh on 9/19/2016.
- */
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ComboBox;
 import main.MainFXApplication;
 import coredata.UserDataObject;
 import model.User;
+import model.Name;
 import model.UserType;
 
 import java.io.IOException;
@@ -86,9 +86,11 @@ public class RegisterController {
             //TODO Get rid of or randomize/increment userId
             //TODO check & display error if userid or email is already in use.
             //TODO Do not accept null values!
+            Name name = new Name(fname.getText(), lname.getText(),
+                prefix.getText());
             User testUser = new User(password.getText(), email.getText(),
-                    pnumber.getText(), "4", fname.getText(), lname.getText(),
-                    prefix.getText(), usertype.getValue().toString());
+                pnumber.getText(), "4", name,
+                usertype.getValue().toString());
             UserDataObject userDAO = UserDataObject.getInstance();
             userDAO.addSingleUser(testUser, username.getText());
 

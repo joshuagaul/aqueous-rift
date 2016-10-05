@@ -1,31 +1,20 @@
 package ui;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import org.junit.Test;
-
-import org.loadui.testfx.*;
+import javafx.scene.Parent;
+import org.loadui.testfx.GuiTest;
 import org.loadui.testfx.utils.FXTestUtils;
 import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
-import org.loadui.testfx.exceptions.NoNodesFoundException;
-import org.loadui.testfx.utils.FXTestUtils;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.loadui.testfx.Assertions.verifyThat;
-import static org.loadui.testfx.GuiTest.waitUntil;
-import static org.loadui.testfx.controls.Commons.hasText;
-import static org.loadui.testfx.controls.impl.EnabledMatcher.disabled;
-import static org.loadui.testfx.controls.impl.EnabledMatcher.enabled;
-import static org.loadui.testfx.controls.impl.NodeExistsMatcher.exists;
-import static org.loadui.testfx.controls.impl.VisibleNodesMatcher.visible;
+// import static org.hamcrest.CoreMatchers.is;
+// import static org.hamcrest.CoreMatchers.not;
+// import static org.loadui.testfx.Assertions.verifyThat;
+import static org.loadui.testfx.Assertions.assertNodeExists;
+// import static org.loadui.testfx.GuiTest.waitUntil;
+// import static org.loadui.testfx.controls.Commons.hasText;
+// import static org.loadui.testfx.controls.impl.EnabledMatcher.disabled;
+// import static org.loadui.testfx.controls.impl.EnabledMatcher.enabled;
+// import static org.loadui.testfx.controls.impl.NodeExistsMatcher.exists;
+// import static org.loadui.testfx.controls.impl.VisibleNodesMatcher.visible;
 
 import main.MainFXApplication;
 
@@ -47,9 +36,6 @@ import main.MainFXApplication;
 //
 //
 
-//I think threat death is happening because the javafx application doesn't completely loader
-//before the test is run (sleeping the thread doesn't work though)
-//OR it is because the loadui has a bug/outdated, could change dependency
 public class WelcomeScreenTest {
 
     private static GuiTest controller;
@@ -70,8 +56,8 @@ public class WelcomeScreenTest {
     }
 
     @Test
-    public void login_button_navigates_correctly() {
+    public void loginButtonNavigatesCorrectly() {
         controller.click("#loginpage");
-        verifyThat("#loginpage", hasText("was clicked"));
+        assertNodeExists("#login");
     }
 }

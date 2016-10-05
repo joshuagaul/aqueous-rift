@@ -18,13 +18,11 @@ public class User {
      * @param   email - new user email
      * @param   phoneNum - new user phone number
      * @param   userId - new user ID
-     * @param   firstName - new user first name
-     * @param   lastName - new user last name
-     * @param   prefix - new user prefix (ie. Mr, Mrs, etc)
+     * @param   name - new user Name object
      * @param   userType - new user type (general user, manager, admin, worker)
      */
     public User(String password, String email, String phoneNum, String userId,
-            String firstName, String lastName, String prefix, String userType) {
+            Name name, String userType) {
         this.password = new SimpleStringProperty();
         this.password.set(password);
         this.email = new SimpleStringProperty();
@@ -33,29 +31,29 @@ public class User {
         this.phoneNum.set(phoneNum);
         this.userId = new SimpleStringProperty();
         this.userId.set(userId);
-        this.name = new Name(firstName, lastName, prefix);
+        this.name = name;
         this.userType = new SimpleStringProperty();
         this.userType.set(userType);
-
-
     }
 
     /**
      * User object constructor w/o prefix
-     * @param   password - new user password
-     * @param   email - new user email
-     * @param   phoneNum - new user phone number
-     * @param   userId - new user ID
-     * @param   firstName - new user first name
-     * @param   lastName - new user last name
+     * @param   password New user password
+     * @param   email New user email
+     * @param   phoneNum New user phone number
+     * @param   userId New user ID
+     * @param   name New user Name object
      */
     public User(String password, String email, String phoneNum, String userId,
-            String firstName, String lastName) {
-        this(password, email, phoneNum, userId, firstName, lastName, "", "");
+            Name name) {
+        this(password, email, phoneNum, userId, name, "");
     }
 
+    /**
+     * No Args constructor for FireBase
+     */
     private User() {
-        //For FireBase
+
     }
 
     /**

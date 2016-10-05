@@ -1,39 +1,16 @@
-//Schemas
-
-    //userlist
-        //username
-        //password
-        //Name
-            //firstName
-            //lastName
-            //prefix
-        //Email
-        //phoneNum
-        //userId
-
-//users
-    //size
-    //gmcallister
-        //true
-    //username2
-        //true
-    //username3
-        //true
-    //...
 package coredata;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.GenericTypeIndicator;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import model.User;
+import model.Name;
 
 public class UserDataObject {
 
@@ -67,7 +44,8 @@ public class UserDataObject {
                     + ", count is " + newSize);
                 //update users here
                 updateUsers(dataSnapshot.getKey(), newSize);
-                updateUserList(dataSnapshot.getKey(), (HashMap<String, Object>) dataSnapshot.getValue());
+                updateUserList(dataSnapshot.getKey(),
+                    (HashMap<String, Object>) dataSnapshot.getValue());
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot,
@@ -143,10 +121,20 @@ public class UserDataObject {
         return usernames.contains(userName);
     }
 
+    /**
+     * Returns the User object mapped to the specified username
+     * @param  username The username key in the mapping
+     * @return          User object
+     */
     public User getUser(String username) {
         return userMap.get(username);
     }
 
+    /**
+     * Overwrites the existing mapping associated with the userName key
+     * @param  userToAdd New user object to add to the database
+     * @param  userName Key to map the user with
+     */
     public void editSingleUser(User userToAdd, String userName) {
         addSingleUser(userToAdd, userName);
     }
@@ -165,10 +153,17 @@ public class UserDataObject {
         usernames.add(username);
     }
 
+    /**
+     * Since I was having trouble using the FireBase object inference
+     * this is a hacky way to cast the mapped userList object to a User
+     * @param  username Key to map the User object with
+     * @param  objUser Data structure that FireBase returns
+     */
     private void updateUserList(String username, Map<String, Object> objUser) {
         //Hacky solution to copy Object into User because of problems with
         //Firebase Object mapping
-        Map<String, String> nameObj = (HashMap<String, String>) objUser.get("name");
+        Map<String, String> nameObj = (HashMap<String, String>)
+            objUser.get("name");
         String firstName = (String) nameObj.get("firstName");
         String lastName = (String) nameObj.get("lastName");
         String prefix = (String) nameObj.get("prefix");
@@ -176,7 +171,8 @@ public class UserDataObject {
         String email = (String) objUser.get("email");
         String phoneNum = (String) objUser.get("phoneNum");
         String usertype = (String) objUser.get("userType");
-        User user = new User(password, email, phoneNum, "4", firstName, lastName, prefix, usertype);
+        Name name = new Name(firstName, lastName, prefix);
+        User user = new User(password, email, phoneNum, "4", name, usertype);
         userMap.put(username, user);
     }
 }
