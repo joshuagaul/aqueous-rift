@@ -61,7 +61,7 @@ public class MainFXApplication extends Application {
             controller.setMainApp(this);
 
             // Set the Main App title
-            mainScreen.setTitle("ConnectH2O");
+            mainScreen.setTitle("Aqueous Rift");
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);

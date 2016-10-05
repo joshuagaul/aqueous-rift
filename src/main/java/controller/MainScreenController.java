@@ -35,7 +35,7 @@ public class MainScreenController {
     @FXML
     private void handleAboutMenu() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("ConnectH2O");
+        alert.setTitle("Aqueous Rift");
         alert.setHeaderText("About");
         alert.setContentText("Update : This is a project for CS2340. Someone update this please");
         alert.showAndWait();
@@ -45,7 +45,7 @@ public class MainScreenController {
     @FXML
     private void handleContactMenu() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("ConnectH2O");
+        alert.setTitle("Aqueous Rift");
         alert.setHeaderText("Contact");
         alert.setContentText("someone update this: This program is made by: \n\nGraham McAllister\nAhJin Noh\nJoshua Gaul\nKwangHee Kim\nAakanksha Patel");
         alert.showAndWait();

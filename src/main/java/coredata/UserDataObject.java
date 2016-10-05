@@ -175,8 +175,8 @@ public class UserDataObject {
         String password = (String) objUser.get("password");
         String email = (String) objUser.get("email");
         String phoneNum = (String) objUser.get("phoneNum");
-        String usertype = (String) objUser.get("usertype");
-        User user = new User(password, email, phoneNum, "4", firstName, lastName, prefix,usertype);
+        String usertype = (String) objUser.get("userType");
+        User user = new User(password, email, phoneNum, "4", firstName, lastName, prefix, usertype);
         userMap.put(username, user);
     }
 }

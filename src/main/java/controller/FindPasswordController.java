@@ -48,7 +48,7 @@ public class FindPasswordController {
 
             //temporary alert
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ConnectH2O");
+            alert.setTitle("Aqueous Rift");
             alert.setHeaderText("Find Password");
             alert.setContentText("This feature has not been implemented yet.");
             alert.showAndWait();
