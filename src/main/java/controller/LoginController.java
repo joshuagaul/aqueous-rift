@@ -16,7 +16,7 @@ import model.User;
 /**
  * Controller class for login page.
  */
-public class LoginController {
+public class LoginController implements IController {
     private MainFXApplication mainApplication;
     private UserDataObject userDAO = UserDataObject.getInstance();
 

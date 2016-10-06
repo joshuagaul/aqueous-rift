@@ -17,7 +17,7 @@ import java.util.Optional;
 /**
  * Controller class for app main screen when user is logged in.
  */
-public class AppScreenController {
+public class AppScreenController implements IController {
     private MainFXApplication mainApplication;
 
     @FXML

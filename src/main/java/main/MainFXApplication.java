@@ -1,12 +1,6 @@
 package main;
 
-import controller.AppScreenController;
-import controller.EditProfileController;
-import controller.FindPasswordController;
-import controller.LoginController;
-import controller.MainScreenController;
-import controller.RegisterController;
-import controller.WelcomeScreenController;
+import controller.IController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -61,7 +55,7 @@ public class MainFXApplication extends Application {
             loader.setLocation(MainFXApplication.class.
                     getClassLoader().getResource("view/MainScreen.fxml"));
             rootLayout = loader.load();
-            MainScreenController controller = loader.getController();
+            IController controller = loader.getController();
             controller.setMainApp(this);
             // Set the Main App title
             mainScreen.setTitle("Aqueous Rift");
@@ -79,24 +73,33 @@ public class MainFXApplication extends Application {
     }
 
     /**
+     * Helper method to show screen from given fxmlfilepath
+     * @param fxmlFilePath relative path of fxml file
+     * @param screenType   Type of app screen that the fxml file represents
+     */
+    private void showScreen(String fxmlFilePath, String screenType) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainFXApplication.class.
+                    getClassLoader().getResource(fxmlFilePath));
+            AnchorPane showPage = loader.load();
+            rootLayout.setCenter(showPage);
+            IController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to find "
+                + "the fxml file for " + screenType);
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * sets the screen to login page.
      *
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showLoginScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.
-                    getClassLoader().getResource("view/LoginScreen.fxml"));
-            AnchorPane showLoginScreen = loader.load();
-            rootLayout.setCenter(showLoginScreen);
-            LoginController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to find "
-                    + "the fxml file for LoginScreen!!");
-            e.printStackTrace();
-        }
+        showScreen("view/LoginScreen.fxml", "LoginScreen");
     }
 
     /**
@@ -105,19 +108,7 @@ public class MainFXApplication extends Application {
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showRegisterScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.
-                    getClassLoader().getResource("view/RegisterScreen.fxml"));
-            AnchorPane showRegisterPage = loader.load();
-            rootLayout.setCenter(showRegisterPage);
-            RegisterController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to find "
-                    + "the fxml file for RegisterScreen!!");
-            e.printStackTrace();
-        }
+        showScreen("view/RegisterScreen.fxml", "RegisterScreen");
     }
 
     /**
@@ -126,20 +117,7 @@ public class MainFXApplication extends Application {
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showFindPasswordScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.
-                    getClassLoader().getResource(
-                            "view/FindPasswordScreen.fxml"));
-            AnchorPane showFindPasswordScreen = loader.load();
-            rootLayout.setCenter(showFindPasswordScreen);
-            FindPasswordController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to find"
-                    + "the fxml file for RegisterScreen!!");
-            e.printStackTrace();
-        }
+        showScreen("view/FindPasswordScreen.fxml", "PasswordScreen");
     }
 
     /**
@@ -148,19 +126,7 @@ public class MainFXApplication extends Application {
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showWelcomeScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.
-                    getClassLoader().getResource("view/WelcomeScreen.fxml"));
-            AnchorPane showWelcomeScreen = loader.load();
-            rootLayout.setCenter(showWelcomeScreen);
-            WelcomeScreenController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to find the"
-                    + "fxml file for WelcomeScreen!!");
-            e.printStackTrace();
-        }
+        showScreen("view/WelcomeScreen.fxml", "WelcomeScreen");
     }
 
     /**
@@ -169,19 +135,7 @@ public class MainFXApplication extends Application {
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showAppScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.
-                    getClassLoader().getResource("view/AppScreen.fxml"));
-            AnchorPane showAppScreen = loader.load();
-            rootLayout.setCenter(showAppScreen);
-            AppScreenController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to "
-                    + "find the fxml file for AppScreen!!");
-            e.printStackTrace();
-        }
+        showScreen("view/AppScreen.fxml", "AppScreen");
     }
 
     /**
@@ -190,20 +144,7 @@ public class MainFXApplication extends Application {
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showEditProfileScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainFXApplication.class.
-                    getClassLoader().getResource(
-                            "view/EditProfileScreen.fxml"));
-            AnchorPane showEditProfileScreen = loader.load();
-            rootLayout.setCenter(showEditProfileScreen);
-            EditProfileController controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to find "
-                    + "the fxml file for EditProfileScreen!!");
-            e.printStackTrace();
-        }
+        showScreen("view/EditProfileScreen.fxml", "EditProfileScreen");
     }
 
     /**

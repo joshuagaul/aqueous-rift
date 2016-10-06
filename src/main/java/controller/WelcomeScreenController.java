@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Controller for welcome screen page.
  */
-public class WelcomeScreenController {
+public class WelcomeScreenController implements IController {
 
     private MainFXApplication mainApplication;
 

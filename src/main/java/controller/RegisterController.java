@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Controller class for registration page.
  */
-public class RegisterController {
+public class RegisterController implements IController {
 
     private MainFXApplication mainApplication;
 

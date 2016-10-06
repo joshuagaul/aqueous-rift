@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * Controller class for finding password page.
  */
-public class FindPasswordController {
+public class FindPasswordController implements IController {
     private MainFXApplication mainApplication;
 
     @FXML

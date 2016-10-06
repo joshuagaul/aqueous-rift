@@ -8,7 +8,7 @@ import javafx.scene.control.Alert;
 /**
  * Controller class for main border pane. Will contain file, help, etc
  */
-public class MainScreenController {
+public class MainScreenController implements IController {
     private MainFXApplication mainApplication;
 
     /**

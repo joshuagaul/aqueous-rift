@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * Controller class for editing profile screen.
  */
-public class EditProfileController {
+public class EditProfileController implements IController {
 
     private MainFXApplication mainApplication;
 
