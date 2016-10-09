@@ -12,13 +12,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportWaterSourceController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="400.0" stylesheets="@Login.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportWaterSourceController">
    <children>
-      <GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="738.0" prefWidth="439.0" vgap="10.0">
+      <GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="738.0" prefWidth="400.0" vgap="10.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="123.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="107.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.0" minWidth="10.0" prefWidth="128.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="108.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="94.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -39,8 +39,8 @@
             <Button fx:id="submit" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="385.0" text="Submit a report" GridPane.columnSpan="3" GridPane.rowIndex="10" />
             <Label prefHeight="21.0" prefWidth="116.0" text="Location" GridPane.rowIndex="2" />
             <TextField fx:id="street" prefHeight="31.0" prefWidth="269.0" promptText="Street name" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-            <TextField fx:id="city" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="101.0" promptText="City" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-            <ComboBox fx:id="state" prefHeight="31.0" prefWidth="88.0" promptText="State" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+            <TextField fx:id="city" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="128.0" promptText="City" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <ComboBox fx:id="state" prefHeight="31.0" prefWidth="95.0" promptText="State" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -63,7 +63,7 @@
             </Text>
          </children>
          <padding>
-            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+            <Insets bottom="50.0" left="25.0" right="25.0" top="25.0" />
          </padding>
       </GridPane>
    </children>
