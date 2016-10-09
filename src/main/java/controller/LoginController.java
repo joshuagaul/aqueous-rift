@@ -1,12 +1,8 @@
 package controller;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
 import java.io.IOException;
 
 import main.MainFXApplication;
@@ -21,13 +17,13 @@ public class LoginController implements IController {
     private UserDataObject userDAO = UserDataObject.getInstance();
 
     @FXML
-    private Button createAccount;
+    private Hyperlink createAccount;
 
     @FXML
-    private Button back;
+    private Button cancel;
 
     @FXML
-    private Button findpassword;
+    private Hyperlink forgotPassword;
 
     @FXML
     private TextField username;
@@ -38,37 +34,42 @@ public class LoginController implements IController {
     @FXML
     private Button login;
 
-    @FXML
-    private Text error;
-
 
     /**
      * Button handler for login page.
-     * Clicking "Create an Account" will redirect to register page.
-     * Clicking "Forgot My Password" will redirect to find password page.
-     * Clicking "Login" will redirect to app page.
-     * Cllicking "Back" will redirect to welcome screen.
+     * Clicking "Login" should check validity of info and count login attempts.
+     * Cllicking "Cancel" will redirect to main screen.
      *
      * @throws IOException throws an exception when fxml is not found.
      * @param event the button user clicks.
      */
     @FXML
      private void handleButtonClicked(ActionEvent event) throws IOException {
-        if (event.getSource() == createAccount) {
-            mainApplication.showRegisterScreen();
-        } else if (event.getSource() == findpassword) {
-            mainApplication.showFindPasswordScreen();
-        } else if (event.getSource() == back) {
-            mainApplication.showWelcomeScreen();
+        if (event.getSource() == cancel) {
+            mainApplication.showMainScreen();
         } else if (event.getSource() == login) {
             if (checkValid()) {
-                mainApplication.showAppScreen();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Aqueous Rift");
-                alert.setHeaderText("Login Failed");
-                alert.showAndWait();
+                //TODO show main screen logged as a user.
+                mainApplication.showReportScreen();
             }
+        }
+    }
+
+
+    /**
+     * Link handler for login page.
+     * Clicking "Create an Account" will redirect to register page.
+     * Clicking "Forgot My Password" will redirect to find password page.
+     *
+     * @throws IOException throws an exception when fxml is not found.
+     * @param event the button user clicks.
+     */
+    @FXML
+    private void handleLinkClicked(ActionEvent event) throws IOException {
+        if (event.getSource() == createAccount) {
+            mainApplication.showRegisterScreen();
+        } else if (event.getSource() == forgotPassword) {
+            mainApplication.showFindPasswordScreen();
         }
     }
 
@@ -79,6 +80,8 @@ public class LoginController implements IController {
      *
      * @return boolean true if input matches.
      * TODO blocking the user
+     * TODO check null text fields
+     * TODO keep track of 3 attempts log in
      */
     @FXML
     protected boolean checkValid() {
@@ -92,7 +95,10 @@ public class LoginController implements IController {
             }
             return false;
         } else {
-            error.setText("Invalid username or password. Please try again.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Aqueous Rift");
+            alert.setHeaderText("Login Failed. # out of 3 attempts.");
+            alert.showAndWait();
             return false;
         }
     }

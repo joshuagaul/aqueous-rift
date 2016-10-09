@@ -48,7 +48,7 @@ public class FindPasswordController implements IController {
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
         if (event.getSource() == cancel) {
-            mainApplication.showWelcomeScreen();
+            mainApplication.showLoginScreen();
         } else if (event.getSource() == ok) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Aqueous Rift");

@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import main.MainFXApplication;
 import coredata.UserDataObject;
 import model.User;
@@ -15,6 +12,8 @@ import model.Name;
 import model.UserType;
 
 import java.io.IOException;
+import java.util.Optional;
+
 /**
  * Controller class for registration page.
  */
@@ -43,6 +42,7 @@ public class RegisterController implements IController {
 
     @FXML
     private TextField prefix;
+    //TODO I think this should be a dropdown menu
 
     @FXML
     private TextField email;
@@ -52,7 +52,7 @@ public class RegisterController implements IController {
     @FXML
     private ComboBox<UserType> usertype = new ComboBox<UserType>();
 
-    private final ObservableList<UserType> userType
+    private final ObservableList<UserType> userTypeList
             = FXCollections.observableArrayList(
             UserType.GeneralUser,
             UserType.Manager,
@@ -62,10 +62,9 @@ public class RegisterController implements IController {
     /**
      * Initializes item (combobox)
      */
-
     @FXML
     private void initialize() {
-        usertype.setItems(userType);
+        usertype.setItems(userTypeList);
         usertype.setValue((UserType.GeneralUser));
     }
 
@@ -81,21 +80,29 @@ public class RegisterController implements IController {
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
         if (event.getSource() == cancel) {
-            mainApplication.showWelcomeScreen();
+            mainApplication.showLoginScreen();
         } else if (event.getSource() == ok) {
-            //TODO Get rid of or randomize/increment userId
-            //TODO check & display error if userid or email is already in use.
-            //TODO Do not accept null values!
-            Name name = new Name(fname.getText(), lname.getText(),
-                prefix.getText());
-            User testUser = new User(password.getText(), email.getText(),
-                pnumber.getText(), "4", name,
-                usertype.getValue().toString());
-            UserDataObject userDAO = UserDataObject.getInstance();
-            userDAO.addSingleUser(testUser, username.getText());
-
-            //TODO Notify success / go to another page / etc
-            mainApplication.showWelcomeScreen();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm registration");
+            alert.setHeaderText("Are you sure above information is correct?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                //TODO Get rid of or randomize/increment userId
+                //TODO check & display error if userid or email
+                // is already in use.
+                //TODO Do not accept null values! (maybe i'll disable
+                // the ok button until all fields are filled)
+                Name name = new Name(fname.getText(), lname.getText(),
+                        prefix.getText());
+                User testUser = new User(password.getText(), email.getText(),
+                        pnumber.getText(), "4", name,
+                        usertype.getValue().toString());
+                UserDataObject userDAO = UserDataObject.getInstance();
+                userDAO.addSingleUser(testUser, username.getText());
+                mainApplication.showMainScreen();
+            } else {
+                alert.close();
+            }
         }
     }
 

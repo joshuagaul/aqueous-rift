@@ -4,8 +4,8 @@ import controller.IController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.User;
 import coredata.ConnectionFactory;
@@ -31,7 +31,7 @@ public class MainFXApplication extends Application {
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
         initRootLayout(mainScreen);
-        showWelcomeScreen();
+        showMainScreen();
     }
 
     /**
@@ -53,7 +53,7 @@ public class MainFXApplication extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainFXApplication.class.
-                    getClassLoader().getResource("view/MainScreen.fxml"));
+                    getClassLoader().getResource("view/MenuBar.fxml"));
             rootLayout = loader.load();
             IController controller = loader.getController();
             controller.setMainApp(this);
@@ -67,7 +67,7 @@ public class MainFXApplication extends Application {
         } catch (IOException e) {
             //error on load, so log it
             LOGGER.log(Level.SEVERE, "Failed to find "
-                    + "the fxml file for MainScreen!!");
+                    + "the fxml file for MenuBar!!");
             e.printStackTrace();
         }
     }
@@ -76,14 +76,22 @@ public class MainFXApplication extends Application {
      * Helper method to show screen from given fxmlfilepath
      * @param fxmlFilePath relative path of fxml file
      * @param screenType   Type of app screen that the fxml file represents
+     * @param location   where this screen will be displayed
      */
-    private void showScreen(String fxmlFilePath, String screenType) {
+    private void showScreen(String fxmlFilePath,
+                            String screenType, String location) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainFXApplication.class.
                     getClassLoader().getResource(fxmlFilePath));
-            AnchorPane showPage = loader.load();
-            rootLayout.setCenter(showPage);
+            Pane showPage = loader.load();
+            if (location.equals("LEFT")) {
+                rootLayout.setLeft(showPage);
+            } else if (location.equals("CENTER")) {
+                rootLayout.setCenter(showPage);
+            } else if (location.equals("RIGHT")) {
+                rootLayout.setRight(showPage);
+            }
             IController controller = loader.getController();
             controller.setMainApp(this);
         } catch (IOException e) {
@@ -99,7 +107,7 @@ public class MainFXApplication extends Application {
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showLoginScreen() {
-        showScreen("view/LoginScreen.fxml", "LoginScreen");
+        showScreen("view/Login.fxml", "LoginScreen", "RIGHT");
     }
 
     /**
@@ -108,7 +116,7 @@ public class MainFXApplication extends Application {
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showRegisterScreen() {
-        showScreen("view/RegisterScreen.fxml", "RegisterScreen");
+        showScreen("view/Register.fxml", "RegisterScreen", "RIGHT");
     }
 
     /**
@@ -117,7 +125,7 @@ public class MainFXApplication extends Application {
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showFindPasswordScreen() {
-        showScreen("view/FindPasswordScreen.fxml", "PasswordScreen");
+        showScreen("view/FindPassword.fxml", "PasswordScreen", "RIGHT");
     }
 
     /**
@@ -125,17 +133,8 @@ public class MainFXApplication extends Application {
      *
      * @throws IOException throws an exception if fxml is not found.
      */
-    public void showWelcomeScreen() {
-        showScreen("view/WelcomeScreen.fxml", "WelcomeScreen");
-    }
-
-    /**
-     * sets the screen to main app page.
-     *
-     * @throws IOException throws an exception if fxml is not found.
-     */
-    public void showAppScreen() {
-        showScreen("view/AppScreen.fxml", "AppScreen");
+    public void showMainScreen() {
+        showScreen("view/MainScreen.fxml", "MainScreen", "RIGHT");
     }
 
     /**
@@ -144,7 +143,18 @@ public class MainFXApplication extends Application {
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showEditProfileScreen() {
-        showScreen("view/EditProfileScreen.fxml", "EditProfileScreen");
+        showScreen("view/EditProfile.fxml", "EditProfileScreen", "RIGHT");
+    }
+
+
+    /**
+     * sets the screen to reporting water source page.
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
+    public void showReportScreen() {
+        showScreen("view/ReportWaterSource.fxml",
+                "ReportWaterSourceScreen", "RIGHT");
     }
 
     /**

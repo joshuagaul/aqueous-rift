@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.text.Text;
 import main.MainFXApplication;
 import coredata.UserDataObject;
 import model.UserType;
@@ -32,7 +33,7 @@ public class EditProfileController implements IController {
     private Button ok;
 
     @FXML
-    private TextField username;
+    private Text username;
 
     @FXML
     private PasswordField password;
@@ -83,7 +84,7 @@ public class EditProfileController implements IController {
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
         if (event.getSource() == cancel) {
-            mainApplication.showAppScreen();
+            mainApplication.showMainScreen();
         } else if (event.getSource() == ok) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirm Profile Update");
@@ -103,7 +104,7 @@ public class EditProfileController implements IController {
                 User editedUser = new User(password.getText(), email.getText(),
                     pnumber.getText(), uId, name, userType);
                 userDAO.editSingleUser(editedUser, username.getText());
-                mainApplication.showWelcomeScreen();
+                mainApplication.showMainScreen();
             } else {
                 alert.close();
             }
