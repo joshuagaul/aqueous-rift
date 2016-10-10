@@ -82,46 +82,47 @@ public class RegisterController implements IController {
         if (event.getSource() == cancel) {
             mainApplication.showLoginScreen();
         } else if (event.getSource() == ok) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirm registration");
-            alert.setHeaderText("Are you sure above information is correct?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                //TODO Get rid of or randomize/increment userId
-                //TODO check & display error if userid or email
-                // is already in use.
-                //TODO Do not accept null values! (maybe i'll disable
-                // the ok button until all fields are filled)
-                //code to validate data
-                String alertMessage = "";
-                if (username.getText().length() == 0) {
-                    alertMessage = alertMessage
-                            + "The username field was left blank.\n";
-                }
-                if (password.getText().length() == 0) {
-                    alertMessage = alertMessage
-                            + "The password field was left blank.\n";
-                }
-                if (fname.getText().length() == 0) {
-                    alertMessage = alertMessage
-                            + "The first name field was left blank.\n";
-                }
-                if (lname.getText().length() == 0) {
-                    alertMessage = alertMessage
-                            + "The last name field was left blank.\n";
-                }
-                if (email.getText().length() == 0) {
-                    alertMessage = alertMessage
-                            + "The email field was left blank.\n";
-                }
-                if (alertMessage.length() != 0) {
-                    Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
-                    emptyAlert.setTitle("Empty fields");
-                    emptyAlert.setContentText(alertMessage);
-                    emptyAlert.setHeaderText("Please fill out all the required fields.");
-                    emptyAlert.showAndWait();
+            //code to validate data
+            String alertMessage = "";
+            if (username.getText().length() == 0) {
+                alertMessage = alertMessage
+                        + "The username field was left blank.\n";
+            }
+            if (password.getText().length() == 0) {
+                alertMessage = alertMessage
+                        + "The password field was left blank.\n";
+            }
+            if (fname.getText().length() == 0) {
+                alertMessage = alertMessage
+                        + "The first name field was left blank.\n";
+            }
+            if (lname.getText().length() == 0) {
+                alertMessage = alertMessage
+                        + "The last name field was left blank.\n";
+            }
+            if (email.getText().length() == 0) {
+                alertMessage = alertMessage
+                        + "The email field was left blank.\n";
+            }
+            if (alertMessage.length() != 0) {
+                Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
+                emptyAlert.setTitle("Empty fields");
+                emptyAlert.setContentText(alertMessage);
+                emptyAlert.setHeaderText("Please fill out all the required fields.");
+                emptyAlert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirm registration");
+                alert.setHeaderText("Are you sure above information is correct?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    //TODO Get rid of or randomize/increment userId
+                    //TODO check & display error if userid or email
+                    // is already in use.
+                    //TODO Do not accept null values! (maybe i'll disable
+                    // the ok button until all fields are filled)
 
-                } else {
+
                     //code after all data is validated
                     Name name = new Name(fname.getText(), lname.getText(),
                             prefix.getText());
