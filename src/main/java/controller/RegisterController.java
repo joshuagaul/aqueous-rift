@@ -132,9 +132,9 @@ public class RegisterController implements IController {
                     UserDataObject userDAO = UserDataObject.getInstance();
                     userDAO.addSingleUser(testUser, username.getText());
                     mainApplication.showMainScreen();
+                } else {
+                    alert.close();
                 }
-            } else {
-                alert.close();
             }
         }
     }
