@@ -92,14 +92,46 @@ public class RegisterController implements IController {
                 // is already in use.
                 //TODO Do not accept null values! (maybe i'll disable
                 // the ok button until all fields are filled)
-                Name name = new Name(fname.getText(), lname.getText(),
-                        prefix.getText());
-                User testUser = new User(password.getText(), email.getText(),
-                        pnumber.getText(), "4", name,
-                        usertype.getValue().toString());
-                UserDataObject userDAO = UserDataObject.getInstance();
-                userDAO.addSingleUser(testUser, username.getText());
-                mainApplication.showMainScreen();
+                //code to validate data
+                String alertMessage = "";
+                if (username.getText().length() == 0) {
+                    alertMessage = alertMessage
+                            + "The username field was left blank.\n";
+                }
+                if (password.getText().length() == 0) {
+                    alertMessage = alertMessage
+                            + "The password field was left blank.\n";
+                }
+                if (fname.getText().length() == 0) {
+                    alertMessage = alertMessage
+                            + "The first name field was left blank.\n";
+                }
+                if (lname.getText().length() == 0) {
+                    alertMessage = alertMessage
+                            + "The last name field was left blank.\n";
+                }
+                if (email.getText().length() == 0) {
+                    alertMessage = alertMessage
+                            + "The email field was left blank.\n";
+                }
+                if (alertMessage.length() != 0) {
+                    Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
+                    emptyAlert.setTitle("Empty fields");
+                    emptyAlert.setContentText(alertMessage);
+                    emptyAlert.setHeaderText("Please fill out all the required fields.");
+                    emptyAlert.showAndWait();
+
+                } else {
+                    //code after all data is validated
+                    Name name = new Name(fname.getText(), lname.getText(),
+                            prefix.getText());
+                    User testUser = new User(password.getText(), email.getText(),
+                            pnumber.getText(), "4", name,
+                            usertype.getValue().toString());
+                    UserDataObject userDAO = UserDataObject.getInstance();
+                    userDAO.addSingleUser(testUser, username.getText());
+                    mainApplication.showMainScreen();
+                }
             } else {
                 alert.close();
             }
