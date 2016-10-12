@@ -89,7 +89,7 @@ public class EditProfileController implements IController {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirm Profile Update");
             alert.setHeaderText("Are you sure you want to"
-                    + "update above information?");
+                    + " update above information?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 //TODO Make username not changeable

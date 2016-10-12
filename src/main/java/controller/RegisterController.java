@@ -1,7 +1,5 @@
 package controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -10,8 +8,6 @@ import coredata.UserDataObject;
 import model.User;
 import model.Name;
 import model.UserType;
-
-import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -77,35 +73,32 @@ public class RegisterController implements IController {
             //code to validate data
             String alertMessage = "";
             if (username.getText().length() == 0) {
-                alertMessage = alertMessage
-                        + "The username field was left blank.\n";
+                alertMessage = alertMessage + "Username\n";
             }
             if (password.getText().length() == 0) {
-                alertMessage = alertMessage
-                        + "The password field was left blank.\n";
+                alertMessage = alertMessage + "Password\n";
             }
             if (fname.getText().length() == 0) {
-                alertMessage = alertMessage
-                        + "The first name field was left blank.\n";
+                alertMessage = alertMessage + "First name\n";
             }
             if (lname.getText().length() == 0) {
-                alertMessage = alertMessage
-                        + "The last name field was left blank.\n";
+                alertMessage = alertMessage + "Last name\n";
             }
             if (email.getText().length() == 0) {
-                alertMessage = alertMessage
-                        + "The email field was left blank.\n";
+                alertMessage = alertMessage + "Email\n";
             }
             if (alertMessage.length() != 0) {
                 Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
                 emptyAlert.setTitle("Empty fields");
                 emptyAlert.setContentText(alertMessage);
-                emptyAlert.setHeaderText("Please fill out all the required fields.");
+                emptyAlert.setHeaderText("Please fill out all "
+                        + "the required fields.");
                 emptyAlert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm registration");
-                alert.setHeaderText("Are you sure above information is correct?");
+                alert.setHeaderText("Are you sure above"
+                        + "information is correct?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     //TODO Get rid of or randomize/increment userId
@@ -118,7 +111,8 @@ public class RegisterController implements IController {
                     //code after all data is validated
                     Name name = new Name(fname.getText(), lname.getText(),
                             prefix.getText());
-                    User testUser = new User(password.getText(), email.getText(),
+                    User testUser = new User(password.getText(),
+                            email.getText(),
                             pnumber.getText(), "4", name,
                             usertype.getValue().toString());
                     UserDataObject userDAO = UserDataObject.getInstance();
