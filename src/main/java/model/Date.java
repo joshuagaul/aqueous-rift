@@ -25,7 +25,7 @@ public class Date {
                                             , "Friday"
                                             , "Saturday" };
     public Date() {
-        Calendar now = new Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
         year = now.get(Calendar.YEAR);
         month = now.get(Calendar.MONTH) + 1;
         date = now.get(Calendar.DATE);
@@ -54,7 +54,7 @@ public class Date {
     public int getDate() {
         return date;
     }
-    public int getDay() {
+    public String getDay() {
         return day;
     }
     public String toString() {
