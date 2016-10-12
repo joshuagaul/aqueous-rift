@@ -45,7 +45,7 @@ public class EditProfileController implements IController {
     private TextField lname;
 
     @FXML
-    private TextField prefix;
+    private ComboBox prefix;
 
     @FXML
     private TextField email;
@@ -70,6 +70,8 @@ public class EditProfileController implements IController {
     private void initialize() {
         usertype.setItems(userType);
         usertype.setValue((UserType.GeneralUser));
+        prefix.getItems().setAll("Mr", "Ms", "Mrs");
+        //prefix.setValue(current user's prefix)
     }
 
     /**
@@ -100,7 +102,7 @@ public class EditProfileController implements IController {
                 String uId = prevUserInfo.getUserId();
                 String userType = prevUserInfo.getUserType();
                 Name name = new Name(fname.getText(), lname.getText(),
-                    prefix.getText());
+                    prefix.getValue().toString());
                 User editedUser = new User(password.getText(), email.getText(),
                     pnumber.getText(), uId, name, userType);
                 userDAO.editSingleUser(editedUser, username.getText());

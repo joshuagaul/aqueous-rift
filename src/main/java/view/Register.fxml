@@ -60,7 +60,7 @@
                 <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 <ComboBox fx:id="usertype" prefHeight="31.0" prefWidth="215.0" promptText="User" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                 <Label text="Prefix" GridPane.rowIndex="2" />
-            <ComboBox fx:id="prefix" prefHeight="31.0" prefWidth="235.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="prefix" prefHeight="31.0" prefWidth="106.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
         </GridPane>
     </children>
