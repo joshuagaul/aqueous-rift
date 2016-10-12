@@ -4,6 +4,8 @@ package controller;
  * Created by ahjin on 10/7/2016.
  */
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import main.MainFXApplication;
@@ -13,6 +15,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import model.State;
+import model.UserType;
+import model.WaterCondition;
+import model.WaterType;
+
+import javax.swing.*;
 import java.util.Optional;
 
 /**
@@ -33,13 +41,13 @@ public class ReportWaterSourceController implements IController {
     private TextField zipCode;
 
     @FXML
-    private ComboBox state;
+    private ComboBox<State> state = new ComboBox();
 
     @FXML
-    private ComboBox waterType;
+    private ComboBox<WaterType> waterType = new ComboBox<>();
 
     @FXML
-    private ComboBox waterCondition;
+    private ComboBox<WaterCondition> waterCondition = new ComboBox<>();
 
     @FXML
     private TextField virus;
@@ -60,6 +68,12 @@ public class ReportWaterSourceController implements IController {
      */
     @FXML
     private void initialize() {
+        waterType.getItems().setAll(WaterType.values());
+        waterCondition.getItems().setAll(WaterCondition.values());
+        state.getItems().setAll(State.values());
+        //waterType.getItems().setAll(FXCollections.observableArrayList(WaterType.values()));
+        //waterCondition.getItems().setAll(FXCollections.observableArrayList(WaterCondition.values()));
+        //state.getItems().setAll(FXCollections.observableArrayList(State.values()));
     }
 
     /**

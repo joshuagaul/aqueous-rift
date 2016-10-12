@@ -52,19 +52,12 @@ public class RegisterController implements IController {
     @FXML
     private ComboBox<UserType> usertype = new ComboBox<UserType>();
 
-    private final ObservableList<UserType> userTypeList
-            = FXCollections.observableArrayList(
-            UserType.GeneralUser,
-            UserType.Manager,
-            UserType.Admin,
-            UserType.Worker);
-
     /**
      * Initializes item (combobox)
      */
     @FXML
     private void initialize() {
-        usertype.setItems(userTypeList);
+        usertype.getItems().setAll(UserType.values());
         usertype.setValue((UserType.GeneralUser));
     }
 
@@ -74,11 +67,10 @@ public class RegisterController implements IController {
      * Clicking OK button will store new user information and create an account.
      * Clicking Cancel button will redirect to the welcome page.
      *
-     * @throws IOException throws an exception if fxml not found.
      * @param event the button user clicks.
      */
     @FXML
-    private void handleButtonClicked(ActionEvent event) throws IOException {
+    private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == cancel) {
             mainApplication.showLoginScreen();
         } else if (event.getSource() == ok) {
