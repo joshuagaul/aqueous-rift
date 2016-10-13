@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="400.0" stylesheets="@Login.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<StackPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="400.0" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <GridPane hgap="10.0" prefHeight="742.0" prefWidth="405.0" vgap="10.0">
         <columnConstraints>
@@ -38,19 +38,19 @@
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
          </padding>
          <children>
-            <Button fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="372.0" text="Cancel" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-            <Button fx:id="login" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="383.0" text="Login" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+            <Button id="button-secondary" fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="372.0" text="Cancel" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+            <Button id="button-primary" fx:id="login" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="383.0" text="Login" GridPane.columnSpan="2" GridPane.rowIndex="6" />
             <Label text="Username" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="57.978515625" GridPane.rowIndex="1">
+            <Text id="heading" strokeType="OUTSIDE" strokeWidth="0.0" text="LOGIN" wrappingWidth="134.978515625" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Text>
             <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label alignment="BOTTOM_LEFT" text="Password" GridPane.rowIndex="4" />
-            <Hyperlink fx:id="forgotPassword" alignment="BOTTOM_CENTER" onAction="#handleLinkClicked" prefHeight="44.0" prefWidth="426.0" text="Forgot Password?" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+            <Hyperlink fx:id="forgotPassword" alignment="BOTTOM_CENTER" onAction="#handleLinkClicked" prefHeight="50.0" prefWidth="350.0" text="Forgot Password?" GridPane.columnSpan="2" GridPane.rowIndex="8" />
             <PasswordField fx:id="password" alignment="BOTTOM_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Hyperlink fx:id="createAccount" alignment="TOP_CENTER" onAction="#handleLinkClicked" prefHeight="43.0" prefWidth="356.0" text="Create an Account" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+            <Hyperlink fx:id="createAccount" alignment="TOP_CENTER" onAction="#handleLinkClicked" prefHeight="73.0" prefWidth="350.0" text="Create an Account" GridPane.columnSpan="2" GridPane.rowIndex="9" />
          </children>
       </GridPane>
    </children>

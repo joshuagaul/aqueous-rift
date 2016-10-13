@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="400.0" stylesheets="@Login.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="400.0" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
     <children>
         <GridPane hgap="10.0" prefHeight="742.0" prefWidth="405.0" vgap="10.0">
             <columnConstraints>
@@ -38,29 +38,29 @@
                 <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
             </padding>
             <children>
-                <Button fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="372.0" text="Cancel" GridPane.columnSpan="2" GridPane.rowIndex="11" />
-                <Button fx:id="ok" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="383.0" text="OK" GridPane.columnSpan="2" GridPane.rowIndex="10" />
-                <Label text="Username" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                <Label text="First Name" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                <Label text="Last Name" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                <Label text="Password" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-                <Label text="Phone" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                <Label text="Email" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-                <Label text="Role" GridPane.columnSpan="2" GridPane.rowIndex="8" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Register" wrappingWidth="57.978515625">
+                <Button id="button-secondary" fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="372.0" text="Cancel" GridPane.columnSpan="2" GridPane.rowIndex="11" />
+                <Button id="button-primary" fx:id="ok" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="383.0" text="OK" GridPane.columnSpan="2" GridPane.rowIndex="10" />
+                <Label text="Username" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <Label text="First Name" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                <Label text="Last Name" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                <Label text="Password" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                <Label text="Phone" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                <Label text="Email" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                <Label text="Role" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                <Text id="heading" strokeType="OUTSIDE" strokeWidth="0.0" text="Register" wrappingWidth="351.978515625">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Text>
-                <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextField fx:id="fname" prefHeight="31.0" prefWidth="84.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <TextField fx:id="lname" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <TextField fx:id="pnumber" prefHeight="31.0" prefWidth="190.0" promptText="ex) johndoe@mail.com" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                <TextField fx:id="email" prefHeight="31.0" prefWidth="127.0" promptText="ex) 000-000-0000" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                <ComboBox fx:id="usertype" prefHeight="31.0" prefWidth="215.0" promptText="User" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                <Label text="Prefix" GridPane.rowIndex="2" />
-            <ComboBox fx:id="prefix" prefHeight="31.0" prefWidth="106.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="username" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <TextField fx:id="fname" prefHeight="31.0" prefWidth="84.0" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                <TextField fx:id="lname" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                <TextField fx:id="pnumber" prefHeight="31.0" prefWidth="190.0" promptText="ex) johndoe@mail.com" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                <TextField fx:id="email" prefHeight="31.0" prefWidth="127.0" promptText="ex) 000-000-0000" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                <PasswordField fx:id="password" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                <ComboBox fx:id="usertype" prefHeight="31.0" prefWidth="215.0" promptText="User" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                <Label text="Prefix" translateY="20.0" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <ComboBox fx:id="prefix" prefHeight="31.0" prefWidth="106.0" promptText="Select" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             </children>
         </GridPane>
     </children>

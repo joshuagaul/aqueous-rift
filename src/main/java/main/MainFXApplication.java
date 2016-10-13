@@ -1,12 +1,14 @@
 package main;
 
 import controller.IController;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.User;
 import coredata.ConnectionFactory;
 import coredata.UserDataObject;
@@ -85,6 +87,7 @@ public class MainFXApplication extends Application {
             loader.setLocation(MainFXApplication.class.
                     getClassLoader().getResource(fxmlFilePath));
             Pane showPage = loader.load();
+            animate(showPage);
             if (location.equals("LEFT")) {
                 rootLayout.setLeft(showPage);
             } else if (location.equals("CENTER")) {
@@ -179,6 +182,20 @@ public class MainFXApplication extends Application {
     public BorderPane getRootLayout() {
         return rootLayout;
     }
+
+    /**
+     * Slide in the workbench as screen is switched.
+     * @param pane pane to be animated
+     */
+    private void animate(Pane pane) {
+        TranslateTransition transition
+                = new TranslateTransition(Duration.seconds(0.3), pane);
+        transition.setFromX(400);
+        transition.setToX(0);
+        transition.play();
+    }
+
+
 
     /**
      * runs the program.
