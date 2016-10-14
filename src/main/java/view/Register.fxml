@@ -38,8 +38,6 @@
                 <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
             </padding>
             <children>
-                <Button id="button-secondary" fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="372.0" text="Cancel" GridPane.columnSpan="2" GridPane.rowIndex="11" />
-                <Button id="button-primary" fx:id="ok" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="383.0" text="OK" GridPane.columnSpan="2" GridPane.rowIndex="10" />
                 <Label text="Username" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                 <Label text="First Name" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                 <Label text="Last Name" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
@@ -53,14 +51,16 @@
                     </font>
                 </Text>
                 <TextField fx:id="username" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <ComboBox fx:id="prefix" prefHeight="31.0" prefWidth="106.0" promptText="Select" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                 <TextField fx:id="fname" prefHeight="31.0" prefWidth="84.0" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                 <TextField fx:id="lname" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                <PasswordField fx:id="password" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                 <TextField fx:id="pnumber" prefHeight="31.0" prefWidth="190.0" promptText="ex) johndoe@mail.com" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                 <TextField fx:id="email" prefHeight="31.0" prefWidth="127.0" promptText="ex) 000-000-0000" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-                <PasswordField fx:id="password" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                 <ComboBox fx:id="usertype" prefHeight="31.0" prefWidth="215.0" promptText="User" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                <Button id="button-primary" fx:id="ok" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="383.0" text="OK" GridPane.columnSpan="2" GridPane.rowIndex="10" />
+                <Button id="button-secondary" fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="372.0" text="Cancel" GridPane.columnSpan="2" GridPane.rowIndex="11" />
                 <Label text="Prefix" translateY="20.0" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <ComboBox fx:id="prefix" prefHeight="31.0" prefWidth="106.0" promptText="Select" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             </children>
         </GridPane>
     </children>
