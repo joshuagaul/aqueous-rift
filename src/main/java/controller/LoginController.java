@@ -1,10 +1,13 @@
 package controller;
 
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.PasswordField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import java.io.IOException;
-
 import main.MainFXApplication;
 import coredata.UserDataObject;
 import model.User;

@@ -8,11 +8,11 @@ public class WaterSourceReport {
     private static int number = 0;
     private Date date;
     private String userId;
-    private ObjectProperty<Location> _location = new SimpleObjectProperty<>();
-    private ObjectProperty<WaterType> _type = new SimpleObjectProperty<>();
-    private ObjectProperty<WaterCondition> _condition =
+    private ObjectProperty<Location> location = new SimpleObjectProperty<>();
+    private ObjectProperty<WaterType> type = new SimpleObjectProperty<>();
+    private ObjectProperty<WaterCondition> condition =
         new SimpleObjectProperty<>();
-    
+
     /**
      * Get the total number of the reports.
      *
@@ -39,32 +39,32 @@ public class WaterSourceReport {
     public String getUserId() {
         return userId;
     }
-    
+
     /**
      * Get the location of the water source.
      *
      * @return the location of the water source
      */
     public Location getLocation() {
-        return _location.get();
+        return location.get();
     }
-    
+
     /**
      * Set the location of the water source.
      *
      * @param location the location of the water source
      */
     public void setLocation(Location location) {
-        _location.set(location);
+        this.location.set(location);
     }
-    
+
     /**
      * Get the object property of the location of the water source.
      *
      * @return the object property of the location of the water source
      */
     public ObjectProperty getLocationProperty() {
-        return _location;
+        return location;
     }
 
     /**
@@ -73,56 +73,56 @@ public class WaterSourceReport {
      * @return the type of the water source
      */
     public WaterType getType() {
-        return _type.get();
+        return type.get();
     }
-    
+
     /**
      * Set the type of the water source.
      *
      * @param type the type of the water source
      */
     public void setType(WaterType type) {
-        _type.set(type);
+        this.type.set(type);
     }
-    
+
     /**
      * Get the object property of the water type source.
      *
      * @return the object property of the location of the water source
      */
     public ObjectProperty getTypeProperty() {
-        return _type;
+        return type;
     }
-    
+
     /**
      * Get the condition of the water source.
      *
      * @return the condition of the water source
      */
     public WaterCondition getCondition() {
-        return _condition.get();
+        return condition.get();
     }
-    
+
     /**
      * Set the condition of the water source.
      *
      * @param condition the condition of the water source
      */
     public void setCondition(WaterCondition condition) {
-        _condition.set(condition);
+        this.condition.set(condition);
     }
-    
+
     /**
      * Get the object property of the water condition source.
      *
      * @return the object property of the condition of the water source
      */
     public ObjectProperty getConditionProperty() {
-        return _condition;
+        return condition;
     }
     /**
      * Make a new water source report.
-     * 
+     *
      * @param user the user information who login the app
      * @param location the location information
      * @param type the type of the water
@@ -135,8 +135,8 @@ public class WaterSourceReport {
         number++;
         date = new Date();
         userId = user.getUserId();
-        _location.set(location);
-        _type.set(type);
-        _condition.set(condition);
+        this.location.set(location);
+        this.type.set(type);
+        this.condition.set(condition);
     }
 }
