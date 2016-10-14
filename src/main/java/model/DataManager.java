@@ -1,4 +1,4 @@
-package coredata;
+package model;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -10,7 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class ConnectionFactory {
+public class DataManager {
 
     private static final String DATABASE_URL = "https://aqueous-rift"
         + ".firebaseio.com/";
@@ -49,7 +49,7 @@ public class ConnectionFactory {
     }
 
     /**
-    * Sets the path to data map
+    * Sets the path to database
     * @param key The key to search in DB
     */
     public void setReference(String key) {

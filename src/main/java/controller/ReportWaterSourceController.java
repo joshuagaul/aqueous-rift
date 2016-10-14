@@ -13,9 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import model.State;
-import model.WaterCondition;
-import model.WaterType;
+import classes.State;
+import classes.WaterCondition;
+import classes.WaterType;
 import java.util.Optional;
 
 /**

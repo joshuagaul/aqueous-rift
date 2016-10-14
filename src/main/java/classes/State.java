@@ -1,4 +1,4 @@
-package model;
+package classes;
 
 public enum State {
     ALABAMA("Alabama", "AL"),

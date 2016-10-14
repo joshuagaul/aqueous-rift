@@ -9,8 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import java.io.IOException;
 import main.MainFXApplication;
-import coredata.UserDataObject;
-import model.User;
+import model.UserDataObject;
+import classes.User;
 
 /**
  * Controller class for login page.
@@ -77,7 +77,7 @@ public class LoginController implements IController {
     }
 
     /**
-     * Checks if provided input matches stored data.
+     * Checks if provided input matches stored model.
      * Will display an error message if input doesn't match.
      * This will check the info up to 3 times before user gets blocked.
      *

@@ -1,4 +1,4 @@
-package coredata;
+package model;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-import model.User;
-import model.Name;
+import classes.User;
+import classes.Name;
 
 public class UserDataObject {
 
@@ -90,7 +90,7 @@ public class UserDataObject {
      * @return UserList database reference
      */
     private DatabaseReference getUserList() {
-        return ConnectionFactory.getReference("/userList");
+        return DataManager.getReference("/userList");
     }
 
     /**
@@ -98,7 +98,7 @@ public class UserDataObject {
      * @return Users database reference
      */
     private DatabaseReference getUsers() {
-        return ConnectionFactory.getReference("/users");
+        return DataManager.getReference("/users");
     }
 
     /**

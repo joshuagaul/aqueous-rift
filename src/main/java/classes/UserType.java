@@ -1,4 +1,4 @@
-package model;
+package classes;
 
 /**
  * Created by Ahjin Noh on 9/15/2016.
