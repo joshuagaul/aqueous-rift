@@ -9,9 +9,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.User;
-import coredata.ConnectionFactory;
-import coredata.UserDataObject;
+import classes.User;
+import model.DataManager;
+import model.UserDataObject;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -204,7 +204,7 @@ public class MainFXApplication extends Application {
 
     public static void main(String[] args) {
         //Instantiate/Initialize singletons and static classes
-        ConnectionFactory.initializeFireBase();
+        DataManager.initializeFireBase();
         UserDataObject userDAO = UserDataObject.getInstance();
         launch(args);
     }

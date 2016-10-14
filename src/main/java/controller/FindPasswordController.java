@@ -36,8 +36,8 @@ public class FindPasswordController implements IController {
 
     /**
      * Button handler for find password page.
-     * Clicking OK button will compare user input with stored data.
-     * If the input matches the data, user's password will be [...]
+     * Clicking OK button will compare user input with stored model.
+     * If the input matches the model, user's password will be [...]
      * //TODO password will be displayed or emailed?
      * Clicking Cancel button will redirect to the welcome page.
      *

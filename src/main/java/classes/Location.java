@@ -1,4 +1,4 @@
-package model;
+package classes;
 
 public class Location {
     private String street;

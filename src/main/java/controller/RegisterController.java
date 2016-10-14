@@ -9,10 +9,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Button;
 import main.MainFXApplication;
-import coredata.UserDataObject;
-import model.User;
-import model.Name;
-import model.UserType;
+import model.UserDataObject;
+import classes.User;
+import classes.Name;
+import classes.UserType;
 import java.util.Optional;
 
 /**
@@ -42,7 +42,7 @@ public class RegisterController implements IController {
     private TextField lname;
 
     @FXML
-    private ComboBox prefix;
+    private ComboBox<String> prefix;
     //TODO I think this should be a dropdown menu
 
     @FXML
@@ -76,23 +76,7 @@ public class RegisterController implements IController {
         if (event.getSource() == cancel) {
             mainApplication.showLoginScreen();
         } else if (event.getSource() == ok) {
-            //code to validate data
-            String alertMessage = "";
-            if (username.getText().length() == 0) {
-                alertMessage = alertMessage + "Username\n";
-            }
-            if (password.getText().length() == 0) {
-                alertMessage = alertMessage + "Password\n";
-            }
-            if (fname.getText().length() == 0) {
-                alertMessage = alertMessage + "First name\n";
-            }
-            if (lname.getText().length() == 0) {
-                alertMessage = alertMessage + "Last name\n";
-            }
-            if (email.getText().length() == 0) {
-                alertMessage = alertMessage + "Email\n";
-            }
+            String alertMessage = validateUserRegistration();
             if (alertMessage.length() != 0) {
                 Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
                 emptyAlert.setTitle("Empty fields");
@@ -114,9 +98,13 @@ public class RegisterController implements IController {
                     // the ok button until all fields are filled)
 
 
-                    //code after all data is validated
+                    //Prefix is Optional
+                    String pre = prefix.getValue();
+                    if (pre == null) {
+                        pre = "";
+                    }
                     Name name = new Name(fname.getText(), lname.getText(),
-                            prefix.getValue().toString());
+                            pre);
                     User testUser = new User(password.getText(),
                             email.getText(),
                             pnumber.getText(), "4", name,
@@ -129,6 +117,33 @@ public class RegisterController implements IController {
                 }
             }
         }
+    }
+
+    /**
+     * Validates the user Registration inputs.  Simple as of now, just checks
+     * that required fields aren't empty.
+     * TODO - REGEX matching
+     * @return An alert message describing the input errors, empty String
+     * if input is valid.
+     */
+    private String validateUserRegistration() {
+        StringBuilder alertMessage = new StringBuilder();
+        if (username.getText().length() == 0) {
+            alertMessage.append("Username\n");
+        }
+        if (password.getText().length() == 0) {
+            alertMessage.append("Password\n");
+        }
+        if (fname.getText().length() == 0) {
+            alertMessage.append("First name\n");
+        }
+        if (lname.getText().length() == 0) {
+            alertMessage.append("Last name\n");
+        }
+        if (email.getText().length() == 0) {
+            alertMessage.append("Email\n");
+        }
+        return alertMessage.toString();
     }
 
     /**

@@ -12,10 +12,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 import main.MainFXApplication;
-import coredata.UserDataObject;
-import model.UserType;
-import model.User;
-import model.Name;
+import model.UserDataObject;
+import classes.UserType;
+import classes.User;
+import classes.Name;
 import java.util.Optional;
 import java.io.IOException;
 
