@@ -35,8 +35,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button id="button-secondary" fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="386.0" text="Cancel" GridPane.columnSpan="3" GridPane.rowIndex="11" />
-            <Button id="button-primary" fx:id="submit" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="385.0" text="OK" GridPane.columnSpan="3" GridPane.rowIndex="10" />
+            <Text id="heading" strokeType="OUTSIDE" strokeWidth="0.0" text="SUBMIT A REPORT" wrappingWidth="350.19140625" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
             <Label prefHeight="21.0" prefWidth="116.0" text="Location" GridPane.rowIndex="2" />
             <TextField fx:id="street" prefHeight="31.0" prefWidth="269.0" promptText="Street name" GridPane.columnSpan="3" GridPane.rowIndex="3" />
             <TextField fx:id="city" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="128.0" promptText="City" GridPane.columnSpan="2" GridPane.rowIndex="4" />
@@ -46,21 +49,18 @@
                </GridPane.margin>
             </ComboBox>
             <TextField fx:id="zipCode" promptText="Zip Code" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Label text="Water Type" GridPane.rowIndex="5" />
             <ComboBox fx:id="waterType" prefWidth="150.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <ComboBox fx:id="waterCondition" prefWidth="150.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="virus" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="contamination" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Button id="button-primary" fx:id="submit" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="385.0" text="OK" GridPane.columnSpan="3" GridPane.rowIndex="10" />
+            <Button id="button-secondary" fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="386.0" text="Cancel" GridPane.columnSpan="3" GridPane.rowIndex="11" />
+            <Label text="Water Type" GridPane.rowIndex="5" />
             <Label text="Condition" GridPane.rowIndex="6" />
             <Label text="Virus" GridPane.rowIndex="7" />
             <Label text="Contamination" wrapText="true" GridPane.rowIndex="8" />
-            <TextField fx:id="virus" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <TextField fx:id="contamination" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-            <Text id="heading" strokeType="OUTSIDE" strokeWidth="0.0" text="SUBMIT A REPORT" wrappingWidth="350.19140625" GridPane.rowSpan="2" GridPane.valignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Text>
          </children>
          <padding>
             <Insets bottom="50.0" left="25.0" right="25.0" top="25.0" />
