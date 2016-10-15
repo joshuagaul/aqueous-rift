@@ -52,8 +52,8 @@ public class LoginController implements IController {
             mainApplication.showMainScreen();
         } else if (event.getSource() == login) {
             if (checkValid()) {
-                //TODO show main screen logged as a user.
                 mainApplication.showReportScreen();
+                mainApplication.updateMenuBar();
             }
         }
     }

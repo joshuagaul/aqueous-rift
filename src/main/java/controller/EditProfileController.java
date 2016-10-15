@@ -36,7 +36,7 @@ public class EditProfileController implements IController {
     private Text username;
 
     @FXML
-    private PasswordField password;
+    private PasswordField newPassword;
 
     @FXML
     private TextField fname;
@@ -64,14 +64,10 @@ public class EditProfileController implements IController {
             UserType.Worker);
 
     /**
-     * Initializes items (combobox)
+     * Initializes choices in comboboxes
      */
     @FXML
     private void initialize() {
-        //Fill in current user information
-        username.setText(currentUsername);
-        usertype.setItems(userType);
-        usertype.setValue((UserType.GeneralUser));
         prefix.getItems().setAll("Mr", "Ms", "Mrs");
     }
 
@@ -95,7 +91,7 @@ public class EditProfileController implements IController {
                     + " update above information?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                //TODO Make username not changeable
+                //TODO check for matching passwords
                 //TODO Do not accept null values!
                 //Create new user with the current user's userID and userType
                 UserDataObject userDAO = UserDataObject.getInstance();
@@ -104,14 +100,29 @@ public class EditProfileController implements IController {
                 String userType = prevUserInfo.getUserType();
                 Name name = new Name(fname.getText(), lname.getText(),
                     prefix.getValue().toString());
-                User editedUser = new User(password.getText(), email.getText(),
-                    pnumber.getText(), uId, name, userType);
+                User editedUser = new User(newPassword.getText(),
+                    email.getText(), pnumber.getText(), uId, name, userType);
                 userDAO.editSingleUser(editedUser, username.getText());
                 mainApplication.showMainScreen();
             } else {
                 alert.close();
             }
         }
+    }
+
+    /**
+     * Helper method to dynamically populate the User's profile.
+     * @param  user User logged in
+     * @param  username username of the User logged in
+     */
+    public void populateUserInformation(User user, String username) {
+        this.username.setText(username);
+        //Don't fill password sections
+        prefix.setValue(user.getName().getPrefix());
+        fname.setText(user.getName().getFirstName());
+        lname.setText(user.getName().getLastName());
+        email.setText(user.getEmail());
+        pnumber.setText(user.getPhoneNum());
     }
 
     /**

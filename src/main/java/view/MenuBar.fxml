@@ -9,16 +9,20 @@
    <top>
       <MenuBar fx:id="header" BorderPane.alignment="CENTER">
         <menus>
+          <Menu fx:id="hello" mnemonicParsing="false">
+          </Menu>
+          <Menu fx:id="login" mnemonicParsing="false">
+          </Menu>
           <Menu fx:id="userOptions" mnemonicParsing="false" text="User">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleEditMenu" text="Edit profile" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenu" text="Logout" />
+              <MenuItem mnemonicParsing="false" onAction="#handleEditMenu" text="Edit profile" />
+              <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenu" text="Logout" />
             </items>
           </Menu>
           <Menu fx:id="help" mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleAboutMenu" text="About" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleContactMenu" text="Contact" />
+              <MenuItem mnemonicParsing="false" onAction="#handleContactMenu" text="Contact" />
             </items>
           </Menu>
         </menus>

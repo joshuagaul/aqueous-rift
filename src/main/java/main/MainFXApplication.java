@@ -1,6 +1,8 @@
 package main;
 
 import controller.IController;
+import controller.MenuBarController;
+import controller.EditProfileController;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +25,7 @@ public class MainFXApplication extends Application {
     private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private static User currentUser;
     private static String currentUsername;
+    private static MenuBarController menuBarController;
 
     //the main container for the application window
     private Stage mainScreen;
@@ -58,9 +61,8 @@ public class MainFXApplication extends Application {
             loader.setLocation(MainFXApplication.class.
                     getClassLoader().getResource("view/MenuBar.fxml"));
             rootLayout = loader.load();
-            IController controller = loader.getController();
-            controller.setMainApp(this);
-            // Set the Main App title
+            menuBarController = loader.getController();
+            menuBarController.setMainApp(this);
             mainScreen.setTitle("Aqueous Rift");
             Scene scene = new Scene(rootLayout);
             mainScreen.setScene(scene);
@@ -68,7 +70,6 @@ public class MainFXApplication extends Application {
             mainScreen.setResizable(false);
             mainScreen.sizeToScene();
         } catch (IOException e) {
-            //error on load, so log it
             LOGGER.log(Level.SEVERE, "Failed to find "
                     + "the fxml file for MenuBar!!");
             e.printStackTrace();
@@ -98,6 +99,10 @@ public class MainFXApplication extends Application {
             }
             IController controller = loader.getController();
             controller.setMainApp(this);
+            if (controller instanceof EditProfileController) {
+                EditProfileController c = (EditProfileController) (controller);
+                c.populateUserInformation(currentUser, currentUsername);
+            }
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to find "
                 + "the fxml file for " + screenType);
@@ -162,6 +167,16 @@ public class MainFXApplication extends Application {
     }
 
     /**
+     * Passes login information from LoginController to MenuBarController.
+     * Main Application calls a controller, not ideal but only solution I
+     * could think of.  And this prevents controllers from calling each other
+     * which would be even worse.
+     */
+    public void updateMenuBar() {
+        menuBarController.userLogsIn();
+    }
+
+    /**
      * gets the current userinfo
      * @return current User using the app
      */
@@ -181,7 +196,7 @@ public class MainFXApplication extends Application {
      * Gets the username of the user logged into the application.
      * @return current username
      */
-    public User getCurrentUsername() {
+    public String getCurrentUsername() {
         return currentUsername;
     }
 
@@ -212,13 +227,10 @@ public class MainFXApplication extends Application {
         transition.play();
     }
 
-
-
     /**
      * runs the program.
      * @param args runs the program.
      */
-
     public static void main(String[] args) {
         //Instantiate/Initialize singletons and static classes
         DataManager.initializeFireBase();

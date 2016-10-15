@@ -4,9 +4,15 @@ import javafx.scene.control.ButtonType;
 import main.MainFXApplication;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 import java.util.Optional;
 
 /**
@@ -14,7 +20,18 @@ import java.util.Optional;
  */
 public class MenuBarController implements IController {
 
+    private BooleanProperty userLoggedIn = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
+    private StringProperty username = new SimpleStringProperty("Hello, Guest");
+
+    @FXML
+    private MenuBar header;
+
+    @FXML
+    private Menu hello;
+
+    @FXML
+    private Menu login;
 
     @FXML
     private Menu userOptions;
@@ -22,23 +39,24 @@ public class MenuBarController implements IController {
     @FXML
     private Menu help;
 
-    @FXML
-    private MenuBar
-
+    /**
+     * Initializes variable bindings and login handler
+     */
     @FXML
     private void initialize() {
-        if (checkUserLoggedIn()) {
-            User currentUser = mainApplication.getCurrentUser();
-            String currentUsername = mainApplication.getCurrentUsername();
-            fillDynamicElements(currentUser, currentUsername);
-        } else {
-            fillDynamicElements(null, "Guest");
-        }
-        //Fill in current user information
-        username.setText(currentUsername);
-        usertype.setItems(userType);
-        usertype.setValue((UserType.GeneralUser));
-        prefix.getItems().setAll("Mr", "Ms", "Mrs");
+        //Help is a static Menu
+        userOptions.visibleProperty().bind(userLoggedIn);
+        login.visibleProperty().bind(userLoggedIn.not());
+        hello.textProperty().bind(username);
+        Label loginLabel = new Label("Login");
+        //Only yellow region fires events, should be able to fix with CSS
+        loginLabel.setStyle("-fx-background-color: yellow; -fx-padding: 0px;");
+        loginLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                mainApplication.showLoginScreen();
+            }
+        });
+        login.setGraphic(loginLabel);
     }
 
     /**
@@ -46,16 +64,7 @@ public class MenuBarController implements IController {
      * @return True if a user is logged in, False otherwise.
      */
     private boolean checkUserLoggedIn() {
-        return mainApplication.getCurrentUser != null;
-    }
-
-    /**
-     * Helper method to dynamically populate the Menu and Menu options.
-     * @param  user User logged in
-     * @param  uName username of the User logged in
-     */
-    private void fillDynamicElements(User user, String uName) {
-
+        return mainApplication.getCurrentUser() != null;
     }
 
     /**
@@ -76,8 +85,9 @@ public class MenuBarController implements IController {
         alert.setHeaderText("Are you sure you want to logout?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            //TODO show the app as a guest
             mainApplication.showMainScreen();
+            username.set("Hello, Guest");
+            userLoggedIn.set(false);
         }
     }
 
@@ -115,5 +125,13 @@ public class MenuBarController implements IController {
                 + "\n\nGraham McAllister\nAhJin Noh\nJoshua Gaul"
                 + "\nKwangHee Kim\nAakanksha Patel");
         alert.showAndWait();
+    }
+
+    /**
+     * Changes the MenuBar when a user logs in.
+     */
+    public void userLogsIn() {
+        username.set("Hello, " + mainApplication.getCurrentUsername());
+        userLoggedIn.set(true);
     }
 }
