@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 public class MainFXApplication extends Application {
     private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private static User currentUser;
+    private static String currentUsername;
 
     //the main container for the application window
     private Stage mainScreen;
@@ -174,6 +175,22 @@ public class MainFXApplication extends Application {
      */
     public void setCurrentUser(User u) {
         currentUser = u;
+    }
+
+    /**
+     * Gets the username of the user logged into the application.
+     * @return current username
+     */
+    public User getCurrentUsername() {
+        return currentUsername;
+    }
+
+    /**
+     * Sets the username of the user logged into the application.
+     * @param username username who is currently using the app
+     */
+    public void setCurrentUsername(String username) {
+        currentUsername = username;
     }
 
     /**

@@ -93,6 +93,7 @@ public class LoginController implements IController {
             User queriedUser = userDAO.getUser(user);
             System.out.println(queriedUser.getPassword());
             if (queriedUser.getPassword().equals(password.getText())) {
+                mainApplication.setCurrentUsername(user);
                 mainApplication.setCurrentUser(queriedUser);
                 return true;
             }

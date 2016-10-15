@@ -68,10 +68,11 @@ public class EditProfileController implements IController {
      */
     @FXML
     private void initialize() {
+        //Fill in current user information
+        username.setText(currentUsername);
         usertype.setItems(userType);
         usertype.setValue((UserType.GeneralUser));
         prefix.getItems().setAll("Mr", "Ms", "Mrs");
-        //prefix.setValue(current user's prefix)
     }
 
     /**
