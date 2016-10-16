@@ -162,7 +162,7 @@ public class MainFXApplication extends Application {
      * @throws IOException throws an exception if fxml is not found.
      */
     public void showReportScreen() {
-        showScreen("view/ReportWaterSource.fxml",
+        showScreen("view/CreateReport.fxml",
                 "ReportWaterSourceScreen", "RIGHT");
     }
 
@@ -173,7 +173,7 @@ public class MainFXApplication extends Application {
      * which would be even worse.
      */
     public void updateMenuBar() {
-        menuBarController.userLogsIn();
+        menuBarController.userLogsIn(currentUser);
     }
 
     /**

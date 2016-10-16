@@ -13,10 +13,10 @@
           </Menu>
           <Menu fx:id="login" mnemonicParsing="false">
           </Menu>
-          <Menu fx:id="userOptions" mnemonicParsing="false" text="User">
+          <Menu fx:id="userOptions" mnemonicParsing="false">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleEditMenu" text="Edit profile" />
-              <MenuItem mnemonicParsing="false" onAction="#handleLogoutMenu" text="Logout" />
+              <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#handleLogoutMenu" text="Logout" />
             </items>
           </Menu>
           <Menu fx:id="help" mnemonicParsing="false" text="Help">

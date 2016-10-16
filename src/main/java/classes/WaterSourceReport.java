@@ -5,9 +5,10 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class WaterSourceReport {
+
     private static int number = 0;
-    private Date date;
-    private String userId;
+    private String date;
+    private String reporterId;
     private ObjectProperty<Location> location = new SimpleObjectProperty<>();
     private ObjectProperty<WaterType> type = new SimpleObjectProperty<>();
     private ObjectProperty<WaterCondition> condition =
@@ -27,7 +28,7 @@ public class WaterSourceReport {
      *
      * @return the date when the report is created
      */
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -36,8 +37,8 @@ public class WaterSourceReport {
      *
      * @return the user ID of the reporter
      */
-    public String getUserId() {
-        return userId;
+    public String getReporterId() {
+        return reporterId;
     }
 
     /**
@@ -63,9 +64,9 @@ public class WaterSourceReport {
      *
      * @return the object property of the location of the water source
      */
-    public ObjectProperty getLocationProperty() {
-        return location;
-    }
+    // public ObjectProperty getLocationProperty() {
+    //     return location;
+    // }
 
     /**
      * Get the type of the water source.
@@ -90,9 +91,9 @@ public class WaterSourceReport {
      *
      * @return the object property of the location of the water source
      */
-    public ObjectProperty getTypeProperty() {
-        return type;
-    }
+    // public ObjectProperty getTypeProperty() {
+    //     return type;
+    // }
 
     /**
      * Get the condition of the water source.
@@ -117,9 +118,10 @@ public class WaterSourceReport {
      *
      * @return the object property of the condition of the water source
      */
-    public ObjectProperty getConditionProperty() {
-        return condition;
-    }
+    // public ObjectProperty getConditionProperty() {
+    //     return condition;
+    // }
+
     /**
      * Make a new water source report.
      *
@@ -133,10 +135,37 @@ public class WaterSourceReport {
                             WaterType type,
                             WaterCondition condition) {
         number++;
-        date = new Date();
-        userId = user.getUserId();
+        //date = new Date();
+        //reporterId = user.getUs();
         this.location.set(location);
         this.type.set(type);
         this.condition.set(condition);
+    }
+
+    /**
+     * Constructor used specifically for the editing call chain in
+     * ReportDataObject
+     *
+     * @param   reporterId The username of the user who created the report
+     * @param   location The location of the report
+     * @param   type The type of water found
+     * @param   condition The condition of water found
+     * @param   date The date the report was submitted
+     */
+    public WaterSourceReport(String reporterId, Location location,
+            WaterType type, WaterCondition condition, String date) {
+        number++;
+        this.reporterId = reporterId;
+        this.location.set(location);
+        this.type.set(type);
+        this.condition.set(condition);
+        this.date = date;
+    }
+
+    /**
+     * No Args constructor for FireBase
+     */
+    private WaterSourceReport() {
+
     }
 }

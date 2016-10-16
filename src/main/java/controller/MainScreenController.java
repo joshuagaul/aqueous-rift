@@ -46,10 +46,11 @@ public class MainScreenController implements IController {
     @FXML
     private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == report) {
-            //TODO (see below)
-            // if (!loggedin) {redirect to showLoginScreen}
-            // else {redirect to showReportSourceScreen}
-            mainApplication.showLoginScreen();
+            if (mainApplication.getCurrentUser() == null) {
+                mainApplication.showLoginScreen();
+            } else {
+                mainApplication.showReportScreen();
+            }
         } else if (event.getSource() == update) {
             // update the current report
             System.out.println("Update the current report.");

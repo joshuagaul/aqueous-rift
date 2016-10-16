@@ -1,7 +1,6 @@
 package controller;
 
 import javafx.scene.control.ButtonType;
-import main.MainFXApplication;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Label;
@@ -14,6 +13,10 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 import java.util.Optional;
+import main.MainFXApplication;
+import classes.UserType;
+import classes.User;
+
 
 /**
  * Controller class for main border pane. Will contain file, help, etc
@@ -23,6 +26,7 @@ public class MenuBarController implements IController {
     private BooleanProperty userLoggedIn = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
     private StringProperty username = new SimpleStringProperty("Hello, Guest");
+    private StringProperty userType = new SimpleStringProperty(UserType.GeneralUser.toString());
 
     @FXML
     private MenuBar header;
@@ -48,6 +52,8 @@ public class MenuBarController implements IController {
         userOptions.visibleProperty().bind(userLoggedIn);
         login.visibleProperty().bind(userLoggedIn.not());
         hello.textProperty().bind(username);
+        userOptions.textProperty().bind(userType);
+        //TODO Make the menu options in userOptions dynamic based on userType
         Label loginLabel = new Label("Login");
         //Only yellow region fires events, should be able to fix with CSS
         loginLabel.setStyle("-fx-background-color: yellow; -fx-padding: 0px;");
@@ -86,6 +92,8 @@ public class MenuBarController implements IController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             mainApplication.showMainScreen();
+            mainApplication.setCurrentUser(null);
+            mainApplication.setCurrentUsername("");
             username.set("Hello, Guest");
             userLoggedIn.set(false);
         }
@@ -129,9 +137,12 @@ public class MenuBarController implements IController {
 
     /**
      * Changes the MenuBar when a user logs in.
+     *
+     * @param user User that logs into the application
      */
-    public void userLogsIn() {
+    public void userLogsIn(User user) {
         username.set("Hello, " + mainApplication.getCurrentUsername());
         userLoggedIn.set(true);
+        userType.set(user.getUserType());
     }
 }
