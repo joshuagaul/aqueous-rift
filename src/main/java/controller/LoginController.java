@@ -11,7 +11,6 @@ import java.io.IOException;
 import main.MainFXApplication;
 import model.UserDataObject;
 import classes.User;
-import sun.applet.Main;
 
 /**
  * Controller class for login page.

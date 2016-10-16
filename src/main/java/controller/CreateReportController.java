@@ -26,11 +26,6 @@ import classes.UserType;
 import classes.Location;
 import classes.WaterSourceReport;
 import java.util.Optional;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.Locale;
 import model.ReportDataObject;
 
 /**
@@ -190,7 +185,8 @@ public class CreateReportController implements IController {
                 String date = "10/15/2016";
                 // try {
                 //     String target = "Sat Oct 15 20:29:30 2016";
-                //     DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss yyyy", Locale.ENGLISH);
+                //     DateFormat df = new SimpleDateFormat
+                //  ("EEE MMM dd kk:mm:ss yyyy", Locale.ENGLISH);
                 //     date =  df.parse(target).toString();
                 // } catch (ParseException e) {
                 //     System.out.println(e.getMessage());
@@ -217,14 +213,14 @@ public class CreateReportController implements IController {
      */
     private String validateWaterReport() {
         StringBuilder alertMessage = new StringBuilder();
-/*
+        /*
         if (virus.getText().length() == 0) {
             alertMessage.append("Virus\n");
         }
         if (contamination.getText().length() == 0) {
             alertMessage.append("Contamination\n");
         }
-*/
+        */
         if (waterCondition.getValue() == null) {
             alertMessage.append("Water Condition\n");
         }

@@ -26,7 +26,8 @@ public class MenuBarController implements IController {
     private BooleanProperty userLoggedIn = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
     private StringProperty username = new SimpleStringProperty("Hello, Guest");
-    private StringProperty userType = new SimpleStringProperty(UserType.GeneralUser.toString());
+    private StringProperty userType
+            = new SimpleStringProperty(UserType.GeneralUser.toString());
 
     @FXML
     private MenuBar header;

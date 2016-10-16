@@ -2,12 +2,8 @@
  * Created by AhJin Noh on 9/22/2016.
  */
 package controller;
-import classes.User;
-import classes.UserType;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -28,7 +24,8 @@ import java.util.Optional;
  * Someone please detail this.
  */
 public class MainScreenController implements IController {
-    public static BooleanProperty isAuthorized = new SimpleBooleanProperty(false);
+    public static BooleanProperty isAuthorized
+            = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
 
     @FXML
