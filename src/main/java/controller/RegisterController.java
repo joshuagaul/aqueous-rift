@@ -91,14 +91,8 @@ public class RegisterController implements IController {
                         + " information is correct?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    //TODO Get rid of or randomize/increment userId
                     //TODO check & display error if userid or email
                     // is already in use.
-                    //TODO Do not accept null values! (maybe i'll disable
-                    // the ok button until all fields are filled)
-
-
-                    //Prefix is Optional
                     String pre = prefix.getValue();
                     if (pre == null) {
                         pre = "";

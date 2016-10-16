@@ -1,6 +1,7 @@
 package main;
 
 import controller.IController;
+import controller.MainScreenController;
 import controller.MenuBarController;
 import controller.EditProfileController;
 import javafx.animation.TranslateTransition;
@@ -26,6 +27,7 @@ public class MainFXApplication extends Application {
     private static User currentUser;
     private static String currentUsername;
     private static MenuBarController menuBarController;
+    private static MainScreenController mainScreenController;
 
     //the main container for the application window
     private Stage mainScreen;
@@ -174,6 +176,19 @@ public class MainFXApplication extends Application {
      */
     public void updateMenuBar() {
         menuBarController.userLogsIn(currentUser);
+    }
+
+    /**
+     * update the buttons for main screen based on the user type.
+     */
+    public void checkAuthority() {
+        if (currentUser.getUserType().equals("Manager")
+                || currentUser.getUserType().equals("Worker")
+                || currentUser.getUserType().equals("Admin")) {
+            MainScreenController.isAuthorized.set(true);
+        } else {
+            MainScreenController.isAuthorized.set(false);
+        }
     }
 
     /**

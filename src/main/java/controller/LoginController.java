@@ -11,6 +11,7 @@ import java.io.IOException;
 import main.MainFXApplication;
 import model.UserDataObject;
 import classes.User;
+import sun.applet.Main;
 
 /**
  * Controller class for login page.
@@ -54,10 +55,10 @@ public class LoginController implements IController {
             if (checkValid()) {
                 mainApplication.showReportScreen();
                 mainApplication.updateMenuBar();
+                mainApplication.checkAuthority();
             }
         }
     }
-
 
     /**
      * Link handler for login page.

@@ -146,7 +146,7 @@ public class CreateReportController implements IController {
      *
      * @return BooleanProperty to bind to
      */
-    private BooleanProperty checkeManager() {
+    private BooleanProperty checkManager() {
         BooleanProperty res = new SimpleBooleanProperty();
         res.setValue(userType.get().equals("Manager"));
         return res;
@@ -166,36 +166,86 @@ public class CreateReportController implements IController {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
         } else if (event.getSource() == submit) {
-            //TODO validate the input
-            // Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            // alert.setTitle("Confirm Submission");
-            // alert.setHeaderText("Are you sure you want to "
-            //         + "submit this report?");
-            // Optional<ButtonType> result = alert.showAndWait();
-            // if (result.get() == ButtonType.OK) {
-            ReportDataObject reportDAO = ReportDataObject.getInstance();
-            String reporterId = mainApplication.getCurrentUsername();
-            //Hard-coded latitude and longitude so I don't alter UI
-            //***Need to decide on how we enter location (or use both ways)
-            Location loc = new Location("55.2", "65.0");
-            String date = "10/15/2016";
-            // try {
-            //     String target = "Sat Oct 15 20:29:30 2016";
-            //     DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss yyyy", Locale.ENGLISH);
-            //     date =  df.parse(target).toString();
-            // } catch (ParseException e) {
-            //     System.out.println(e.getMessage());
-            // }
-            WaterSourceReport report = new WaterSourceReport(reporterId,
-                loc, WaterType.Bottled, WaterCondition.Potable, date);
-            reportDAO.addCandidateReport(report);
-            //TODO show a toast message that the report has been submitted
-            mainApplication.showMainScreen();
-            // } else {
-            //     alert.close();
-            // }
+            String alertMessage = validateWaterReport();
+            if (alertMessage.length() != 0) {
+                Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
+                emptyAlert.setTitle("Empty fields");
+                emptyAlert.setContentText(alertMessage);
+                emptyAlert.setHeaderText("Please fill out all "
+                        + "the required fields.");
+                emptyAlert.showAndWait();
+            } else {
+                //TODO validate the input
+                // Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                // alert.setTitle("Confirm Submission");
+                // alert.setHeaderText("Are you sure you want to "
+                //         + "submit this report?");
+                // Optional<ButtonType> result = alert.showAndWait();
+                // if (result.get() == ButtonType.OK) {
+                ReportDataObject reportDAO = ReportDataObject.getInstance();
+                String reporterId = mainApplication.getCurrentUsername();
+                //Hard-coded latitude and longitude so I don't alter UI
+                //***Need to decide on how we enter location (or use both ways)
+                Location loc = new Location("55.2", "65.0");
+                String date = "10/15/2016";
+                // try {
+                //     String target = "Sat Oct 15 20:29:30 2016";
+                //     DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss yyyy", Locale.ENGLISH);
+                //     date =  df.parse(target).toString();
+                // } catch (ParseException e) {
+                //     System.out.println(e.getMessage());
+                // }
+                WaterSourceReport report = new WaterSourceReport(reporterId,
+                        loc, WaterType.Bottled, WaterCondition.Potable, date);
+                reportDAO.addCandidateReport(report);
+                //TODO show a toast message that the report has been submitted
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Report Submitted");
+                alert.setHeaderText("Your report has been submitted.");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    mainApplication.showMainScreen();
+                }
+            }
         }
     }
+
+    /**
+     * Validates the user Report inputs. (Checking null fields for now.)
+     * @return An alert message describing the input errors.
+     */
+    private String validateWaterReport() {
+        StringBuilder alertMessage = new StringBuilder();
+/*
+        if (virus.getText().length() == 0) {
+            alertMessage.append("Virus\n");
+        }
+        if (contamination.getText().length() == 0) {
+            alertMessage.append("Contamination\n");
+        }
+*/
+        if (waterCondition.getValue() == null) {
+            alertMessage.append("Water Condition\n");
+        }
+        if (waterType.getValue() == null) {
+            alertMessage.append("Water Type\n");
+        }
+        if (street.getText().length() == 0) {
+            alertMessage.append("Street\n");
+        }
+        if (city.getText().length() == 0) {
+            alertMessage.append("City\n");
+        }
+        if (state.getValue() == null) {
+            alertMessage.append("State\n");
+        }
+        if (zipCode.getText().length() == 0) {
+            alertMessage.append("Zip Code\n");
+        }
+        return alertMessage.toString();
+    }
+
 
     /**
      * Gives the controller access to mainApplication.
