@@ -97,7 +97,7 @@ public class MenuBarController implements IController {
             mainApplication.setCurrentUsername("");
             username.set("Hello, Guest");
             userLoggedIn.set(false);
-            MainScreenController.isAuthorized.set(false);
+            MainScreenController.setAuthority(false);
         }
     }
 

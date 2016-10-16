@@ -24,7 +24,7 @@ import java.util.Optional;
  * Someone please detail this.
  */
 public class MainScreenController implements IController {
-    public static BooleanProperty isAuthorized
+    private static BooleanProperty isAuthorized
             = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
 
@@ -45,6 +45,16 @@ public class MainScreenController implements IController {
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);
     }
+
+    /**
+     * set the button based on the usertypes
+     * @param set true if the user is authorized (worker, admin, manager).
+     *            false if the user is not logged in or a general user.
+     */
+    public static void setAuthority(boolean set) {
+        isAuthorized.set(set);
+    }
+
 
     /**
      * Button handler for mainScreenPage.

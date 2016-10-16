@@ -185,9 +185,9 @@ public class MainFXApplication extends Application {
         if (currentUser.getUserType().equals("Manager")
                 || currentUser.getUserType().equals("Worker")
                 || currentUser.getUserType().equals("Admin")) {
-            MainScreenController.isAuthorized.set(true);
+            MainScreenController.setAuthority(true);
         } else {
-            MainScreenController.isAuthorized.set(false);
+            MainScreenController.setAuthority(false);
         }
     }
 
