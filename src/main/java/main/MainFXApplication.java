@@ -169,6 +169,18 @@ public class MainFXApplication extends Application {
                 "ReportWaterSourceScreen", "RIGHT");
     }
 
+
+    /**
+     * sets the screen to view all recents reports.
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
+    public void showViewAllReportsScreen() {
+        showScreen("view/ViewAllReports.fxml",
+                "ViewAllReports", "LEFT");
+    }
+
+
     /**
      * Passes login information from LoginController to MenuBarController.
      * Main Application calls a controller, not ideal but only solution I
@@ -244,6 +256,19 @@ public class MainFXApplication extends Application {
         transition.setToX(0);
         transition.play();
     }
+
+    /**
+     * Hide the workbench
+     * @param pane pane to be animated
+     */
+    private void animateReverse(Pane pane) {
+        TranslateTransition transition
+                = new TranslateTransition(Duration.seconds(0.3), pane);
+        transition.setFromX(0);
+        transition.setToX(400);
+        transition.play();
+    }
+
 
     /**
      * runs the program.

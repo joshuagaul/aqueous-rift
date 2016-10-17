@@ -6,7 +6,10 @@
     -fx-background-color: #ffffff;
 }
 
+#pane {
+    -fx-background-color: #ffffff;
 
+}
 
 #button-primary {
     -fx-padding: 5 22 5 22;

@@ -42,6 +42,9 @@ public class MenuBarController implements IController {
     private Menu userOptions;
 
     @FXML
+    private Menu reports;
+
+    @FXML
     private Menu help;
 
     /**
@@ -51,13 +54,12 @@ public class MenuBarController implements IController {
     private void initialize() {
         //Help is a static Menu
         userOptions.visibleProperty().bind(userLoggedIn);
+        reports.visibleProperty().bind(userLoggedIn);
         login.visibleProperty().bind(userLoggedIn.not());
         hello.textProperty().bind(username);
         userOptions.textProperty().bind(userType);
         //TODO Make the menu options in userOptions dynamic based on userType
         Label loginLabel = new Label("Login");
-        //Only yellow region fires events, should be able to fix with CSS
-        loginLabel.setStyle("-fx-background-color: yellow; -fx-padding: 0px;");
         loginLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 mainApplication.showLoginScreen();
@@ -111,6 +113,16 @@ public class MenuBarController implements IController {
     }
 
     /**
+     * Lets the user edit profile
+     */
+    @FXML
+    private void handleViewAllMenu() {
+        mainApplication.showViewAllReportsScreen();
+    }
+
+
+
+    /**
      * About menu item event handler.
      * Provide information on our project, version, etc
      */
@@ -147,5 +159,6 @@ public class MenuBarController implements IController {
         username.set("Hello, " + mainApplication.getCurrentUsername());
         userLoggedIn.set(true);
         userType.set(user.getUserType());
+        reports.setText("Reports");
     }
 }

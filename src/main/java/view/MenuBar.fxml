@@ -19,6 +19,12 @@
               <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#handleLogoutMenu" text="Logout" />
             </items>
           </Menu>
+            <Menu fx:id="reports" mnemonicParsing="false">
+              <items>
+                <MenuItem fx:id="viewAll" mnemonicParsing="false" onAction="#handleViewAllMenu" text="View All Reports" />
+                  <MenuItem mnemonicParsing="false" text="Check My Reports" />
+              </items>
+            </Menu>
           <Menu fx:id="help" mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleAboutMenu" text="About" />
