@@ -2,27 +2,8 @@ package classes;
 
 public class Location {
 
-    private String latitude;
-    private String longitude;
-    private String street;
-    private String city;
-    private State state;
-    //private int zipCode;
-
-    /**
-     * Constructor with the address of the location.
-     *
-     * @param street the street of the location
-     * @param city the city of the location
-     * @param state the state of the location
-     * @param zipCode the zipCode of the location
-     */
-    public Location(String street, String city, State state, int zipCode) {
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        //this.zipCode = zipCode;
-    }
+    private Double latitude;
+    private Double longitude;
 
     /**
      * Constructor for GPS coordinates.
@@ -31,10 +12,8 @@ public class Location {
      * @param longitude The longitude GPS coordinate.
      */
     public Location(String latitude, String longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        //TODO
-        //Do some calulations/query google maps to approximate street address
+        setLatitude(latitude);
+        setLongitude(longitude);
     }
 
     /**
@@ -42,7 +21,7 @@ public class Location {
      *
      * @return the latitude of the location
      */
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
@@ -51,52 +30,48 @@ public class Location {
      *
      * @return the longitude of the location
      */
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
     /**
-     * Get the street name of the location.
-     *
-     * @return the street of the location
+     * Set's latitude instance variable to given latitude.
+     * @param latitude The latitude to set as a double.
+     * @throws IllegalArgumentException Thrown if latitude isn't
+     * between -90 and 90.
      */
-    public String getStreet() {
-        return street;
+    public void setLatitude(String latitude) {
+        try {
+            if (Math.abs(Double.parseDouble(latitude)) > 90) {
+                throw new IllegalArgumentException("Latitude must be within"
+                    + " the range of -90 to 90. Given latitude = " 
+                    + latitude);
+            }
+
+            this.latitude = Double.parseDouble(latitude);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Given latitude can't be converted" 
+                + " to a double");
+        }
     }
 
     /**
-     * Get the city of the location.
-     *
-     * @return the city of the location
+     * Set's longitude instance variable to given longitude.
+     * @param longitude The longitude to set given as a double.
+     * @throws IllegalArgumentException Thrown if longitude isn't between
+     * -180 and 180.
      */
-    public String getCity() {
-        return city;
-    }
-
-    /**
-     * Get the state of the location.
-     *
-     * @return the state of the location
-     */
-    public State getState() {
-        return state;
-    }
-
-    /**
-     * Get the zip code of the location.
-     *
-     * @return the zip code of the location
-     */
-    // public int getZipCode() {
-    //     return zipCode;
-    // }
-
-    /**
-     * Return the string of the location class.
-     *
-     * @return the full address of the location
-     */
-    public String toString() {
-        return street + " " + city + " " + state.toString() + " "; //+ zipCode;
+    public void setLongitude(String longitude) {
+        try {
+            if (Math.abs(Double.parseDouble(longitude)) > 180) {
+                throw new IllegalArgumentException("Longitude must be within" 
+                    + " the range of -180 to 180. Given longitude = " 
+                    + longitude);
+            }
+            this.longitude = Double.parseDouble(longitude);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Given longitude can't be converted" 
+                + " to a double");            
+        }
     }
 }

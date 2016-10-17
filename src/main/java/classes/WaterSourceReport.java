@@ -3,70 +3,20 @@ package classes;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-public class WaterSourceReport {
+public class WaterSourceReport extends WaterReport {
 
     private static int number = 0;
-    private String date;
-    private String reporterId;
-    private ObjectProperty<Location> location = new SimpleObjectProperty<>();
     private ObjectProperty<WaterType> type = new SimpleObjectProperty<>();
     private ObjectProperty<WaterCondition> condition =
         new SimpleObjectProperty<>();
 
     /**
-     * Get the total number of the reports.
-     *
-     * @return total number of the reports
+     * Gets the number of WaterSourceReports.
+     * @return Returns the number of waterSourceReports.
      */
     public int getNumber() {
         return number;
     }
-
-    /**
-     * Get the date when the report is created.
-     *
-     * @return the date when the report is created
-     */
-    public String getDate() {
-        return date;
-    }
-
-    /**
-     * Get the user ID of the reporter.
-     *
-     * @return the user ID of the reporter
-     */
-    public String getReporterId() {
-        return reporterId;
-    }
-
-    /**
-     * Get the location of the water source.
-     *
-     * @return the location of the water source
-     */
-    public Location getLocation() {
-        return location.get();
-    }
-
-    /**
-     * Set the location of the water source.
-     *
-     * @param location the location of the water source
-     */
-    public void setLocation(Location location) {
-        this.location.set(location);
-    }
-
-    /**
-     * Get the object property of the location of the water source.
-     *
-     * @return the object property of the location of the water source
-     */
-    // public ObjectProperty getLocationProperty() {
-    //     return location;
-    // }
-
     /**
      * Get the type of the water source.
      *
@@ -113,35 +63,6 @@ public class WaterSourceReport {
     }
 
     /**
-     * Get the object property of the water condition source.
-     *
-     * @return the object property of the condition of the water source
-     */
-    // public ObjectProperty getConditionProperty() {
-    //     return condition;
-    // }
-
-    /**
-     * Make a new water source report.
-     *
-     * @param user the user information who login the app
-     * @param location the location information
-     * @param type the type of the water
-     * @param condition the condition of the water
-     */
-    public WaterSourceReport(User user,
-                            Location location,
-                            WaterType type,
-                            WaterCondition condition) {
-        number++;
-        //date = new Date();
-        //reporterId = user.getUs();
-        this.location.set(location);
-        this.type.set(type);
-        this.condition.set(condition);
-    }
-
-    /**
      * Constructor used specifically for the editing call chain in
      * ReportDataObject
      *
@@ -153,18 +74,9 @@ public class WaterSourceReport {
      */
     public WaterSourceReport(String reporterId, Location location,
             WaterType type, WaterCondition condition, String date) {
+        super(date, reporterId, location);
         number++;
-        this.reporterId = reporterId;
-        this.location.set(location);
         this.type.set(type);
         this.condition.set(condition);
-        this.date = date;
-    }
-
-    /**
-     * No Args constructor for FireBase
-     */
-    private WaterSourceReport() {
-
     }
 }
