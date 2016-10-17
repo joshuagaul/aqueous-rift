@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -61,6 +62,7 @@
             <Label fx:id="contaminationLabel" text="Contamination" wrapText="true" GridPane.rowIndex="8" />
             <Text fx:id="ppm1" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Text fx:id="ppm2" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <CheckBox fx:id="checkbox" mnemonicParsing="false" prefHeight="21.0" prefWidth="407.0" text="This water source has been confirmed." GridPane.columnSpan="3" GridPane.rowIndex="9" />
          </children>
          <padding>
             <Insets bottom="50.0" left="25.0" right="25.0" top="25.0" />

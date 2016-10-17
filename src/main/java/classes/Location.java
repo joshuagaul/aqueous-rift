@@ -50,8 +50,8 @@ public class Location {
 
             this.latitude = Double.parseDouble(latitude);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Given latitude can't be converted" 
-                + " to a double");
+            throw new IllegalArgumentException("Given latitude"
+                + "can't be converted to a double");
         }
     }
 
@@ -70,8 +70,8 @@ public class Location {
             }
             this.longitude = Double.parseDouble(longitude);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Given longitude can't be converted" 
-                + " to a double");            
+            throw new IllegalArgumentException("Given longitude "
+                + "can't be converted to a double");
         }
     }
 }

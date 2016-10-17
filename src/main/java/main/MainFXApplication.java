@@ -3,6 +3,7 @@ package main;
 import controller.IController;
 import controller.MainScreenController;
 import controller.MenuBarController;
+import controller.CreateReportController;
 import controller.EditProfileController;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -186,8 +187,10 @@ public class MainFXApplication extends Application {
                 || currentUser.getUserType().equals("Worker")
                 || currentUser.getUserType().equals("Admin")) {
             MainScreenController.setAuthority(true);
+            CreateReportController.setAuthority(true);
         } else {
             MainScreenController.setAuthority(false);
+            CreateReportController.setAuthority(false);
         }
     }
 

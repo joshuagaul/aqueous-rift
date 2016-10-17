@@ -19,7 +19,8 @@ public class WaterPurityReport extends WaterReport {
      * @param  condition  Overall condition of the water 
      * (Safe/Treatable/Unsafe)
      * @param virusPPM The parts per million of viruses in the water.
-     * @param  contaminantPPM The parats per million of contaminants in the water.
+     * @param  contaminantPPM The parats per million
+     *                        of contaminants in the water.
      */
     public WaterPurityReport(String reporterId, String date, Location location,
         OverallCondition condition, double virusPPM, double contaminantPPM) {

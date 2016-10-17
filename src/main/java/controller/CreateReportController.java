@@ -6,15 +6,18 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.CheckBox;
 import main.MainFXApplication;
 import java.io.IOException;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import java.util.Optional;
+
 import javafx.scene.text.Text;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.BooleanProperty;
@@ -25,7 +28,6 @@ import classes.WaterType;
 import classes.UserType;
 import classes.Location;
 import classes.WaterSourceReport;
-import java.util.Optional;
 import model.ReportDataObject;
 
 /**
@@ -34,7 +36,8 @@ import model.ReportDataObject;
  */
 public class CreateReportController implements IController {
 
-
+    private static BooleanProperty isAuthorized
+            = new SimpleBooleanProperty(false);
     private ObjectProperty<UserType> userType = new SimpleObjectProperty<>();
     private MainFXApplication mainApplication;
 
@@ -75,6 +78,11 @@ public class CreateReportController implements IController {
     private Label contaminationLabel;
 
     @FXML
+    private CheckBox checkbox;
+    //TODO checking this will confirm the report
+    // and change the pin on the map
+
+    @FXML
     private Button submit;
 
     @FXML
@@ -91,61 +99,77 @@ public class CreateReportController implements IController {
         state.getItems().setAll(State.values());
         //Bind event handler and set binding variables
         userType.set(UserType.GeneralUser);
-        ppm1.visibleProperty().bind(checkUser().not());
-        ppm2.visibleProperty().bind(checkUser().not());
-        virusLabel.visibleProperty().bind(checkUser().not());
-        contaminationLabel.visibleProperty().bind(checkUser().not());
-        virus.visibleProperty().bind(checkUser().not());
-        contamination.visibleProperty().bind(checkUser().not());
+        ppm1.visibleProperty().bind(isAuthorized);
+        ppm2.visibleProperty().bind(isAuthorized);
+        virusLabel.visibleProperty().bind(isAuthorized);
+        contaminationLabel.visibleProperty().bind(isAuthorized);
+        virus.visibleProperty().bind(isAuthorized);
+        contamination.visibleProperty().bind(isAuthorized);
+        checkbox.visibleProperty().bind(isAuthorized);
     }
 
     /**
-     * Helper method to convert the current User type to a boolean property
-     * for binding. Checks if the User is a GeneralUser.
-     *
-     * @return BooleanProperty to bind to
+     * set the visibility of the textfields based on the user type.
+     * @param set true if the user is authorized (worker, admin, manager).
+     *            false if the user is not logged in or a general user.
      */
+    public static void setAuthority(boolean set) {
+        isAuthorized.set(set);
+    }
+
+    /**
+      *Helper method to convert the current User type to a boolean property
+      *for binding. Checks if the User is a GeneralUser.
+      *@return BooleanProperty to bind to
+     */
+    /*
+
     private BooleanProperty checkUser() {
         BooleanProperty res = new SimpleBooleanProperty();
         res.setValue(userType.get().equals(UserType.GeneralUser));
         return res;
     }
+    */
 
     /**
      * Helper method to convert the current User type to a boolean property
      * for binding. Checks if the user is an Admin.
      *
      * @return BooleanProperty to bind to
-     */
+     **/
+    /*
     private BooleanProperty checkAdmin() {
         BooleanProperty res = new SimpleBooleanProperty();
         res.setValue(userType.get().equals("Admin"));
         return res;
     }
-
+    */
     /**
      * Helper method to convert the current User type to a boolean property
      * for binding. Checks if the user is a Worker.
      *
      * @return BooleanProperty to bind to
      */
+    /*
     private BooleanProperty checkWorker() {
         BooleanProperty res = new SimpleBooleanProperty();
         res.setValue(userType.get().equals("Worker"));
         return res;
     }
-
+    */
     /**
      * Helper method to convert the current User type to a boolean property
      * for binding. Checks if the user is a Manager.
      *
      * @return BooleanProperty to bind to
      */
+    /*
     private BooleanProperty checkManager() {
         BooleanProperty res = new SimpleBooleanProperty();
         res.setValue(userType.get().equals("Manager"));
         return res;
     }
+    */
 
     /**
      * Button handler for editing profile page.
@@ -213,14 +237,6 @@ public class CreateReportController implements IController {
      */
     private String validateWaterReport() {
         StringBuilder alertMessage = new StringBuilder();
-        /*
-        if (virus.getText().length() == 0) {
-            alertMessage.append("Virus\n");
-        }
-        if (contamination.getText().length() == 0) {
-            alertMessage.append("Contamination\n");
-        }
-        */
         if (waterCondition.getValue() == null) {
             alertMessage.append("Water Condition\n");
         }
@@ -238,6 +254,14 @@ public class CreateReportController implements IController {
         }
         if (zipCode.getText().length() == 0) {
             alertMessage.append("Zip Code\n");
+        }
+        if (isAuthorized.getValue()) {
+            if (virus.getText().length() == 0) {
+                alertMessage.append("Virus\n");
+            }
+            if (contamination.getText().length() == 0) {
+                alertMessage.append("Contamination\n");
+            }
         }
         return alertMessage.toString();
     }
