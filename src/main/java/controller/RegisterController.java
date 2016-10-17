@@ -88,7 +88,8 @@ public class RegisterController implements IController {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm registration");
                 alert.setHeaderText("Are you sure above"
-                        + " information is correct?");
+                        + " information is correct?\n"
+                        + "Click \"OK\" to confirm.");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     //TODO check & display error if userid or email

@@ -96,17 +96,18 @@ public class EditProfileController implements IController {
                 emptyAlert.setHeaderText("Please fill out all "
                         + "the required fields.");
                 emptyAlert.showAndWait();
-            } else if (newPassword.getText().equals(confirmPassword)) {
+            } else if (!newPassword.getText().equals(confirmPassword.getText())) {
                 Alert passAlert = new Alert(Alert.AlertType.WARNING);
-                emptyAlert.setTitle("Password");
-                emptyAlert.setHeaderText("Your confirmed password"
-                        + "doesn't match the new password field!!""");
-                emptyAlert.showAndWait();
+                passAlert.setTitle("Password");
+                passAlert.setHeaderText("Your confirmed password "
+                        + "doesn't match the new password field!!");
+                passAlert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm Profile Update");
                 alert.setHeaderText("Are you sure you want to"
-                        + " update above information?");
+                        + " update above information?\n"
+                        + "Click \"OK\" to confirm.");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     //TODO check for matching passwords
