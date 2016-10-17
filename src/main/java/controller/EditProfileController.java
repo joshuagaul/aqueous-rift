@@ -85,30 +85,71 @@ public class EditProfileController implements IController {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
         } else if (event.getSource() == ok) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirm Profile Update");
-            alert.setHeaderText("Are you sure you want to"
-                    + " update above information?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                //TODO check for matching passwords
-                //TODO Do not accept null values!
-                //Create new user with the current user's userID and userType
-                UserDataObject userDAO = UserDataObject.getInstance();
-                User prevUserInfo = mainApplication.getCurrentUser();
-                String uId = prevUserInfo.getUserId();
-                String userType = prevUserInfo.getUserType();
-                Name name = new Name(fname.getText(), lname.getText(),
-                    prefix.getValue().toString());
-                User editedUser = new User(newPassword.getText(),
-                    email.getText(), pnumber.getText(), uId, name, userType);
-                userDAO.editSingleUser(editedUser, username.getText());
-                mainApplication.showMainScreen();
+            String alertMessage = validateEditProfile();
+            if (alertMessage.length() != 0) {
+                Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
+                emptyAlert.setTitle("Empty fields");
+                emptyAlert.setContentText(alertMessage);
+                emptyAlert.setHeaderText("Please fill out all "
+                        + "the required fields.");
+                emptyAlert.showAndWait();
             } else {
-                alert.close();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirm Profile Update");
+                alert.setHeaderText("Are you sure you want to"
+                        + " update above information?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    //TODO check for matching passwords
+                    //TODO Do not accept null values!
+                    //Create new user with the current user's userID and userType
+                    UserDataObject userDAO = UserDataObject.getInstance();
+                    User prevUserInfo = mainApplication.getCurrentUser();
+                    String uId = prevUserInfo.getUserId();
+                    String userType = prevUserInfo.getUserType();
+                    Name name = new Name(fname.getText(), lname.getText(),
+                            prefix.getValue().toString());
+                    User editedUser = new User(newPassword.getText(),
+                            email.getText(), pnumber.getText(), uId, name, userType);
+                    userDAO.editSingleUser(editedUser, username.getText());
+                    mainApplication.showMainScreen();
+                } else {
+                    alert.close();
+                }
             }
         }
     }
+
+    /**
+     * Validates the edit profile inputs.  Simple as of now, just checks
+     * that required fields aren't empty.
+     * TODO - REGEX matching
+     * @return An alert message describing the input errors, empty String
+     * if input is valid.
+     */
+    private String validateEditProfile() {
+        StringBuilder alertMessage = new StringBuilder();
+        if (username.getText().length() == 0) {
+            alertMessage.append("Username\n");
+        }
+        if (newPassword.getText().length() == 0) {
+            alertMessage.append("Password\n");
+        }
+        if (fname.getText().length() == 0) {
+            alertMessage.append("First name\n");
+        }
+        if (lname.getText().length() == 0) {
+            alertMessage.append("Last name\n");
+        }
+        if (email.getText().length() == 0) {
+            alertMessage.append("Email\n");
+        }
+        if (pnumber.getText().length() == 0) {
+            alertMessage.append("P number\n");
+        }
+        return alertMessage.toString();
+    }
+
 
     /**
      * Helper method to dynamically populate the User's profile.
