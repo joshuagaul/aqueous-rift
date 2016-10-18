@@ -13,14 +13,9 @@ import java.io.IOException;
 public class ViewAllReportsController implements IController {
 
     private MainFXApplication mainApplication;
-
-    @FXML
-    private StackPane pane;
-    @FXML
-    private Button back;
-
-    @FXML
-    private Button submit;
+    @FXML private static StackPane pane;
+    @FXML private Button back;
+    @FXML private Button submit;
 
     /**
      * Button handler for login page.
@@ -33,14 +28,13 @@ public class ViewAllReportsController implements IController {
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
         if (event.getSource() == back) {
-            pane.setVisible(false);
+            mainApplication.showMap();
             mainApplication.showMainScreen();
         } else if (event.getSource() == submit) {
-            pane.setVisible(false);
+            mainApplication.showMap();
             mainApplication.showReportScreen();
         }
     }
-
 
     /**
      * Gives the controller access to mainApplication.
