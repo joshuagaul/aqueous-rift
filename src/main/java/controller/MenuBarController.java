@@ -17,7 +17,6 @@ import main.MainFXApplication;
 import classes.UserType;
 import classes.User;
 
-import javax.swing.text.View;
 
 
 /**

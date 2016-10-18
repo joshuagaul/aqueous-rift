@@ -96,7 +96,8 @@ public class EditProfileController implements IController {
                 emptyAlert.setHeaderText("Please fill out all "
                         + "the required fields.");
                 emptyAlert.showAndWait();
-            } else if (!newPassword.getText().equals(confirmPassword.getText())) {
+            } else if (!newPassword.getText().equals(
+                    confirmPassword.getText())) {
                 Alert passAlert = new Alert(Alert.AlertType.WARNING);
                 passAlert.setTitle("Password");
                 passAlert.setHeaderText("Your confirmed password "
@@ -110,9 +111,6 @@ public class EditProfileController implements IController {
                         + "Click \"OK\" to confirm.");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    //TODO check for matching passwords
-                    //TODO Do not accept null values!
-                    //Create new user with the current user's userID and userType
                     UserDataObject userDAO = UserDataObject.getInstance();
                     User prevUserInfo = mainApplication.getCurrentUser();
                     String uId = prevUserInfo.getUserId();
@@ -120,7 +118,8 @@ public class EditProfileController implements IController {
                     Name name = new Name(fname.getText(), lname.getText(),
                             prefix.getValue().toString());
                     User editedUser = new User(newPassword.getText(),
-                            email.getText(), pnumber.getText(), uId, name, userType);
+                            email.getText(), pnumber.getText(),
+                            uId, name, userType);
                     userDAO.editSingleUser(editedUser, username.getText());
                     mainApplication.showMainScreen();
                 } else {
