@@ -39,6 +39,9 @@ public class EditProfileController implements IController {
     private PasswordField newPassword;
 
     @FXML
+    private PasswordField confirmPassword;
+
+    @FXML
     private TextField fname;
 
     @FXML
@@ -92,6 +95,12 @@ public class EditProfileController implements IController {
                 emptyAlert.setContentText(alertMessage);
                 emptyAlert.setHeaderText("Please fill out all "
                         + "the required fields.");
+                emptyAlert.showAndWait();
+            } else if (newPassword.getText().equals(confirmPassword)) {
+                Alert passAlert = new Alert(Alert.AlertType.WARNING);
+                emptyAlert.setTitle("Password");
+                emptyAlert.setHeaderText("Your confirmed password"
+                        + "doesn't match the new password field!!""");
                 emptyAlert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
