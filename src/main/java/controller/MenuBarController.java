@@ -18,6 +18,7 @@ import classes.UserType;
 import classes.User;
 
 
+
 /**
  * Controller class for main border pane. Will contain file, help, etc
  */
@@ -94,6 +95,7 @@ public class MenuBarController implements IController {
         alert.setHeaderText("Are you sure you want to logout?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
+            mainApplication.showMap();
             mainApplication.showMainScreen();
             mainApplication.setCurrentUser(null);
             mainApplication.setCurrentUsername("");
@@ -109,6 +111,7 @@ public class MenuBarController implements IController {
      */
     @FXML
     private void handleEditMenu() {
+        mainApplication.showMap();
         mainApplication.showEditProfileScreen();
     }
 

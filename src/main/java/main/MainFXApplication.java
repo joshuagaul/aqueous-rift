@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import classes.User;
@@ -41,6 +42,7 @@ public class MainFXApplication extends Application {
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
         initRootLayout(mainScreen);
+        showMap();
         showMainScreen();
     }
 
@@ -170,7 +172,6 @@ public class MainFXApplication extends Application {
                 "ReportWaterSourceScreen", "RIGHT");
     }
 
-
     /**
      * sets the screen to view all recents reports.
      *
@@ -182,6 +183,16 @@ public class MainFXApplication extends Application {
     }
 
 
+
+    /**
+     * sets the screen to view all recents reports.
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
+    public void showMap() {
+        showScreen("view/ViewMap.fxml",
+                "Map", "LEFT");
+    }
     /**
      * Passes login information from LoginController to MenuBarController.
      * Main Application calls a controller, not ideal but only solution I
@@ -251,25 +262,14 @@ public class MainFXApplication extends Application {
      * @param pane pane to be animated
      */
     private void animate(Pane pane) {
-        TranslateTransition transition
-                = new TranslateTransition(Duration.seconds(0.3), pane);
-        transition.setFromX(400);
-        transition.setToX(0);
-        transition.play();
+        if (pane instanceof StackPane) {
+            TranslateTransition transition
+                    = new TranslateTransition(Duration.seconds(0.3), pane);
+            transition.setFromX(400);
+            transition.setToX(0);
+            transition.play();
+        }
     }
-
-    /**
-     * Hide the workbench
-     * @param pane pane to be animated
-     */
-    private void animateReverse(Pane pane) {
-        TranslateTransition transition
-                = new TranslateTransition(Duration.seconds(0.3), pane);
-        transition.setFromX(0);
-        transition.setToX(400);
-        transition.play();
-    }
-
 
     /**
      * runs the program.
