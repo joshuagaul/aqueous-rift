@@ -23,21 +23,10 @@ import classes.WaterSourceReport;
 public class ViewAllReportsController implements IController {
 
     private MainFXApplication mainApplication;
-<<<<<<< HEAD
 
-    @FXML
-    private StackPane pane;
-
-    @FXML
-    private Button back;
-
-    @FXML
-    private Button submit;
-=======
     @FXML private static StackPane pane;
     @FXML private Button back;
     @FXML private Button submit;
->>>>>>> b2600ff7e0ffd0928ff9738fe89a03d660f5616d
 
     @FXML
     private TableView<WaterReport> reportView;
