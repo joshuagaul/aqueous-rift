@@ -164,7 +164,7 @@ public class ReportDataObject {
      */
     public void addConfirmedReport(WaterPurityReport reportToAdd) {
         // int reportId = reportToAdd.getNumber();
-        // DatabaseReference report = getConfirmedReports().child("/" 
+        // DatabaseReference report = getConfirmedReports().child("/"
         // + reportId);
         // report.setValue(reportToAdd);
     }
@@ -198,6 +198,16 @@ public class ReportDataObject {
      */
     public WaterSourceReport getCandidateReport(String reportId) {
         return candidateReportMap.get(reportId);
+    }
+
+    /**
+     * Returns all saved candidateReport objects
+     * A WaterSourceReport is returned because it represents a candidate report.
+     *
+     * @return     The <reportId, WaterReport> map
+     */
+    public Map<String, WaterSourceReport> getAllCandidateReports() {
+        return candidateReportMap;
     }
 
     /**

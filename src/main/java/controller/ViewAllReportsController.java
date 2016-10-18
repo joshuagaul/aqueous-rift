@@ -1,11 +1,21 @@
 package controller;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import main.MainFXApplication;
-
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.collections.ObservableList;
+import java.util.List;
+import java.util.ArrayList;
 import java.io.IOException;
+import main.MainFXApplication;
+import model.ReportDataObject;
+import classes.WaterReport;
+import classes.WaterSourceReport;
+
 
 /**
  * Created by ahjin on 10/17/2016.
@@ -16,11 +26,39 @@ public class ViewAllReportsController implements IController {
 
     @FXML
     private StackPane pane;
+
     @FXML
     private Button back;
 
     @FXML
     private Button submit;
+
+    @FXML
+    private TableView<WaterReport> reportView;
+
+    // @FXML
+    // private TableColumn<WaterSourceReport, String> num;
+    //
+    // @FXML
+    // private TableColumn<WaterSourceReport, String> date;
+    //
+    // @FXML
+    // private TableColumn<WaterSourceReport, String> location;
+    //
+    // @FXML
+    // private TableColumn<WaterSourceReport, String> type;
+    //
+    // @FXML
+    // private TableColumn<WaterSourceReport, String> condition;
+    //
+    // @FXML
+    // private TableColumn<WaterSourceReport, String> virus;
+    //
+    // @FXML
+    // private TableColumn<WaterSourceReport, String> contamination;
+    //
+    @FXML
+    private TableColumn<WaterReport, String> user;
 
     /**
      * Button handler for login page.
@@ -41,6 +79,31 @@ public class ViewAllReportsController implements IController {
         }
     }
 
+    /**
+     * Loads report data
+     */
+    @FXML
+    private void initialize() {
+        TableColumn<WaterReport, String> numCol  = new TableColumn<>("Location");
+        ReportDataObject reportDAO = ReportDataObject.getInstance();
+        numCol.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("location"));
+        // date.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("date"));
+        // location.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("location"));
+        // type.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("type"));
+        // num.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("condition"));
+        // date.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("virus"));
+        // location.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("contamination"));
+        user.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("reporterId"));
+        System.out.println(parseReportList(reportDAO));
+        reportView.getColumns().addAll(numCol);
+        reportView.getItems().setAll(parseReportList(reportDAO));
+    }
+
+    private List<WaterReport> parseReportList(ReportDataObject reportDAO) {
+        System.out.println(reportDAO.getAllCandidateReports().values());
+        return new ArrayList<WaterReport>(reportDAO.getAllCandidateReports().values());
+    }
+
 
     /**
      * Gives the controller access to mainApplication.
@@ -51,5 +114,3 @@ public class ViewAllReportsController implements IController {
         mainApplication = mainFXApplication;
     }
 }
-
-

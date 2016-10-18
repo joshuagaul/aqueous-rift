@@ -16,6 +16,7 @@ import javafx.util.Duration;
 import classes.User;
 import model.DataManager;
 import model.UserDataObject;
+import model.ReportDataObject;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -278,6 +279,7 @@ public class MainFXApplication extends Application {
         //Instantiate/Initialize singletons and static classes
         DataManager.initializeFireBase();
         UserDataObject userDAO = UserDataObject.getInstance();
+        ReportDataObject reportDAO = ReportDataObject.getInstance();
         launch(args);
     }
 }

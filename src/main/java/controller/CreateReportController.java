@@ -185,15 +185,15 @@ public class CreateReportController implements IController {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
         } else if (event.getSource() == submit) {
-            String alertMessage = validateWaterReport();
-            if (alertMessage.length() != 0) {
-                Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
-                emptyAlert.setTitle("Empty fields");
-                emptyAlert.setContentText(alertMessage);
-                emptyAlert.setHeaderText("Please fill out all "
-                        + "the required fields.");
-                emptyAlert.showAndWait();
-            } else {
+            //String alertMessage = validateWaterReport();
+            // if (alertMessage.length() != 0) {
+            //     Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
+            //     emptyAlert.setTitle("Empty fields");
+            //     emptyAlert.setContentText(alertMessage);
+            //     emptyAlert.setHeaderText("Please fill out all "
+            //             + "the required fields.");
+            //     emptyAlert.showAndWait();
+            // } else {
                 //TODO validate the input
                 // Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 // alert.setTitle("Confirm Submission");
@@ -205,7 +205,7 @@ public class CreateReportController implements IController {
                 String reporterId = mainApplication.getCurrentUsername();
                 //Hard-coded latitude and longitude so I don't alter UI
                 //***Need to decide on how we enter location (or use both ways)
-                Location loc = new Location("55.2", "65.0");
+                Location loc = new Location("65.4", "45.2");
                 String date = "10/15/2016";
                 // try {
                 //     String target = "Sat Oct 15 20:29:30 2016";
@@ -227,7 +227,7 @@ public class CreateReportController implements IController {
                 if (result.get() == ButtonType.OK) {
                     mainApplication.showMainScreen();
                 }
-            }
+            //}
         }
     }
 

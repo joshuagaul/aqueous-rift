@@ -41,16 +41,16 @@
          <children>
             <ScrollPane hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="1088.0" vbarPolicy="ALWAYS" GridPane.columnSpan="9" GridPane.rowIndex="2" GridPane.rowSpan="8">
                <content>
-                  <TableView prefHeight="495.0" prefWidth="983.0">
+                  <TableView fx:id="reportView" prefHeight="495.0" prefWidth="983.0">
                     <columns>
-                        <TableColumn prefWidth="41.0" resizable="false" text="No." />
-                      <TableColumn editable="false" prefWidth="98.0" resizable="false" text="Date" />
-                      <TableColumn prefWidth="237.0" resizable="false" text="Location" />
-                        <TableColumn prefWidth="95.0" resizable="false" text="Type" />
-                        <TableColumn prefWidth="121.0" resizable="false" text="Condition" />
-                        <TableColumn prefWidth="100.0" text="Virus" />
-                        <TableColumn prefWidth="146.0" text="Contamination" />
-                        <TableColumn minWidth="8.0" prefWidth="144.0" text="User" />
+                        <!-- <TableColumn fx:id="num" prefWidth="41.0" resizable="false" text="No." />
+                        <TableColumn fx:id="date" editable="false" prefWidth="98.0" resizable="false" text="Date" />
+                        <TableColumn fx:id="location" prefWidth="237.0" resizable="false" text="Location" />
+                        <TableColumn fx:id="type" prefWidth="95.0" resizable="false" text="Type" />
+                        <TableColumn fx:id="condition" prefWidth="121.0" resizable="false" text="Condition" />
+                        <TableColumn fx:id="virus" prefWidth="100.0" text="Virus" />
+                        <TableColumn fx:id="contamination" prefWidth="146.0" text="Contamination" /> -->
+                        <TableColumn fx:id="user" minWidth="8.0" prefWidth="144.0" text="User" />
                     </columns>
                   </TableView>
                </content>

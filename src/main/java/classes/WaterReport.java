@@ -2,15 +2,17 @@ package classes;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public abstract class WaterReport {
 
     private String date;
-    private String reporterId;
+    private StringProperty reporterId = new SimpleStringProperty();
     private ObjectProperty<Location> location = new SimpleObjectProperty<>();
 
     /**
-     * Instantiates an abstract WaterReport. WaterSourceReport and 
+     * Instantiates an abstract WaterReport. WaterSourceReport and
      * Water purity report extend this class.
      * @param  date     The date report was created
      * @param  reporterId The username of the report creator.
@@ -18,7 +20,7 @@ public abstract class WaterReport {
      */
     public WaterReport(String date, String reporterId, Location location) {
         this.date = date;
-        this.reporterId = reporterId;
+        this.reporterId.set(reporterId);
         this.location.set(location);
     }
 
@@ -62,7 +64,7 @@ public abstract class WaterReport {
      * @return the user ID of the reporter
      */
     public String getReporterId() {
-        return reporterId;
+        return reporterId.get();
     }
 
     /**
