@@ -36,6 +36,11 @@ public class Location {
         return longitude;
     }
 
+    @Override
+    public String toString() {
+        return latitude + ", " + longitude;
+    }
+
     /**
      * Set's latitude instance variable to given latitude.
      * @param latitude The latitude to set as a double.

@@ -140,7 +140,7 @@ public class MainScreenController implements IController {
         if (report != null && isLoggedIn.get()) {
             delete.visibleProperty().bind(isAuthorized);
             update.visibleProperty().bind(isAuthorized);
-            date.setText(report.getDate());
+            date.setText(report.getDateAsString());
             type.setText(report.getType().toString());
             condition.setText(report.getCondition().toString());
             longitude.setText(report.getLocation().getLongitude());
