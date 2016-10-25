@@ -2,6 +2,7 @@ package controller;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
@@ -15,9 +16,12 @@ import java.util.Map;
 import main.MainFXApplication;
 import model.ReportDataObject;
 import classes.WaterSourceReport;
+import netscape.javascript.JSObject;
 
 public class MapController implements IController,
         MapComponentInitializedListener {
+
+    private boolean opened = false;
 
     @FXML
     private GoogleMapView mapView;
@@ -65,27 +69,33 @@ public class MapController implements IController,
             double lng = Double.parseDouble(report.getLocation()
                 .getLongitude());
             LatLong location = new LatLong(lat, lng);
+
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(location);
             Marker marker = new Marker(markerOptions);
             map.addMarker(marker);
-        }
+            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+            infoWindowOptions.content("Water Condition: " + report.getCondition()
+                    + "<br>Water Type: " + report.getType());
+            InfoWindow window = new InfoWindow(infoWindowOptions);
 
-        LatLong fredWilkieLocation = new LatLong(66.55, 45.333);
-        //Marker example
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(fredWilkieLocation);
-        Marker fredWilkieMarker = new Marker(markerOptions);
-        map.addMarker(fredWilkieMarker);
-        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-        infoWindowOptions.content("<h2>Fred Wilkie</h2>"
-                                + "Current Location: Russia?<br>"
-                                + "Report..." );
-        InfoWindow fredWilkeInfoWindow = new InfoWindow(infoWindowOptions);
-        fredWilkeInfoWindow.open(map, fredWilkieMarker);
-        //It centers the map on either the last marker added
-        //  or on the window opening
-    }
+            map.addUIEventHandler(marker,
+                    UIEventType.click,
+                    (JSObject obj) -> {
+
+                        if (opened) {
+                            window.close();
+                            opened = false;
+                        } else {
+                            window.open(map, marker);
+                            opened = true;
+                        }
+
+                    });
+
+
+        }
+   }
 
     /**
      * Gives the controller access to mainApplication.
