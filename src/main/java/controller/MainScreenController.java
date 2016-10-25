@@ -68,14 +68,14 @@ public class MainScreenController implements IController {
         ReportDataObject reportDAO = ReportDataObject.getInstance();
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);
-        List a = parseReportList(reportDAO);
         if (isLoggedIn.get()) {
             date.setText(reportDAO.getCandidateReport("1").getDate());
             type.setText(reportDAO.getCandidateReport("1").getType().toString());
             condition.setText(reportDAO.getCandidateReport("1").getCondition().toString());
+            longitude.setText(reportDAO.getCandidateReport("1").getLocation().getLongitude());
+            latitude.setText(reportDAO.getCandidateReport("1").getLocation().getLatitude());
         }
-        longitude.setText("//must log in to view?");
-        latitude.setText("//must log in to view?");
+
 
     }
 
@@ -128,10 +128,6 @@ public class MainScreenController implements IController {
     private void handlePinClicked(ActionEvent event) {
         //TODO (see below)
         //Set the text to the information pulled from the map & report
-    }
-
-    private List<WaterReport> parseReportList(ReportDataObject reportDAO) {
-        return new ArrayList<WaterReport>(reportDAO.getAllCandidateReports().values());
     }
 
     /**

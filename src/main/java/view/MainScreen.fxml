@@ -68,8 +68,8 @@
             <Button id="button-secondary" fx:id="update" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="193.0" text="Update" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <Label text="Longitude" GridPane.rowIndex="3" />
             <Label text="Latitude" GridPane.rowIndex="4" />
-            <Text fx:id="longitude" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Text fx:id="latitude" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Text fx:id="longitude" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Text fx:id="latitude" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>
