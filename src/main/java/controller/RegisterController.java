@@ -36,6 +36,9 @@ public class RegisterController implements IController {
     //TODO Tabbing out of the passwordField doesn't work
 
     @FXML
+    private PasswordField confirmPassword;
+
+    @FXML
     private TextField fname;
 
     @FXML
@@ -84,6 +87,13 @@ public class RegisterController implements IController {
                 emptyAlert.setHeaderText("Please fill out all "
                         + "the required fields.");
                 emptyAlert.showAndWait();
+            } else if (!password.getText().equals(
+                    confirmPassword.getText())) {
+                Alert passAlert = new Alert(Alert.AlertType.WARNING);
+                passAlert.setTitle("Password");
+                passAlert.setHeaderText("Your confirmed password "
+                        + "doesn't match the new password field!!");
+                passAlert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm registration");

@@ -33,6 +33,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <padding>
                 <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -42,9 +43,9 @@
                 <Label text="First Name" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                 <Label text="Last Name" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                 <Label text="Password" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                <Label text="Phone" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                <Label text="Email" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-                <Label text="Role" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                <Label text="Phone" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                <Label text="Email" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                <Label text="Role" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
                 <Text id="heading" strokeType="OUTSIDE" strokeWidth="0.0" text="Register" wrappingWidth="351.978515625">
                     <font>
                         <Font name="System Bold" size="15.0" />
@@ -55,12 +56,14 @@
                 <TextField fx:id="fname" prefHeight="31.0" prefWidth="84.0" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                 <TextField fx:id="lname" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                 <PasswordField fx:id="password" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                <TextField fx:id="pnumber" prefHeight="31.0" prefWidth="190.0" promptText="ex) 000-000-0000" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                <TextField fx:id="email" prefHeight="31.0" prefWidth="127.0" promptText="ex) johndoe@mail.com" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-                <ComboBox fx:id="usertype" prefHeight="31.0" prefWidth="215.0" promptText="User" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
-                <Button id="button-primary" fx:id="ok" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="383.0" text="OK" GridPane.columnSpan="2" GridPane.rowIndex="10" />
-                <Button id="button-secondary" fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="372.0" text="Cancel" GridPane.columnSpan="2" GridPane.rowIndex="11" />
+                <TextField fx:id="pnumber" prefHeight="31.0" prefWidth="190.0" promptText="ex) 000-000-0000" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                <TextField fx:id="email" prefHeight="31.0" prefWidth="127.0" promptText="ex) johndoe@mail.com" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                <ComboBox fx:id="usertype" prefHeight="31.0" prefWidth="215.0" promptText="User" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
+                <Button id="button-primary" fx:id="ok" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="383.0" text="OK" GridPane.columnSpan="2" GridPane.rowIndex="11" />
+                <Button id="button-secondary" fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="372.0" text="Cancel" GridPane.columnSpan="2" GridPane.rowIndex="12" />
                 <Label text="Prefix" translateY="20.0" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Label text="Confirm Password" translateY="20.0" GridPane.rowIndex="6" />
+            <PasswordField fx:id="confirmPassword" translateY="20.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             </children>
         </GridPane>
     </children>
