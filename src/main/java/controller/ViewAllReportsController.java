@@ -79,12 +79,16 @@ public class ViewAllReportsController implements IController {
      */
     @FXML
     private void initialize() {
-        TableColumn<WaterReport, String> location  = new TableColumn<>("Location");
+        TableColumn<WaterReport, String> latitude  = new TableColumn<>("Latitude");
+        TableColumn<WaterReport, String> longitude  = new TableColumn<>("Longitude");
         TableColumn<WaterReport, String> date  = new TableColumn<>("Date");
         TableColumn<WaterReport, String> type  = new TableColumn<>("Type");
         TableColumn<WaterReport, String> condition  = new TableColumn<>("Condition");
         ReportDataObject reportDAO = ReportDataObject.getInstance();
-        location.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("location"));
+
+        //TODO SHOW LONGITUDE AND LATITUDE
+        latitude.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("location"));
+        longitude.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("location"));
         date.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("date"));
         type.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("type"));
         condition.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("condition"));
@@ -92,7 +96,7 @@ public class ViewAllReportsController implements IController {
         //location.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("contamination"));
         user.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("reporterId"));
         System.out.println(parseReportList(reportDAO));
-        reportView.getColumns().addAll(location, date, type, condition);
+        reportView.getColumns().addAll(latitude, longitude, date, type, condition);
         reportView.getItems().setAll(parseReportList(reportDAO));
 
     }
