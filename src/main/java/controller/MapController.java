@@ -21,6 +21,8 @@ import netscape.javascript.JSObject;
 public class MapController implements IController,
         MapComponentInitializedListener {
 
+    private boolean opened = false;
+
     @FXML
     private GoogleMapView mapView;
 
@@ -73,6 +75,10 @@ public class MapController implements IController,
             markerOptions.position(location);
             Marker marker = new Marker(markerOptions);
             map.addMarker(marker);
+            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+            infoWindowOptions.content("Water Condition: " + report.getCondition()
+                    + "<br>Water Type: " + report.getType());
+            InfoWindow window = new InfoWindow(infoWindowOptions);
 
             map.addUIEventHandler(marker,
                     UIEventType.click,
@@ -83,9 +89,14 @@ public class MapController implements IController,
                         + "<br>Water Type: " + report.getType());
                         InfoWindow window = new InfoWindow(infoWindowOptions);
                         window.open(map, marker);
+                        if (opened) {
+                            window.close();
+                            opened = false;
+                        } else {
+                            window.open(map, marker);
+                            opened = true;
+                        }
                     });
-
-
         }
    }
 
