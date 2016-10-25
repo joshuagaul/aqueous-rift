@@ -7,7 +7,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.collections.ObservableList;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -79,31 +78,52 @@ public class ViewAllReportsController implements IController {
      */
     @FXML
     private void initialize() {
-        TableColumn<WaterReport, String> latitude  = new TableColumn<>("Latitude");
-        TableColumn<WaterReport, String> longitude  = new TableColumn<>("Longitude");
-        TableColumn<WaterReport, String> date  = new TableColumn<>("Date");
-        TableColumn<WaterReport, String> type  = new TableColumn<>("Type");
-        TableColumn<WaterReport, String> condition  = new TableColumn<>("Condition");
+        TableColumn<WaterReport, String> latitude 
+            = new TableColumn<>("Latitude");
+        TableColumn<WaterReport, String> longitude  
+            = new TableColumn<>("Longitude");
+        TableColumn<WaterReport, String> date  
+            = new TableColumn<>("Date");
+        TableColumn<WaterReport, String> type  
+            = new TableColumn<>("Type");
+        TableColumn<WaterReport, String> condition  
+            = new TableColumn<>("Condition");
         ReportDataObject reportDAO = ReportDataObject.getInstance();
 
         //TODO SHOW LONGITUDE AND LATITUDE
-        latitude.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("location"));
-        longitude.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("location"));
-        date.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("date"));
-        type.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("type"));
-        condition.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("condition"));
-        // date.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("virus"));
-        //location.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("contamination"));
-        user.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("reporterId"));
+        latitude.setCellValueFactory(
+            new PropertyValueFactory<WaterReport, String>("location"));
+
+        longitude.setCellValueFactory(
+            new PropertyValueFactory<WaterReport, String>("location"));
+
+        date.setCellValueFactory(
+            new PropertyValueFactory<WaterReport, String>("date"));
+
+        type.setCellValueFactory(
+            new PropertyValueFactory<WaterReport, String>("type"));
+
+        condition.setCellValueFactory(
+            new PropertyValueFactory<WaterReport, String>("condition"));
+
+        user.setCellValueFactory(
+            new PropertyValueFactory<WaterReport, String>("reporterId"));
         System.out.println(parseReportList(reportDAO));
-        reportView.getColumns().addAll(latitude, longitude, date, type, condition);
+        reportView.getColumns().addAll(latitude, longitude, date,
+            type, condition);
         reportView.getItems().setAll(parseReportList(reportDAO));
 
     }
 
+    /**
+     * Parses the reportList from the given Report Data Object
+     * @param  reportDAO Report Data Object to parse
+     * @return           ArrayList of water reports
+     */
     private List<WaterReport> parseReportList(ReportDataObject reportDAO) {
         System.out.println(reportDAO.getAllCandidateReports().values());
-        return new ArrayList<WaterReport>(reportDAO.getAllCandidateReports().values());
+        return new ArrayList<WaterReport>(reportDAO.getAllCandidateReports()
+            .values());
     }
     /**
      * Gives the controller access to mainApplication.

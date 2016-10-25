@@ -67,7 +67,7 @@ public abstract class WaterReport {
      */    
     public String getDateAsString() {
         java.text.SimpleDateFormat dateFormat =
-            new java.text.SimpleDateFormat ("mm/dd/yyyy 'at' hh:mm:ss a zzz");
+            new java.text.SimpleDateFormat("mm/dd/yyyy 'at' hh:mm:ss a zzz");
         return dateFormat.format(date);
     }
 

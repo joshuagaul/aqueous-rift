@@ -2,7 +2,6 @@
  * Created by AhJin Noh on 9/22/2016.
  */
 package controller;
-import classes.WaterReport;
 import classes.WaterSourceReport;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -11,12 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import main.MainFXApplication;
-import model.ReportDataObject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -136,6 +131,10 @@ public class MainScreenController implements IController {
         isLoggedIn.set(set);
     }
 
+    /**
+     * Sets the current report
+     * @param report Report to set
+     */
     public void setCurrentReport(WaterSourceReport report) {
         if (report != null && isLoggedIn.get()) {
             delete.visibleProperty().bind(isAuthorized);

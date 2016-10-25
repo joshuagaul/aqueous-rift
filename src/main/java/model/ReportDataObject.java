@@ -205,7 +205,7 @@ public class ReportDataObject {
      * Returns all saved candidateReport objects
      * A WaterSourceReport is returned because it represents a candidate report.
      *
-     * @return     The <reportId, WaterReport> map
+     * @return     A map mapping String reportId and WaterSourceReport
      */
     public Map<String, WaterSourceReport> getAllCandidateReports() {
         return candidateReportMap;
@@ -261,7 +261,7 @@ public class ReportDataObject {
 
             Date date = new java.text.SimpleDateFormat("mm/dd/"
                 + "yyyy").parse(dateString);
-        // String time = (String) objReport.get("time");
+
             String reporterId = (String) objReport.get("reporterId");
             String type = (String) objReport.get("type");
             WaterType t = WaterType.valueOf(type);

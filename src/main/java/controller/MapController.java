@@ -6,13 +6,11 @@ import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
-import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import javafx.fxml.FXML;
-import java.util.Map;
 import main.MainFXApplication;
 import model.ReportDataObject;
 import classes.WaterSourceReport;
@@ -29,6 +27,9 @@ public class MapController implements IController,
     private GoogleMap map;
     private MainFXApplication mainApplication;
 
+    /**
+     * Initializes the controller
+     */
     @FXML
     public void initialize() {
         mapView.addMapInializedListener(this);
@@ -62,8 +63,8 @@ public class MapController implements IController,
             System.out.println(e.getMessage());
         }
         ReportDataObject reportDAO = ReportDataObject.getInstance();
-        for (WaterSourceReport report :
-                reportDAO.getAllCandidateReports().values()) {
+        for (WaterSourceReport report
+            : reportDAO.getAllCandidateReports().values()) {
             System.out.println("reports!");
             double lat = Double.parseDouble(report.getLocation().getLatitude());
             double lng = Double.parseDouble(report.getLocation()
@@ -75,29 +76,30 @@ public class MapController implements IController,
             Marker marker = new Marker(markerOptions);
             map.addMarker(marker);
             InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-            infoWindowOptions.content("Water Condition: " + report.getCondition()
-                    + "<br>Water Type: " + report.getType());
+            infoWindowOptions.content("Water Condition: "
+                + report.getCondition() + "<br>Water Type: "
+                + report.getType());
             InfoWindow window = new InfoWindow(infoWindowOptions);
 
             map.addUIEventHandler(marker,
-                    UIEventType.click,
-                    (JSObject obj) -> {
-                        mainApplication.setCurrentReport(report);
-                        // InfoWindowOptions cur = new InfoWindowOptions();
-                        // cur.content("Water Condition: " + report.getCondition()
-                        // + "<br>Water Type: " + report.getType());
-                        // InfoWindow win = new InfoWindow(infoWindowOptions);
-                        // wind.open(map, marker);
-                        if (opened) {
-                            window.close();
-                            opened = false;
-                        } else {
-                            window.open(map, marker);
-                            opened = true;
-                        }
-                    });
+                UIEventType.click,
+                (JSObject obj) -> {
+                    mainApplication.setCurrentReport(report);
+                    // InfoWindowOptions cur = new InfoWindowOptions();
+                    // cur.content("Water Condition: " + report.getCondition()
+                    // + "<br>Water Type: " + report.getType());
+                    // InfoWindow win = new InfoWindow(infoWindowOptions);
+                    // wind.open(map, marker);
+                    if (opened) {
+                        window.close();
+                        opened = false;
+                    } else {
+                        window.open(map, marker);
+                        opened = true;
+                    }
+                });
         }
-   }
+    }
 
     /**
      * Gives the controller access to mainApplication.
