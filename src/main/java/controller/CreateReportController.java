@@ -212,21 +212,8 @@ public class CreateReportController implements IController {
                 String reporterId = mainApplication.getCurrentUsername();
                 //Hard-coded latitude and longitude so I don't alter UI
                 //***Need to decide on how we enter location (or use both ways)
-<<<<<<< HEAD
                 Location loc = new Location("65.4", "45.2");
                 Date date = new Date();
-=======
-                Location loc = new Location(longitude.getText(), latitude.getText());
-                String date = "10/15/2016";
->>>>>>> refs/remotes/origin/master
-                // try {
-                //     String target = "Sat Oct 15 20:29:30 2016";
-                //     DateFormat df = new SimpleDateFormat
-                //  ("EEE MMM dd kk:mm:ss yyyy", Locale.ENGLISH);
-                //     date =  df.parse(target).toString();
-                // } catch (ParseException e) {
-                //     System.out.println(e.getMessage());
-                // }
                 WaterSourceReport report = new WaterSourceReport(reporterId,
                         loc, WaterType.Bottled, WaterCondition.Potable, date);
                 reportDAO.addCandidateReport(report);

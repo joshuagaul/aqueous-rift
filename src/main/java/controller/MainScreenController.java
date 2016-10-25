@@ -69,7 +69,8 @@ public class MainScreenController implements IController {
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);
         if (isLoggedIn.get()) {
-            date.setText(reportDAO.getCandidateReport("1").getDate());
+            java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("mm/dd/yyyy");
+            date.setText(format.format(reportDAO.getCandidateReport("1").getDate()));
             type.setText(reportDAO.getCandidateReport("1").getType().toString());
             condition.setText(reportDAO.getCandidateReport("1").getCondition().toString());
             longitude.setText(reportDAO.getCandidateReport("1").getLocation().getLongitude());
