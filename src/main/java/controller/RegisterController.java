@@ -89,13 +89,6 @@ public class RegisterController implements IController {
                 emptyAlert.setHeaderText("Please fill out all "
                         + "the required fields.");
                 emptyAlert.showAndWait();
-            } else if (userDAO.userExists(username.getText())) {
-                Alert takenAlert = new Alert(Alert.AlertType.WARNING);
-                takenAlert.setTitle("Password");
-                takenAlert.setHeaderText("Your chosen username "
-                        + "is already taken! Please choose "
-                        + "another username for yourself.");
-                takenAlert.showAndWait();
             } else if (!password.getText().equals(
                     confirmPassword.getText())) {
                 Alert passAlert = new Alert(Alert.AlertType.WARNING);
@@ -103,6 +96,13 @@ public class RegisterController implements IController {
                 passAlert.setHeaderText("Your confirmed password "
                         + "doesn't match the new password field!!");
                 passAlert.showAndWait();
+            } else if (userDAO.userExists(username.getText())) {
+                Alert takenAlert = new Alert(Alert.AlertType.WARNING);
+                takenAlert.setTitle("Password");
+                takenAlert.setHeaderText("Your chosen username "
+                        + "is already taken! Please choose "
+                        + "another username for yourself.");
+                takenAlert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm registration");
