@@ -1,5 +1,6 @@
 package classes;
 
+import java.util.Date;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -73,7 +74,7 @@ public class WaterSourceReport extends WaterReport {
      * @param   date The date the report was submitted
      */
     public WaterSourceReport(String reporterId, Location location,
-            WaterType type, WaterCondition condition, String date) {
+            WaterType type, WaterCondition condition, Date date) {
         super(date, reporterId, location);
         number++;
         this.type.set(type);

@@ -1,6 +1,6 @@
 package classes;
 
-// import java.util.Date;
+import java.util.Date;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -22,7 +22,7 @@ public class WaterPurityReport extends WaterReport {
      * @param  contaminantPPM The parats per million
      *                        of contaminants in the water.
      */
-    public WaterPurityReport(String reporterId, String date, Location location,
+    public WaterPurityReport(String reporterId, Date date, Location location,
         OverallCondition condition, double virusPPM, double contaminantPPM) {
         super(date, reporterId, location);
         number++;

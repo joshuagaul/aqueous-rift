@@ -1,5 +1,6 @@
 package classes;
 
+import java.util.Date;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -7,7 +8,7 @@ import javafx.beans.property.StringProperty;
 
 public abstract class WaterReport {
 
-    private String date;
+    private Date date;
     private StringProperty reporterId = new SimpleStringProperty();
     private ObjectProperty<Location> location = new SimpleObjectProperty<>();
 
@@ -18,7 +19,7 @@ public abstract class WaterReport {
      * @param  reporterId The username of the report creator.
      * @param  location The location that the water report comes from.
      */
-    public WaterReport(String date, String reporterId, Location location) {
+    public WaterReport(Date date, String reporterId, Location location) {
         this.date = date;
         this.reporterId.set(reporterId);
         this.location.set(location);
@@ -30,6 +31,7 @@ public abstract class WaterReport {
     private WaterReport() {
 
     }
+
 
     /**
      * Get the location of the water source.
@@ -54,8 +56,19 @@ public abstract class WaterReport {
      *
      * @return the date when the report is created
      */
-    public String getDate() {
+    public Date getDate() {
         return date;
+    }
+
+    /**
+     * Get the date as a string when the report is created.
+     *
+     * @return the date when the report was created as a string.
+     */    
+    public String getDateAsString() {
+        java.text.SimpleDateFormat dateFormat =
+            new java.text.SimpleDateFormat ("mm/dd/yyyy 'at' hh:mm:ss a zzz");
+        return dateFormat.format(date);
     }
 
     /**

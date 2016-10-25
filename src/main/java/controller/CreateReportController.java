@@ -4,6 +4,7 @@ package controller;
  * Created by ahjin on 10/7/2016.
  */
 
+import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -206,7 +207,7 @@ public class CreateReportController implements IController {
                 //Hard-coded latitude and longitude so I don't alter UI
                 //***Need to decide on how we enter location (or use both ways)
                 Location loc = new Location("65.4", "45.2");
-                String date = "10/15/2016";
+                Date date = new Date();
                 // try {
                 //     String target = "Sat Oct 15 20:29:30 2016";
                 //     DateFormat df = new SimpleDateFormat
