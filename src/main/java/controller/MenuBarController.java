@@ -116,6 +116,15 @@ public class MenuBarController implements IController {
     }
 
     /**
+     * go back to the main screen
+     */
+    @FXML
+    private void handleMainMenu() {
+        mainApplication.showMap();
+        mainApplication.showMainScreen();
+    }
+
+    /**
      * Lets the user edit profile
      */
     @FXML

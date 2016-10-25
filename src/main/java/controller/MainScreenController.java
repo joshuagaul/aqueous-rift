@@ -2,6 +2,7 @@
  * Created by AhJin Noh on 9/22/2016.
  */
 package controller;
+import classes.WaterReport;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -9,7 +10,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import main.MainFXApplication;
+import model.ReportDataObject;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,10 +33,26 @@ import java.util.Optional;
 public class MainScreenController implements IController {
     private static BooleanProperty isAuthorized
             = new SimpleBooleanProperty(false);
+    private static BooleanProperty isLoggedIn
+            = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
+    @FXML
+    private Text longitude;
+
+    @FXML
+    private Text latitude;
 
     @FXML
     private Button report;
+
+    @FXML
+    private Text condition;
+
+    @FXML
+    private Text type;
+
+    @FXML
+    private Text date;
 
     @FXML
     private Button update;
@@ -42,8 +65,18 @@ public class MainScreenController implements IController {
      */
     @FXML
     private void initialize() {
+        ReportDataObject reportDAO = ReportDataObject.getInstance();
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);
+        List a = parseReportList(reportDAO);
+        if (isLoggedIn.get()) {
+            date.setText(reportDAO.getCandidateReport("1").getDate());
+            type.setText(reportDAO.getCandidateReport("1").getType().toString());
+            condition.setText(reportDAO.getCandidateReport("1").getCondition().toString());
+        }
+        longitude.setText("//must log in to view?");
+        latitude.setText("//must log in to view?");
+
     }
 
     /**
@@ -95,6 +128,18 @@ public class MainScreenController implements IController {
     private void handlePinClicked(ActionEvent event) {
         //TODO (see below)
         //Set the text to the information pulled from the map & report
+    }
+
+    private List<WaterReport> parseReportList(ReportDataObject reportDAO) {
+        return new ArrayList<WaterReport>(reportDAO.getAllCandidateReports().values());
+    }
+
+    /**
+     * NOTE: THIS IS TEMPORARY - to show the data info on the main screen
+     * @param set true if the user is logged in.
+     */
+    public static void setLoggedIn(boolean set) {
+        isLoggedIn.set(set);
     }
 
     /**

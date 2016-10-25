@@ -34,18 +34,18 @@ public class ViewAllReportsController implements IController {
     // @FXML
     // private TableColumn<WaterSourceReport, String> num;
     //
-    // @FXML
-    // private TableColumn<WaterSourceReport, String> date;
+    @FXML
+    private TableColumn<WaterSourceReport, String> date;
     //
     // @FXML
     // private TableColumn<WaterSourceReport, String> location;
     //
-    // @FXML
-    // private TableColumn<WaterSourceReport, String> type;
-    //
-    // @FXML
-    // private TableColumn<WaterSourceReport, String> condition;
-    //
+    @FXML
+    private TableColumn<WaterSourceReport, String> type;
+
+    @FXML
+    private TableColumn<WaterSourceReport, String> condition;
+
     // @FXML
     // private TableColumn<WaterSourceReport, String> virus;
     //
@@ -79,19 +79,22 @@ public class ViewAllReportsController implements IController {
      */
     @FXML
     private void initialize() {
-        TableColumn<WaterReport, String> numCol  = new TableColumn<>("Location");
+        TableColumn<WaterReport, String> location  = new TableColumn<>("Location");
+        TableColumn<WaterReport, String> date  = new TableColumn<>("Date");
+        TableColumn<WaterReport, String> type  = new TableColumn<>("Type");
+        TableColumn<WaterReport, String> condition  = new TableColumn<>("Condition");
         ReportDataObject reportDAO = ReportDataObject.getInstance();
-        numCol.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("location"));
-        // date.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("date"));
-        // location.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("location"));
-        // type.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("type"));
-        // num.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("condition"));
+        location.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("location"));
+        date.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("date"));
+        type.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("type"));
+        condition.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("condition"));
         // date.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("virus"));
-        // location.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("contamination"));
+        //location.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("contamination"));
         user.setCellValueFactory(new PropertyValueFactory<WaterReport, String>("reporterId"));
         System.out.println(parseReportList(reportDAO));
-        reportView.getColumns().addAll(numCol);
+        reportView.getColumns().addAll(location, date, type, condition);
         reportView.getItems().setAll(parseReportList(reportDAO));
+
     }
 
     private List<WaterReport> parseReportList(ReportDataObject reportDAO) {

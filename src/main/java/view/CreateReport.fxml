@@ -42,14 +42,8 @@
                </font>
             </Text>
             <Label prefHeight="21.0" prefWidth="116.0" text="Location" GridPane.rowIndex="2" />
-            <TextField fx:id="street" prefHeight="31.0" prefWidth="269.0" promptText="Street name" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-            <TextField fx:id="city" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="128.0" promptText="City" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-            <ComboBox fx:id="state" prefHeight="31.0" prefWidth="95.0" promptText="State" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </ComboBox>
-            <TextField fx:id="zipCode" promptText="Zip Code" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <TextField fx:id="longitude" prefHeight="31.0" prefWidth="269.0" promptText="Longitude" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="latitude" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="128.0" promptText="Latitude" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
             <ComboBox fx:id="waterType" prefWidth="150.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <ComboBox fx:id="waterCondition" prefWidth="150.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextField fx:id="virus" GridPane.columnIndex="1" GridPane.rowIndex="7" />
@@ -63,6 +57,8 @@
             <Text fx:id="ppm1" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Text fx:id="ppm2" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" GridPane.columnIndex="2" GridPane.rowIndex="8" />
             <CheckBox fx:id="checkbox" mnemonicParsing="false" prefHeight="21.0" prefWidth="407.0" text="This water source has been confirmed." GridPane.columnSpan="3" GridPane.rowIndex="9" />
+            <Label text="Longitude" GridPane.rowIndex="3" />
+            <Label text="Latitude" GridPane.rowIndex="4" />
          </children>
          <padding>
             <Insets bottom="50.0" left="25.0" right="25.0" top="25.0" />

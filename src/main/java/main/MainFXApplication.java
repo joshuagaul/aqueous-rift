@@ -211,10 +211,13 @@ public class MainFXApplication extends Application {
                 || currentUser.getUserType().equals("Worker")
                 || currentUser.getUserType().equals("Admin")) {
             MainScreenController.setAuthority(true);
+            MainScreenController.setLoggedIn(true);
             CreateReportController.setAuthority(true);
+
         } else {
             MainScreenController.setAuthority(false);
             CreateReportController.setAuthority(false);
+            MainScreenController.setLoggedIn(true);
         }
     }
 
