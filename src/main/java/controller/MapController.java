@@ -28,7 +28,6 @@ public class MapController implements IController,
 
     private GoogleMap map;
     private MainFXApplication mainApplication;
-    private WaterReport currentReport;
 
     @FXML
     public void initialize() {
@@ -83,12 +82,12 @@ public class MapController implements IController,
             map.addUIEventHandler(marker,
                     UIEventType.click,
                     (JSObject obj) -> {
-                        currentReport = report;
-                        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("Water Condition: " + report.getCondition()
-                        + "<br>Water Type: " + report.getType());
-                        InfoWindow window = new InfoWindow(infoWindowOptions);
-                        window.open(map, marker);
+                        mainApplication.setCurrentReport(report);
+                        // InfoWindowOptions cur = new InfoWindowOptions();
+                        // cur.content("Water Condition: " + report.getCondition()
+                        // + "<br>Water Type: " + report.getType());
+                        // InfoWindow win = new InfoWindow(infoWindowOptions);
+                        // wind.open(map, marker);
                         if (opened) {
                             window.close();
                             opened = false;

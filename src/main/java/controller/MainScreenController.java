@@ -3,6 +3,7 @@
  */
 package controller;
 import classes.WaterReport;
+import classes.WaterSourceReport;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -14,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import main.MainFXApplication;
 import model.ReportDataObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -65,18 +65,16 @@ public class MainScreenController implements IController {
      */
     @FXML
     private void initialize() {
-        ReportDataObject reportDAO = ReportDataObject.getInstance();
-        delete.visibleProperty().bind(isAuthorized);
-        update.visibleProperty().bind(isAuthorized);
-        if (isLoggedIn.get()) {
-            date.setText(reportDAO.getCandidateReport("1").getDate());
-            type.setText(reportDAO.getCandidateReport("1").getType().toString());
-            condition.setText(reportDAO.getCandidateReport("1").getCondition().toString());
-            longitude.setText(reportDAO.getCandidateReport("1").getLocation().getLongitude());
-            latitude.setText(reportDAO.getCandidateReport("1").getLocation().getLatitude());
-        }
-
-
+        // WaterSourceReport curReport = mainApplication.getCurrentReport();
+        // if (curReport != null && isLoggedIn.get()) {
+        //     delete.visibleProperty().bind(isAuthorized);
+        //     update.visibleProperty().bind(isAuthorized);
+        //     date.setText(curReport.getDate());
+        //     type.setText(curReport.getType().toString());
+        //     condition.setText(curReport.getCondition().toString());
+        //     longitude.setText(curReport.getLocation().getLongitude());
+        //     latitude.setText(curReport.getLocation().getLatitude());
+        // }
     }
 
     /**
@@ -136,6 +134,18 @@ public class MainScreenController implements IController {
      */
     public static void setLoggedIn(boolean set) {
         isLoggedIn.set(set);
+    }
+
+    public void setCurrentReport(WaterSourceReport report) {
+        if (report != null && isLoggedIn.get()) {
+            delete.visibleProperty().bind(isAuthorized);
+            update.visibleProperty().bind(isAuthorized);
+            date.setText(report.getDate());
+            type.setText(report.getType().toString());
+            condition.setText(report.getCondition().toString());
+            longitude.setText(report.getLocation().getLongitude());
+            latitude.setText(report.getLocation().getLatitude());
+        }
     }
 
     /**

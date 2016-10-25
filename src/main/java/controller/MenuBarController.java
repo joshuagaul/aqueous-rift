@@ -102,6 +102,7 @@ public class MenuBarController implements IController {
             username.set("Hello, Guest");
             userLoggedIn.set(false);
             MainScreenController.setAuthority(false);
+            MainScreenController.setLoggedIn(false);
             CreateReportController.setAuthority(false);
         }
     }
