@@ -2,6 +2,7 @@
  * Created by AhJin Noh on 9/22/2016.
  */
 package controller;
+import classes.WaterSourceReport;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.text.Text;
 import main.MainFXApplication;
 import java.util.Optional;
 
@@ -26,10 +28,26 @@ import java.util.Optional;
 public class MainScreenController implements IController {
     private static BooleanProperty isAuthorized
             = new SimpleBooleanProperty(false);
+    private static BooleanProperty isLoggedIn
+            = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
+    @FXML
+    private Text longitude;
+
+    @FXML
+    private Text latitude;
 
     @FXML
     private Button report;
+
+    @FXML
+    private Text condition;
+
+    @FXML
+    private Text type;
+
+    @FXML
+    private Text date;
 
     @FXML
     private Button update;
@@ -42,8 +60,16 @@ public class MainScreenController implements IController {
      */
     @FXML
     private void initialize() {
-        delete.visibleProperty().bind(isAuthorized);
-        update.visibleProperty().bind(isAuthorized);
+        // WaterSourceReport curReport = mainApplication.getCurrentReport();
+        // if (curReport != null && isLoggedIn.get()) {
+        //     delete.visibleProperty().bind(isAuthorized);
+        //     update.visibleProperty().bind(isAuthorized);
+        //     date.setText(curReport.getDate());
+        //     type.setText(curReport.getType().toString());
+        //     condition.setText(curReport.getCondition().toString());
+        //     longitude.setText(curReport.getLocation().getLongitude());
+        //     latitude.setText(curReport.getLocation().getLatitude());
+        // }
     }
 
     /**
@@ -95,6 +121,30 @@ public class MainScreenController implements IController {
     private void handlePinClicked(ActionEvent event) {
         //TODO (see below)
         //Set the text to the information pulled from the map & report
+    }
+
+    /**
+     * NOTE: THIS IS TEMPORARY - to show the data info on the main screen
+     * @param set true if the user is logged in.
+     */
+    public static void setLoggedIn(boolean set) {
+        isLoggedIn.set(set);
+    }
+
+    /**
+     * Sets the current report
+     * @param report Report to set
+     */
+    public void setCurrentReport(WaterSourceReport report) {
+        if (report != null && isLoggedIn.get()) {
+            delete.visibleProperty().bind(isAuthorized);
+            update.visibleProperty().bind(isAuthorized);
+            date.setText(report.getDateAsString());
+            type.setText(report.getType().toString());
+            condition.setText(report.getCondition().toString());
+            longitude.setText(report.getLocation().getLongitude());
+            latitude.setText(report.getLocation().getLatitude());
+        }
     }
 
     /**

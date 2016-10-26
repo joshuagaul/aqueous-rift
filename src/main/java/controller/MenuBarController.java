@@ -102,6 +102,7 @@ public class MenuBarController implements IController {
             username.set("Hello, Guest");
             userLoggedIn.set(false);
             MainScreenController.setAuthority(false);
+            MainScreenController.setLoggedIn(false);
             CreateReportController.setAuthority(false);
         }
     }
@@ -113,6 +114,15 @@ public class MenuBarController implements IController {
     private void handleEditMenu() {
         mainApplication.showMap();
         mainApplication.showEditProfileScreen();
+    }
+
+    /**
+     * go back to the main screen
+     */
+    @FXML
+    private void handleMainMenu() {
+        mainApplication.showMap();
+        mainApplication.showMainScreen();
     }
 
     /**

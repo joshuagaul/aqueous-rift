@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import classes.User;
+import classes.WaterSourceReport;
 import model.DataManager;
 import model.UserDataObject;
 import model.ReportDataObject;
@@ -29,6 +30,7 @@ public class MainFXApplication extends Application {
     private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private static User currentUser;
     private static String currentUsername;
+    private static WaterSourceReport currentReport;
     private static MenuBarController menuBarController;
     private static MainScreenController mainScreenController;
 
@@ -108,6 +110,8 @@ public class MainFXApplication extends Application {
             if (controller instanceof EditProfileController) {
                 EditProfileController c = (EditProfileController) (controller);
                 c.populateUserInformation(currentUser, currentUsername);
+            } else if (controller instanceof MainScreenController) {
+                mainScreenController = (MainScreenController) (controller);
             }
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to find "
@@ -211,10 +215,13 @@ public class MainFXApplication extends Application {
                 || currentUser.getUserType().equals("Worker")
                 || currentUser.getUserType().equals("Admin")) {
             MainScreenController.setAuthority(true);
+            MainScreenController.setLoggedIn(true);
             CreateReportController.setAuthority(true);
+
         } else {
             MainScreenController.setAuthority(false);
             CreateReportController.setAuthority(false);
+            MainScreenController.setLoggedIn(true);
         }
     }
 
@@ -248,6 +255,23 @@ public class MainFXApplication extends Application {
      */
     public void setCurrentUsername(String username) {
         currentUsername = username;
+    }
+
+    /**
+     * Gets the report that is currently being viewed in the application.
+     * @return currentReport
+     */
+    public WaterSourceReport getCurrentReport() {
+        return currentReport;
+    }
+
+    /**
+     * Sets the report that is being viewed in the application.
+     * @param report report currently active
+     */
+    public void setCurrentReport(WaterSourceReport report) {
+        currentReport = report;
+        mainScreenController.setCurrentReport(report);
     }
 
     /**

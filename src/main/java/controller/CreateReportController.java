@@ -4,6 +4,7 @@ package controller;
  * Created by ahjin on 10/7/2016.
  */
 
+import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -58,6 +59,12 @@ public class CreateReportController implements IController {
 
     @FXML
     private ComboBox<WaterCondition> waterCondition = new ComboBox<>();
+
+    @FXML
+    private TextField longitude;
+
+    @FXML
+    private TextField latitude;
 
     @FXML
     private TextField virus;
@@ -185,49 +192,24 @@ public class CreateReportController implements IController {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
         } else if (event.getSource() == submit) {
-            //String alertMessage = validateWaterReport();
-            // if (alertMessage.length() != 0) {
-            //     Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
-            //     emptyAlert.setTitle("Empty fields");
-            //     emptyAlert.setContentText(alertMessage);
-            //     emptyAlert.setHeaderText("Please fill out all "
-            //             + "the required fields.");
-            //     emptyAlert.showAndWait();
-            // } else {
-                //TODO validate the input
-                // Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                // alert.setTitle("Confirm Submission");
-                // alert.setHeaderText("Are you sure you want to "
-                //         + "submit this report?");
-                // Optional<ButtonType> result = alert.showAndWait();
-                // if (result.get() == ButtonType.OK) {
-                ReportDataObject reportDAO = ReportDataObject.getInstance();
-                String reporterId = mainApplication.getCurrentUsername();
-                //Hard-coded latitude and longitude so I don't alter UI
-                //***Need to decide on how we enter location (or use both ways)
-                Location loc = new Location("65.4", "45.2");
-                String date = "10/15/2016";
-                // try {
-                //     String target = "Sat Oct 15 20:29:30 2016";
-                //     DateFormat df = new SimpleDateFormat
-                //  ("EEE MMM dd kk:mm:ss yyyy", Locale.ENGLISH);
-                //     date =  df.parse(target).toString();
-                // } catch (ParseException e) {
-                //     System.out.println(e.getMessage());
-                // }
-                WaterSourceReport report = new WaterSourceReport(reporterId,
-                        loc, WaterType.Bottled, WaterCondition.Potable, date);
-                reportDAO.addCandidateReport(report);
-                //TODO show a toast message that the report has been submitted
+            ReportDataObject reportDAO = ReportDataObject.getInstance();
+            String reporterId = mainApplication.getCurrentUsername();
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Report Submitted");
-                alert.setHeaderText("Your report has been submitted.");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) {
-                    mainApplication.showMainScreen();
-                }
-            //}
+            //Hard-coded latitude and longitude so I don't alter UI
+            //***Need to decide on how we enter location (or use both ways)
+            Location loc = new Location("65.4", "45.2");
+            Date date = new Date();
+            WaterSourceReport report = new WaterSourceReport(reporterId,
+                loc, WaterType.Bottled, WaterCondition.Potable, date);
+            reportDAO.addCandidateReport(report);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Report Submitted");
+            alert.setHeaderText("Your report has been submitted.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                mainApplication.showMainScreen();
+            }
         }
     }
 

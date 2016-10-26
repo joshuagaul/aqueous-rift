@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ChildEventListener;
@@ -204,7 +205,7 @@ public class ReportDataObject {
      * Returns all saved candidateReport objects
      * A WaterSourceReport is returned because it represents a candidate report.
      *
-     * @return     The <reportId, WaterReport> map
+     * @return     A map mapping String reportId and WaterSourceReport
      */
     public Map<String, WaterSourceReport> getAllCandidateReports() {
         return candidateReportMap;
@@ -251,21 +252,28 @@ public class ReportDataObject {
      */
     private void updateCandidateReports(String reportId,
             Map<String, Object> objReport) {
-        Map<String, String> locationObj = (HashMap<String, String>)
-            objReport.get("location");
-        String lat = (String) locationObj.get("latitude");
-        String lon = (String) locationObj.get("longitude");
-        String date = (String) objReport.get("date");
-        // String time = (String) objReport.get("time");
-        String reporterId = (String) objReport.get("reporterId");
-        String type = (String) objReport.get("type");
-        WaterType t = WaterType.valueOf(type);
-        String condition = (String) objReport.get("condition");
-        WaterCondition c = WaterCondition.valueOf(condition);
-        Location loc = new Location(lat, lon);
-        WaterSourceReport report = new WaterSourceReport(reporterId, loc, t,
-            c, date);
-        candidateReportMap.put(reportId, report);
+        try {
+            Map<String, String> locationObj = (HashMap<String, String>)
+                objReport.get("location");
+            String lat = (String) locationObj.get("latitude");
+            String lon = (String) locationObj.get("longitude");
+            String dateString = (String) objReport.get("date");
+
+            Date date = new java.text.SimpleDateFormat("mm/dd/"
+                + "yyyy").parse(dateString);
+
+            String reporterId = (String) objReport.get("reporterId");
+            String type = (String) objReport.get("type");
+            WaterType t = WaterType.valueOf(type);
+            String condition = (String) objReport.get("condition");
+            WaterCondition c = WaterCondition.valueOf(condition);
+            Location loc = new Location(lat, lon);
+            WaterSourceReport report = new WaterSourceReport(reporterId, loc,
+                t, c, date);
+            candidateReportMap.put(reportId, report);
+        } catch (java.text.ParseException pe) {
+            System.out.println(pe.getMessage());
+        }
     }
 
     /**
