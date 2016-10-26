@@ -259,7 +259,7 @@ public class ReportDataObject {
             String lon = (String) locationObj.get("longitude");
             String dateString = (String) objReport.get("date");
 
-            Date date = new java.text.SimpleDateFormat("mm/dd/"
+            Date date = new java.text.SimpleDateFormat("MM/dd/"
                 + "yyyy").parse(dateString);
 
             String reporterId = (String) objReport.get("reporterId");
