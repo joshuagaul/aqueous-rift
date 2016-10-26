@@ -33,6 +33,7 @@ public class MapController implements IController,
     @FXML
     public void initialize() {
         mapView.addMapInializedListener(this);
+        System.out.println("map is initialized");
     }
 
     @Override

@@ -60,10 +60,11 @@ public class MainScreenController implements IController {
      */
     @FXML
     private void initialize() {
+        delete.visibleProperty().bind(isAuthorized);
+        update.visibleProperty().bind(isAuthorized);
+
         // WaterSourceReport curReport = mainApplication.getCurrentReport();
         // if (curReport != null && isLoggedIn.get()) {
-        //     delete.visibleProperty().bind(isAuthorized);
-        //     update.visibleProperty().bind(isAuthorized);
         //     date.setText(curReport.getDate());
         //     type.setText(curReport.getType().toString());
         //     condition.setText(curReport.getCondition().toString());
@@ -98,8 +99,14 @@ public class MainScreenController implements IController {
                 mainApplication.showReportScreen();
             }
         } else if (event.getSource() == update) {
-            // update the current report
-            System.out.println("Update the current report.");
+            if (mainApplication.getCurrentReport() != null) {
+                mainApplication.showEditReportScreen();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Click a pin to update a report");
+                alert.setHeaderText("Please click on a pin to select a report");
+                alert.showAndWait();
+            }
         } else if (event.getSource() == delete) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete this report");

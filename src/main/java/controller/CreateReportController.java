@@ -194,13 +194,13 @@ public class CreateReportController implements IController {
         } else if (event.getSource() == submit) {
             ReportDataObject reportDAO = ReportDataObject.getInstance();
             String reporterId = mainApplication.getCurrentUsername();
-
-            //Hard-coded latitude and longitude so I don't alter UI
-            //***Need to decide on how we enter location (or use both ways)
-            Location loc = new Location("65.4", "45.2");
+            Location loc = new Location(longitude.getText(),
+                    latitude.getText());
             Date date = new Date();
+            WaterType type = waterType.getValue();
+            WaterCondition condition = waterCondition.getValue();
             WaterSourceReport report = new WaterSourceReport(reporterId,
-                loc, WaterType.Bottled, WaterCondition.Potable, date);
+                loc, type, condition, date);
             reportDAO.addCandidateReport(report);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -208,6 +208,7 @@ public class CreateReportController implements IController {
             alert.setHeaderText("Your report has been submitted.");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
+                mainApplication.showMap();
                 mainApplication.showMainScreen();
             }
         }
