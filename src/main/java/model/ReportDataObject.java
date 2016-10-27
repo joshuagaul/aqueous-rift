@@ -251,29 +251,24 @@ public class ReportDataObject {
      * @param  objReport Data structure that FireBase returns
      */
     private void updateCandidateReports(String reportId,
-            Map<String, Object> objReport) {
-        try {
-            Map<String, String> locationObj = (HashMap<String, String>)
-                objReport.get("location");
-            String lat = (String) locationObj.get("latitude");
-            String lon = (String) locationObj.get("longitude");
-            String dateString = (String) objReport.get("date");
+        Map<String, Object> objReport) {
+        Map<String, String> locationObj = (HashMap<String, String>)
+            objReport.get("location");
+        String lat = (String) locationObj.get("latitude");
+        String lon = (String) locationObj.get("longitude");
+        HashMap dateString = (HashMap) objReport.get("date");
 
-            Date date = new java.text.SimpleDateFormat("MM/dd/"
-                + "yyyy").parse(dateString);
+        Date date = new Date((long) dateString.get("time"));
 
-            String reporterId = (String) objReport.get("reporterId");
-            String type = (String) objReport.get("type");
-            WaterType t = WaterType.valueOf(type);
-            String condition = (String) objReport.get("condition");
-            WaterCondition c = WaterCondition.valueOf(condition);
-            Location loc = new Location(lat, lon);
-            WaterSourceReport report = new WaterSourceReport(reporterId, loc,
-                t, c, date);
-            candidateReportMap.put(reportId, report);
-        } catch (java.text.ParseException pe) {
-            System.out.println(pe.getMessage());
-        }
+        String reporterId = (String) objReport.get("reporterId");
+        String type = (String) objReport.get("type");
+        WaterType t = WaterType.valueOf(type);
+        String condition = (String) objReport.get("condition");
+        WaterCondition c = WaterCondition.valueOf(condition);
+        Location loc = new Location(lat, lon);
+        WaterSourceReport report = new WaterSourceReport(reporterId, loc,
+            t, c, date);
+        candidateReportMap.put(reportId, report);
     }
 
     /**
