@@ -23,7 +23,7 @@ public class RegisterController implements IController {
     private MainFXApplication mainApplication;
 
     private UserDataObject userDAO = UserDataObject.getInstance();
-
+    
     @FXML
     private Button cancel;
 
@@ -35,6 +35,7 @@ public class RegisterController implements IController {
 
     @FXML
     private PasswordField password;
+    //TODO Tabbing out of the passwordField doesn't work
 
     @FXML
     private PasswordField confirmPassword;
