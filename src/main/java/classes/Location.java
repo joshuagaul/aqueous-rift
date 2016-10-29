@@ -12,10 +12,15 @@ public class Location {
      * @param longitude The longitude GPS coordinate.
      */
     public Location(String latitude, String longitude) {
-        // setLatitude(latitude);
-        // setLongitude(longitude);
-        this.latitude = latitude;
-        this.longitude = longitude;
+        setLatitude(latitude);
+        setLongitude(longitude);
+    }
+
+    /**
+     * For FireBase
+     */
+    public Location() {
+
     }
 
     /**
@@ -28,6 +33,26 @@ public class Location {
     }
 
     /**
+     * Set's latitude instance variable to given latitude.
+     * @param latitude The latitude to set as a double.
+     * @throws IllegalArgumentException Thrown if latitude isn't
+     * between -90 and 90.
+     */
+    public void setLatitude(String latitude) {
+        try {
+            if (Math.abs(Double.parseDouble(latitude)) > 90) {
+                throw new IllegalArgumentException("Latitude must be within"
+                    + " the range of -90 to 90. Given latitude = "
+                    + latitude);
+            }
+            this.latitude = latitude;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Given latitude"
+                + "can't be converted to a double");
+        }
+    }
+
+    /**
      * Get the longitude of the location.
      *
      * @return the longitude of the location
@@ -36,49 +61,28 @@ public class Location {
         return longitude;
     }
 
-    @Override
-    public String toString() {
-        return latitude + ", " + longitude;
-    }
-
-    /**
-     * Set's latitude instance variable to given latitude.
-     * @param latitude The latitude to set as a double.
-     * @throws IllegalArgumentException Thrown if latitude isn't
-     * between -90 and 90.
-     */
-    // public void setLatitude(String latitude) {
-    //     try {
-    //         if (Math.abs(Double.parseDouble(latitude)) > 90) {
-    //             throw new IllegalArgumentException("Latitude must be within"
-    //                 + " the range of -90 to 90. Given latitude = "
-    //                 + latitude);
-    //         }
-    //
-    //         this.latitude = Double.parseDouble(latitude);
-    //     } catch (NumberFormatException e) {
-    //         throw new IllegalArgumentException("Given latitude"
-    //             + "can't be converted to a double");
-    //     }
-    // }
-
     /**
      * Set's longitude instance variable to given longitude.
      * @param longitude The longitude to set given as a double.
      * @throws IllegalArgumentException Thrown if longitude isn't between
      * -180 and 180.
      */
-    // public void setLongitude(String longitude) {
-    //     try {
-    //         if (Math.abs(Double.parseDouble(longitude)) > 180) {
-    //             throw new IllegalArgumentException("Longitude must be within"
-    //                 + " the range of -180 to 180. Given longitude = "
-    //                 + longitude);
-    //         }
-    //         this.longitude = Double.parseDouble(longitude);
-    //     } catch (NumberFormatException e) {
-    //         throw new IllegalArgumentException("Given longitude "
-    //             + "can't be converted to a double");
-    //     }
-    // }
+    public void setLongitude(String longitude) {
+        try {
+            if (Math.abs(Double.parseDouble(longitude)) > 180) {
+                throw new IllegalArgumentException("Longitude must be within"
+                    + " the range of -180 to 180. Given longitude = "
+                    + longitude);
+            }
+            this.longitude = longitude;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Given longitude "
+                + "can't be converted to a double");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return latitude + ", " + longitude;
+    }
 }

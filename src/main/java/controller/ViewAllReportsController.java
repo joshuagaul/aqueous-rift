@@ -111,9 +111,9 @@ public class ViewAllReportsController implements IController {
      * @return           ArrayList of water reports
      */
     private List<WaterReport> parseReportList(ReportDataObject reportDAO) {
-        System.out.println(reportDAO.getAllCandidateReports().values());
+        System.out.println(reportDAO.getAllSourceReports().values());
         return new ArrayList<WaterReport>(
-                reportDAO.getAllCandidateReports().values());
+                reportDAO.getAllSourceReports().values());
     }
     /**
      * Gives the controller access to mainApplication.

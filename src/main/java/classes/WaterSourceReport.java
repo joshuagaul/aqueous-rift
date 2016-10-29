@@ -11,6 +11,25 @@ public class WaterSourceReport extends WaterReport {
     private ObjectProperty<WaterCondition> condition =
         new SimpleObjectProperty<>();
 
+
+    /**
+     * Constructor used specifically for the editing call chain in
+     * ReportDataObject
+     *
+     * @param   reporterId The username of the user who created the report
+     * @param   location The location of the report
+     * @param   type The type of water found
+     * @param   condition The condition of water found
+     * @param   date The date the report was submitted
+     */
+    public WaterSourceReport(String reporterId, Location location,
+            WaterType type, WaterCondition condition, Date date) {
+        super(date, reporterId, location);
+        number++;
+        this.type.set(type);
+        this.condition.set(condition);
+    }
+
     /**
      * Gets the number of WaterSourceReports.
      * @return Returns the number of waterSourceReports.
@@ -18,6 +37,15 @@ public class WaterSourceReport extends WaterReport {
     public int getNumber() {
         return number;
     }
+
+    /**
+     * Sets the report number.
+     * @param n New report number.
+     */
+    public static void setNumber(int n) {
+        number = n;
+    }
+
     /**
      * Get the type of the water source.
      *
@@ -35,15 +63,6 @@ public class WaterSourceReport extends WaterReport {
     public void setType(WaterType type) {
         this.type.set(type);
     }
-
-    /**
-     * Get the object property of the water type source.
-     *
-     * @return the object property of the location of the water source
-     */
-    // public ObjectProperty getTypeProperty() {
-    //     return type;
-    // }
 
     /**
      * Get the condition of the water source.
@@ -64,20 +83,9 @@ public class WaterSourceReport extends WaterReport {
     }
 
     /**
-     * Constructor used specifically for the editing call chain in
-     * ReportDataObject
-     *
-     * @param   reporterId The username of the user who created the report
-     * @param   location The location of the report
-     * @param   type The type of water found
-     * @param   condition The condition of water found
-     * @param   date The date the report was submitted
+     * For FireBase
      */
-    public WaterSourceReport(String reporterId, Location location,
-            WaterType type, WaterCondition condition, Date date) {
-        super(date, reporterId, location);
-        number++;
-        this.type.set(type);
-        this.condition.set(condition);
+    private WaterSourceReport() {
+        super();
     }
 }

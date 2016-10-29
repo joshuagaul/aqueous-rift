@@ -95,6 +95,9 @@ public class CreateReportController implements IController {
     @FXML
     private Button cancel;
 
+    @FXML
+    private Button test;
+
     /**
      * Initializes items (combobox's)
      */
@@ -194,14 +197,19 @@ public class CreateReportController implements IController {
         } else if (event.getSource() == submit) {
             ReportDataObject reportDAO = ReportDataObject.getInstance();
             String reporterId = mainApplication.getCurrentUsername();
-            Location loc = new Location(longitude.getText(),
-                    latitude.getText());
+            Location loc = new Location("0", "0");
+            try {
+                loc.setLongitude(longitude.getText());
+                loc.setLatitude(latitude.getText());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
             Date date = new Date();
             WaterType type = waterType.getValue();
             WaterCondition condition = waterCondition.getValue();
             WaterSourceReport report = new WaterSourceReport(reporterId,
                 loc, type, condition, date);
-            reportDAO.addCandidateReport(report);
+            reportDAO.addSourceReport(report);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Report Submitted");

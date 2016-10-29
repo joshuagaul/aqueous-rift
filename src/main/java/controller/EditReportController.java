@@ -107,14 +107,19 @@ public class EditReportController implements IController {
                     WaterSourceReport prevReportInfo =
                             mainApplication.getCurrentReport();
                     String reporterId = prevReportInfo.getReporterId();
-                    Location loc = new Location(longitude.getText(),
-                            latitude.getText());
+                    Location loc = new Location("0", "0");
+                    try {
+                        loc.setLongitude(longitude.getText());
+                        loc.setLatitude(latitude.getText());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
                     Date date = new Date();
                     WaterType type = waterType.getValue();
                     WaterCondition condition = waterCondition.getValue();
                     WaterSourceReport report = new WaterSourceReport(reporterId,
                             loc, type, condition, date);
-                    reportDAO.editCandidateReport(report, reporterId);
+                    reportDAO.editSourceReport(report, reporterId);
                     mainApplication.showMainScreen();
                     mainApplication.showMap();
                 }

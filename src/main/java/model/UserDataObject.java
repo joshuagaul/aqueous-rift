@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import classes.User;
-import classes.Name;
 
 public class UserDataObject {
 
@@ -30,10 +29,6 @@ public class UserDataObject {
         }
         DatabaseReference users = getUsers();
         DatabaseReference userList = getUserList();
-        //Add listeners to update usernames and size when added
-        //**May not be the most efficient, looks like it is called for every
-        //child, not just the one added
-        //**But may need it this way to keep all local data synced
         userList.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot,
@@ -45,22 +40,22 @@ public class UserDataObject {
                 //update users here
                 updateUsers(dataSnapshot.getKey(), newSize);
                 updateUserList(dataSnapshot.getKey(),
-                    (HashMap<String, Object>) dataSnapshot.getValue());
+                    dataSnapshot.getValue(User.class));
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot,
                     String prevChildKey) {
                 System.out.println("Edited " + dataSnapshot.getKey()
                     + ", count is " + size);
-                // updateUsers(dataSnapshot.getKey(), newSize);
-                // updateUserList(dataSnapshot.getValue(User.class));
+                //No need to do anything to data.
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                // User removedUser = dataSnapshot.getValue(User.class);
-                // System.out.println("The user "
-                //     + removedUser.getUserId() + " has been deleted");
+                User removedUser = dataSnapshot.getValue(User.class);
+                System.out.println("The user "
+                    + dataSnapshot.getKey() + " has been deleted");
+                updateUsersOnDelete(dataSnapshot.getKey());
             }
 
             @Override
@@ -113,6 +108,17 @@ public class UserDataObject {
     }
 
     /**
+     * Deletes the User object entry. Be sure to check for existence first.
+     * @param  username The username key in the mapping
+     */
+    public void deleteUser(String username) {
+        DatabaseReference user = getUserList().child("/" + username);
+        user.removeValue();
+        DatabaseReference u = getUsers().child("/" + username);
+        u.removeValue();
+    }
+
+    /**
      * Determines if the queried userName is in the database
      * @param  userName The username to query
      * @return          True if the user exists in the database
@@ -154,25 +160,22 @@ public class UserDataObject {
     }
 
     /**
-     * Since I was having trouble using the FireBase object inference
-     * this is a hacky way to cast the mapped userList object to a User
-     * @param  username Key to map the User object with
-     * @param  objUser Data structure that FireBase returns
+     * Helper method from the Database callback
+     * @param username Key of the object that was reported.
      */
-    private void updateUserList(String username, Map<String, Object> objUser) {
-        //Hacky solution to copy Object into User because of problems with
-        //Firebase Object mapping
-        Map<String, String> nameObj = (HashMap<String, String>)
-            objUser.get("name");
-        String firstName = (String) nameObj.get("firstName");
-        String lastName = (String) nameObj.get("lastName");
-        String prefix = (String) nameObj.get("prefix");
-        String password = (String) objUser.get("password");
-        String email = (String) objUser.get("email");
-        String phoneNum = (String) objUser.get("phoneNum");
-        String usertype = (String) objUser.get("userType");
-        Name name = new Name(firstName, lastName, prefix);
-        User user = new User(password, email, phoneNum, "4", name, usertype);
+    private void updateUsersOnDelete(String username) {
+        userMap.remove(username);
+        usernames.remove(username);
+        int newCount = size.decrementAndGet();
+        getUsers().child("/size").setValue(newCount);
+    }
+
+    /**
+     * Updates local User storage when a new User is added.
+     * @param  username Key to map the User object with
+     * @param  user User object from FireBase
+     */
+    private void updateUserList(String username, User user) {
         userMap.put(username, user);
     }
 }

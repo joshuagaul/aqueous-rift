@@ -65,7 +65,7 @@ public class MapController implements IController,
         }
         ReportDataObject reportDAO = ReportDataObject.getInstance();
         for (WaterSourceReport report
-            : reportDAO.getAllCandidateReports().values()) {
+            : reportDAO.getAllSourceReports().values()) {
             System.out.println("reports!");
             double lat = Double.parseDouble(report.getLocation().getLatitude());
             double lng = Double.parseDouble(report.getLocation()
