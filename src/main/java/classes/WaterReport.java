@@ -5,6 +5,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import java.text.SimpleDateFormat;
+import java.text.ParsePosition;
 
 public abstract class WaterReport {
 
@@ -28,10 +30,9 @@ public abstract class WaterReport {
     /**
      * No args constructor for firebase
      */
-    private WaterReport() {
+    public WaterReport() {
 
     }
-
 
     /**
      * Get the location of the water source.
@@ -61,14 +62,33 @@ public abstract class WaterReport {
     }
 
     /**
+     * Set the created date on the report.
+     * @param date Report creation date.
+     */
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    /**
      * Get the date as a string when the report is created.
      *
      * @return the date when the report was created as a string.
-     */    
+     */
     public String getDateAsString() {
-        java.text.SimpleDateFormat dateFormat =
-            new java.text.SimpleDateFormat("mm/dd/yyyy 'at' hh:mm:ss a zzz");
-        return dateFormat.format(date);
+        SimpleDateFormat dateFormat =
+            new SimpleDateFormat("MM/dd/yyyy 'at' hh:mm:ss a zzz");
+        return dateFormat.format(this.getDate());
+    }
+
+    /**
+     * Set the date as a string when the report is created.
+     *
+     * @param date The date when the report was created.
+     */
+    public void setDateAsString(String date) {
+        SimpleDateFormat dateFormat =
+            new SimpleDateFormat("MM/dd/yyyy 'at' hh:mm:ss a zzz");
+        this.date = dateFormat.parse(date, new ParsePosition(0));
     }
 
     /**
@@ -81,9 +101,10 @@ public abstract class WaterReport {
     }
 
     /**
-     * Get the total number of reports in specific WaterReports.
-     * @return [description]
+     * Sets the reporterId of this reports.
+     * @param id The user id of reporter.
      */
-    public abstract int getNumber();
-
+    public void setReporterId(String id) {
+        reporterId.set(id);
+    }
 }

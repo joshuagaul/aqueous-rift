@@ -2,6 +2,7 @@ package main;
 
 import controller.IController;
 import controller.MainScreenController;
+import controller.EditReportController;
 import controller.MenuBarController;
 import controller.CreateReportController;
 import controller.EditProfileController;
@@ -112,6 +113,14 @@ public class MainFXApplication extends Application {
                 c.populateUserInformation(currentUser, currentUsername);
             } else if (controller instanceof MainScreenController) {
                 mainScreenController = (MainScreenController) (controller);
+            } else if (controller instanceof EditReportController) {
+                EditReportController c = (EditReportController) (controller);
+                c.populateReportInformation(
+                        getCurrentReport().getLocation().getLongitude(),
+                        getCurrentReport().getLocation().getLatitude(),
+                        getCurrentReport().getType(),
+                        getCurrentReport().getCondition(), 0, 0);
+                //TODO get virus and contamination
             }
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to find "
@@ -186,6 +195,15 @@ public class MainFXApplication extends Application {
                 "ViewAllReports", "LEFT");
     }
 
+    /**
+     * sets the screen to editing an existing report
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
+    public void showEditReportScreen() {
+        showScreen("view/EditReport.fxml",
+                "EditReport", "RIGHT");
+    }
 
 
     /**

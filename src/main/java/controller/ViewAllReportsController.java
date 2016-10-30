@@ -78,10 +78,8 @@ public class ViewAllReportsController implements IController {
      */
     @FXML
     private void initialize() {
-        TableColumn<WaterReport, String> latitude 
-            = new TableColumn<>("Latitude");
-        TableColumn<WaterReport, String> longitude  
-            = new TableColumn<>("Longitude");
+        TableColumn<WaterReport, String> location
+            = new TableColumn<>("Location");
         TableColumn<WaterReport, String> date  
             = new TableColumn<>("Date");
         TableColumn<WaterReport, String> type  
@@ -89,27 +87,19 @@ public class ViewAllReportsController implements IController {
         TableColumn<WaterReport, String> condition  
             = new TableColumn<>("Condition");
         ReportDataObject reportDAO = ReportDataObject.getInstance();
-
-        //TODO SHOW LONGITUDE AND LATITUDE
-        latitude.setCellValueFactory(
+        location.setCellValueFactory(
             new PropertyValueFactory<WaterReport, String>("location"));
-
-        longitude.setCellValueFactory(
-            new PropertyValueFactory<WaterReport, String>("location"));
-
         date.setCellValueFactory(
             new PropertyValueFactory<WaterReport, String>("date"));
-
         type.setCellValueFactory(
             new PropertyValueFactory<WaterReport, String>("type"));
 
         condition.setCellValueFactory(
             new PropertyValueFactory<WaterReport, String>("condition"));
-
         user.setCellValueFactory(
             new PropertyValueFactory<WaterReport, String>("reporterId"));
         System.out.println(parseReportList(reportDAO));
-        reportView.getColumns().addAll(latitude, longitude, date,
+        reportView.getColumns().addAll(location, date,
             type, condition);
         reportView.getItems().setAll(parseReportList(reportDAO));
 
@@ -121,9 +111,9 @@ public class ViewAllReportsController implements IController {
      * @return           ArrayList of water reports
      */
     private List<WaterReport> parseReportList(ReportDataObject reportDAO) {
-        System.out.println(reportDAO.getAllCandidateReports().values());
-        return new ArrayList<WaterReport>(reportDAO.getAllCandidateReports()
-            .values());
+        System.out.println(reportDAO.getAllSourceReports().values());
+        return new ArrayList<WaterReport>(
+                reportDAO.getAllSourceReports().values());
     }
     /**
      * Gives the controller access to mainApplication.

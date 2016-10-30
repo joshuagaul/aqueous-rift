@@ -125,7 +125,7 @@ public class RegisterController implements IController {
                             usertype.getValue().toString());
                     UserDataObject userDAO = UserDataObject.getInstance();
                     userDAO.addSingleUser(testUser, username.getText());
-                    mainApplication.showMainScreen();
+                    mainApplication.showLoginScreen();
                 } else {
                     alert.close();
                 }

@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Date;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ChildEventListener;
@@ -9,20 +8,18 @@ import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import classes.WaterSourceReport;
 import classes.WaterPurityReport;
-import classes.WaterType;
-import classes.WaterCondition;
-import classes.Location;
 
 public class ReportDataObject {
 
     private Set<String> reports = new HashSet<>();
-    private Map<String, WaterSourceReport> candidateReportMap = new HashMap<>();
-    private Map<String, WaterPurityReport> confirmedReportMap = new HashMap<>();
-    private AtomicInteger numCandidateReports = new AtomicInteger();
-    private AtomicInteger numConfirmedReports = new AtomicInteger();
+    private Map<String, WaterSourceReport> sourceReportMap = new HashMap<>();
+    private Map<String, WaterPurityReport> purityReportMap = new HashMap<>();
+    private AtomicInteger numSourceReports = new AtomicInteger();
+    private AtomicInteger numPurityReports = new AtomicInteger();
     private static final ReportDataObject INSTANCE = new ReportDataObject();
 
     /**
@@ -35,33 +32,35 @@ public class ReportDataObject {
                 + "UserDataObject.  Please getInstance().");
         }
         DatabaseReference reports = getReports();
-        DatabaseReference candidateReports = getCandidateReports();
-        DatabaseReference confirmedReports = getConfirmedReports();
-        candidateReports.addChildEventListener(new ChildEventListener() {
+        DatabaseReference sourceReports = getSourceReports();
+        DatabaseReference purityReports = getPurityReports();
+        sourceReports.addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot,
                     String prevChildKey) {
-                int newSize = numCandidateReports.incrementAndGet();
-                System.out.println("Added " + dataSnapshot.getKey()
-                    + ", count is " + newSize);
+                int newSize = numSourceReports.incrementAndGet();
+                System.out.println("Added Source Report: "
+                    + dataSnapshot.getKey() + ", count is " + newSize);
                 updateReports(dataSnapshot.getKey(), false);
-                updateCandidateReports(dataSnapshot.getKey(),
-                    (HashMap<String, Object>) dataSnapshot.getValue());
+                updateSourceReports(dataSnapshot.getKey(),
+                    dataSnapshot.getValue(WaterSourceReport.class));
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot,
                     String prevChildKey) {
-                int size = numCandidateReports.get()
-                    + numConfirmedReports.get();
+                int size = numSourceReports.get()
+                    + numPurityReports.get();
                 System.out.println("Edited " + dataSnapshot.getKey()
                     + ", count is " + size);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                //TODO
+                System.out.println("The report "
+                    + dataSnapshot.getKey() + " has been deleted");
+                updateReportsOnDelete(dataSnapshot.getKey(), false);
             }
 
             @Override
@@ -76,31 +75,33 @@ public class ReportDataObject {
                     + databaseError.getMessage());
             }
         });
-        confirmedReports.addChildEventListener(new ChildEventListener() {
+        purityReports.addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot,
                     String prevChildKey) {
-                int newSize = numConfirmedReports.incrementAndGet();
-                System.out.println("Added " + dataSnapshot.getKey()
-                    + ", count is " + newSize);
+                int newSize = numPurityReports.incrementAndGet();
+                System.out.println("Added Purity Report: "
+                    + dataSnapshot.getKey() + ", count is " + newSize);
                 updateReports(dataSnapshot.getKey(), true);
-                updateConfirmedReports(dataSnapshot.getKey(),
-                    (HashMap<String, Object>) dataSnapshot.getValue());
+                updatePurityReports(dataSnapshot.getKey(),
+                    dataSnapshot.getValue(WaterPurityReport.class));
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot,
                     String prevChildKey) {
-                int size = numCandidateReports.get()
-                    + numConfirmedReports.get();
+                int size = numSourceReports.get()
+                    + numPurityReports.get();
                 System.out.println("Edited " + dataSnapshot.getKey()
                     + ", count is " + size);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                //TODO
+                System.out.println("The report "
+                    + dataSnapshot.getKey() + " has been deleted");
+                updateReportsOnDelete(dataSnapshot.getKey(), true);
             }
 
             @Override
@@ -126,19 +127,19 @@ public class ReportDataObject {
     }
 
     /**
-     * Returns a reference to the "candidateReports" key in the database
-     * @return candidateReports database reference
+     * Returns a reference to the "sourceReports" key in the database
+     * @return sourceReports database reference
      */
-    private DatabaseReference getCandidateReports() {
-        return DataManager.getReference("/candidateReports");
+    private DatabaseReference getSourceReports() {
+        return DataManager.getReference("/sourceReports");
     }
 
     /**
-     * Returns a reference to the "confirmedReports" key in the database
-     * @return confirmedReports database reference
+     * Returns a reference to the "purityReports" key in the database
+     * @return purityReports database reference
      */
-    private DatabaseReference getConfirmedReports() {
-        return DataManager.getReference("/confirmedReports");
+    private DatabaseReference getPurityReports() {
+        return DataManager.getReference("/purityReports");
     }
 
     /**
@@ -150,24 +151,58 @@ public class ReportDataObject {
     }
 
     /**
-     * Adds a candidate report to the firebase database
+     * Adds a source report to the firebase database
      * @param  reportToAdd - report instance to add
      */
-    public void addCandidateReport(WaterSourceReport reportToAdd) {
-        int reportId = reportToAdd.getNumber();
-        DatabaseReference report = getCandidateReports().child("/" + reportId);
+    public void addSourceReport(WaterSourceReport reportToAdd) {
+        String reportId = UUID.randomUUID().toString().substring(0, 9);
+        DatabaseReference report = getSourceReports().child("/" + reportId);
         report.setValue(reportToAdd);
     }
 
     /**
-     * Adds a confirmed report to the firebase database
+     * Adds a purity report to the firebase database
      * @param  reportToAdd - report instance to add
      */
-    public void addConfirmedReport(WaterPurityReport reportToAdd) {
-        // int reportId = reportToAdd.getNumber();
-        // DatabaseReference report = getConfirmedReports().child("/"
-        // + reportId);
-        // report.setValue(reportToAdd);
+    public void addPurityReport(WaterPurityReport reportToAdd) {
+        String reportId = UUID.randomUUID().toString().substring(0, 9);
+        DatabaseReference report = getPurityReports().child("/" + reportId);
+        report.setValue(reportToAdd);
+    }
+
+    /**
+     * Converts a source report to a purity report.
+     * @param reportToAdd WaterPurityReport instance to add.
+     * @param reportId WaterSourceReport that is being converted
+     * into a WaterPurityReport.
+     */
+    public void confirmPurityReport(WaterPurityReport reportToAdd,
+            String reportId) {
+        deleteSourceReport(reportId);
+        DatabaseReference report = getPurityReports().child("/" + reportId);
+        report.setValue(reportToAdd);
+    }
+
+    /**
+     * Deletes a source report from the firebase database
+     * @param  reportId ID of the report to delete.
+     */
+    public void deleteSourceReport(String reportId) {
+        DatabaseReference r = getSourceReports().child("/" + reportId);
+        r.removeValue();
+        DatabaseReference reports = getReports().child("/" + reportId);
+        reports.removeValue();
+    }
+
+    /**
+     * Deletes a purity report from the firebase database
+     * @param  reportId ID of the report to delete.
+     */
+    public void deletePurityReport(String reportId) {
+        DatabaseReference r = getPurityReports().child("/" + reportId);
+        r.removeValue();
+        DatabaseReference reports = getReports().child("/" + reportId);
+        reports.removeValue();
     }
 
     /**
@@ -180,46 +215,54 @@ public class ReportDataObject {
     }
 
     /**
-     * Determines if the queried report is in confirmed or not.
+     * Determines if the queried report is a purity report or not.
      * Be sure to check if the report exists before using this method.
      *
      * @param  reportId The report to query
-     * @return True if the report is confirmed, false if it is a candidate.
+     * @return True if the report is purity report, false if it is a source.
      */
-    public Boolean reportConfirmed(String reportId) {
-        return confirmedReportMap.containsKey(reportId);
+    public Boolean isPurityReport(String reportId) {
+        return purityReportMap.containsKey(reportId);
     }
 
     /**
      * Returns the Report object mapped to the specified reportId.
-     * A WaterSourceReport is returned because it represents a candidate report.
+     * A WaterSourceReport is returned because it represents a source report.
      *
      * @param  reportId The report key in the mapping
      * @return          WaterSourceReport object
      */
-    public WaterSourceReport getCandidateReport(String reportId) {
-        return candidateReportMap.get(reportId);
+    public WaterSourceReport getSourceReport(String reportId) {
+        return sourceReportMap.get(reportId);
     }
 
     /**
-     * Returns all saved candidateReport objects
-     * A WaterSourceReport is returned because it represents a candidate report.
+     * Returns all saved WaterSourceReport objects.
      *
      * @return     A map mapping String reportId and WaterSourceReport
      */
-    public Map<String, WaterSourceReport> getAllCandidateReports() {
-        return candidateReportMap;
+    public Map<String, WaterSourceReport> getAllSourceReports() {
+        return sourceReportMap;
     }
 
     /**
      * Returns the Report object mapped to the specified reportId.
-     * A WaterPurityReport is returned because it represents a confirmed report.
+     * A WaterPurityReport is returned because it represents a purity report.
      *
      * @param  reportId The report key in the mapping
      * @return          WaterPurityReport object
      */
-    public WaterPurityReport getConfirmedReport(String reportId) {
-        return confirmedReportMap.get(reportId);
+    public WaterPurityReport getPurityReport(String reportId) {
+        return purityReportMap.get(reportId);
+    }
+
+    /**
+     * Returns all saved WaterPurityReport objects.
+     *
+     * @return     A map mapping String reportId and WaterpurityReport
+     */
+    public Map<String, WaterPurityReport> getAllPurityReports() {
+        return purityReportMap;
     }
 
     /**
@@ -227,62 +270,70 @@ public class ReportDataObject {
      * @param  reportToAdd New Report object to add to the database
      * @param  reportId Key to map the Report with
      */
-    public void editCandidateReport(WaterSourceReport reportToAdd,
+    public void editSourceReport(WaterSourceReport reportToAdd,
             String reportId) {
-        addCandidateReport(reportToAdd);
+        addSourceReport(reportToAdd);
+    }
+
+    /**
+     * Overwrites the existing mapping associated with the reportId key
+     * @param  reportToAdd New Report object to add to the database
+     * @param  reportId Key to map the Report with
+     */
+    public void editPurityReport(WaterPurityReport reportToAdd,
+            String reportId) {
+        addPurityReport(reportToAdd);
     }
 
     /**
      * Helper method from an add callback in adding either type of Report
      * @param  reportId - key to update.
-     * @param  confirmed - Determines whether the report is confirmed or not.
+     * @param  purity - Determines whether the report is a purity report or not.
      */
-    private void updateReports(String reportId, Boolean confirmed) {
+    private void updateReports(String reportId, Boolean purity) {
         DatabaseReference reports = getReports();
-        reports.child("/size").setValue(numConfirmedReports.get()
-            + numCandidateReports.get());
-        reports.child("/" + reportId).setValue(confirmed);
+        reports.child("/size").setValue(numPurityReports.get()
+            + numSourceReports.get());
+        reports.child("/" + reportId).setValue(purity);
         this.reports.add(reportId);
     }
 
     /**
-     * Updates local storage when a WaterSourceReport is edited
-     * @param  reportId Key to map the Report object with
-     * @param  objReport Data structure that FireBase returns
+     * Helper method from delete callback to update local storage.
+     * @param  reportId The report ID that was deleted.
+     * @param  isPurityReport If the report deleted was a purityReport.
      */
-    private void updateCandidateReports(String reportId,
-            Map<String, Object> objReport) {
-        try {
-            Map<String, String> locationObj = (HashMap<String, String>)
-                objReport.get("location");
-            String lat = (String) locationObj.get("latitude");
-            String lon = (String) locationObj.get("longitude");
-            String dateString = (String) objReport.get("date");
-
-            Date date = new java.text.SimpleDateFormat("mm/dd/"
-                + "yyyy").parse(dateString);
-
-            String reporterId = (String) objReport.get("reporterId");
-            String type = (String) objReport.get("type");
-            WaterType t = WaterType.valueOf(type);
-            String condition = (String) objReport.get("condition");
-            WaterCondition c = WaterCondition.valueOf(condition);
-            Location loc = new Location(lat, lon);
-            WaterSourceReport report = new WaterSourceReport(reporterId, loc,
-                t, c, date);
-            candidateReportMap.put(reportId, report);
-        } catch (java.text.ParseException pe) {
-            System.out.println(pe.getMessage());
+    private void updateReportsOnDelete(String reportId,
+            boolean isPurityReport) {
+        int newCount;
+        if (isPurityReport) {
+            purityReportMap.remove(reportId);
+            newCount = numPurityReports.decrementAndGet()
+                + numSourceReports.get();
+        } else {
+            sourceReportMap.remove(reportId);
+            newCount = numSourceReports.decrementAndGet()
+                + numPurityReports.get();
         }
+        reports.remove(reportId);
+        getReports().child("/size").setValue(newCount);
     }
 
     /**
-     * TODO - updateConfirmedReports (very similar to above)
+     * Updates local storage when a WaterSourceReport is edited.
      * @param  reportId Key to map the Report object with
-     * @param  objReport Data structure that FireBase returns
+     * @param  r Report structure that FireBase returns
      */
-    private void updateConfirmedReports(String reportId, Map<String,
-            Object> objReport) {
+    private void updateSourceReports(String reportId, WaterSourceReport r) {
+        sourceReportMap.put(reportId, r);
+    }
 
+    /**
+     * Updates local storage when a WaterPurityReport is edited.
+     * @param  reportId Key to map the Report object with
+     * @param  r Report object from FireBase
+     */
+    private void updatePurityReports(String reportId, WaterPurityReport r) {
+        purityReportMap.put(reportId, r);
     }
 }

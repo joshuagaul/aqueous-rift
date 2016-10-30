@@ -6,11 +6,11 @@ import javafx.beans.property.StringProperty;
 public class User {
 
     private Name name;
-    private StringProperty password;
-    private StringProperty email;
-    private StringProperty phoneNum;
-    private StringProperty userId;
-    private StringProperty userType;
+    private StringProperty password = new SimpleStringProperty();
+    private StringProperty email = new SimpleStringProperty();
+    private StringProperty phoneNum = new SimpleStringProperty();
+    private StringProperty userId = new SimpleStringProperty();
+    private StringProperty userType  = new SimpleStringProperty();
 
     /**
      * User object constructor
@@ -23,16 +23,11 @@ public class User {
      */
     public User(String password, String email, String phoneNum, String userId,
             Name name, String userType) {
-        this.password = new SimpleStringProperty();
-        this.password.set(password);
-        this.email = new SimpleStringProperty();
-        this.email.set(email);
-        this.phoneNum = new SimpleStringProperty();
-        this.phoneNum.set(phoneNum);
-        this.userId = new SimpleStringProperty();
-        this.userId.set(userId);
         this.name = name;
-        this.userType = new SimpleStringProperty();
+        this.password.set(password);
+        this.email.set(email);
+        this.phoneNum.set(phoneNum);
+        this.userId.set(userId);
         this.userType.set(userType);
     }
 
@@ -50,18 +45,19 @@ public class User {
     }
 
     /**
-     * No Args constructor for FireBase
-     */
-    private User() {
-
-    }
-
-    /**
      * getter
      * @return name
      */
     public Name getName() {
         return name;
+    }
+
+    /**
+     * Public setter for Name.
+     * @param name Multi-attribute name object.
+     */
+    public void setName(Name name) {
+        this.name = name;
     }
 
     /**
@@ -73,11 +69,27 @@ public class User {
     }
 
     /**
+     * Public setter for password.
+     * @param password New password.
+     */
+    public void setPassword(String password) {
+        this.password.set(password);
+    }
+
+    /**
      * getter
      * @return email
      */
     public String getEmail() {
         return email.get();
+    }
+
+    /**
+     * Public setter for email.
+     * @param email New email.
+     */
+    public void setEmail(String email) {
+        this.email.set(email);
     }
 
     /**
@@ -89,6 +101,14 @@ public class User {
     }
 
     /**
+     * Public setter for phoneNum.
+     * @param phoneNum New phone number.
+     */
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum.set(phoneNum);
+    }
+
+    /**
      * getter
      * @return userId
      */
@@ -97,10 +117,33 @@ public class User {
     }
 
     /**
+     * Public setter for userId.
+     * @param userId New user ID.
+     */
+    public void setUserId(String userId) {
+        this.userId.set(userId);
+    }
+
+    /**
      * getter
      * @return userType
      */
     public String getUserType() {
         return userType.get();
+    }
+
+    /**
+     * Public setter for UserType.
+     * @param userType New type of User.
+     */
+    public void setUserType(String userType) {
+        this.userType.set(userType);
+    }
+
+    /**
+     * No Args constructor for FireBase
+     */
+    private User() {
+
     }
 }
