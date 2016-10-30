@@ -81,11 +81,10 @@ public class RegisterController implements IController {
         if (event.getSource() == cancel) {
             mainApplication.showLoginScreen();
         } else if (event.getSource() == ok) {
-            String alertMessage = validateUserRegistration();
-            if (alertMessage.length() != 0) {
+            Boolean emptyFieldsExist = validateUserRegistration();
+            if (emptyFieldsExist) {
                 Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
                 emptyAlert.setTitle("Empty fields");
-                emptyAlert.setContentText(alertMessage);
                 emptyAlert.setHeaderText("Please fill out all "
                         + "the required fields.");
                 emptyAlert.showAndWait();
@@ -95,10 +94,18 @@ public class RegisterController implements IController {
                 passAlert.setTitle("Password");
                 passAlert.setHeaderText("Your confirmed password "
                         + "doesn't match the new password field!!");
+                password.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                confirmPassword.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
                 passAlert.showAndWait();
             } else if (userDAO.userExists(username.getText())) {
+                password.setStyle("-fx-border-width: 0px ;");
+                confirmPassword.setStyle("-fx-border-width: 0px ;");
                 Alert takenAlert = new Alert(Alert.AlertType.WARNING);
                 takenAlert.setTitle("Password");
+                username.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
                 takenAlert.setHeaderText("Your chosen username "
                         + "is already taken! Please choose "
                         + "another username for yourself.");
@@ -140,24 +147,49 @@ public class RegisterController implements IController {
      * @return An alert message describing the input errors, empty String
      * if input is valid.
      */
-    private String validateUserRegistration() {
-        StringBuilder alertMessage = new StringBuilder();
+    private Boolean validateUserRegistration() {
+        int emptyFields = 0;
         if (username.getText().length() == 0) {
-            alertMessage.append("Username\n");
+            username.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            username.setStyle("-fx-border-width: 0px ;");
         }
+
         if (password.getText().length() == 0) {
-            alertMessage.append("Password\n");
+            password.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+            confirmPassword.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+        } else {
+            password.setStyle("-fx-border-width: 0px ;");
+            confirmPassword.setStyle("-fx-border-width: 0px ;");
         }
+
         if (fname.getText().length() == 0) {
-            alertMessage.append("First name\n");
+            fname.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            fname.setStyle("-fx-border-width: 0px ;");
         }
         if (lname.getText().length() == 0) {
-            alertMessage.append("Last name\n");
+            lname.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            lname.setStyle("-fx-border-width: 0px ;");
         }
         if (email.getText().length() == 0) {
-            alertMessage.append("Email\n");
+            email.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            email.setStyle("-fx-border-width: 0px ;");
         }
-        return alertMessage.toString();
+        return (emptyFields != 0);
     }
 
     /**
