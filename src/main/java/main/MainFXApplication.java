@@ -1,6 +1,15 @@
 package main;
-
-import controller.*;
+import controller.IController;
+import controller.ViewAllReportsController;
+import controller.CreateReportController;
+import controller.EditReportController;
+import controller.MapController;
+import controller.EditProfileController;
+import controller.MainScreenController;
+import controller.MenuBarController;
+import model.ReportDataObject;
+import model.DataManager;
+import model.UserDataObject;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import classes.User;
 import classes.WaterSourceReport;
-import model.DataManager;
-import model.UserDataObject;
-import model.ReportDataObject;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -231,11 +238,13 @@ public class MainFXApplication extends Application {
             MainScreenController.setAuthority(true);
             MainScreenController.setLoggedIn(true);
             CreateReportController.setAuthority(true);
+            ViewAllReportsController.setAuthority(true);
 
         } else {
             MainScreenController.setAuthority(false);
             CreateReportController.setAuthority(false);
             MainScreenController.setLoggedIn(true);
+            ViewAllReportsController.setAuthority(false);
         }
     }
 

@@ -112,7 +112,7 @@ public class EditReportController implements IController {
     }
 
     /**
-     * Button handler for editing profile page.
+     * Button handler for editing report page.
      * Clicking OK button will ask for confirmation,
      * then update the information.
      * Clicking Cancel button will close the alert.
@@ -177,14 +177,16 @@ public class EditReportController implements IController {
                         WaterSourceReport report = new WaterSourceReport(
                                 reporterId, loc, type,
                                 condition, date);
-                        reportDAO.editSourceReport(report, prevReportInfo.getId());
+                        reportDAO.editSourceReport(report,
+                                prevReportInfo.getId());
                     } else {
                         //update as a purity report
                         WaterPurityReport report = new WaterPurityReport(
                                 reporterId, date, loc, condition,
                                 Double.parseDouble(virus.getText()),
                                 Double.parseDouble(contamination.getText()));
-                        reportDAO.confirmPurityReport(report, prevReportInfo.getId());
+                        reportDAO.confirmPurityReport(report,
+                                prevReportInfo.getId());
                     }
 
                     mainApplication.showMap();

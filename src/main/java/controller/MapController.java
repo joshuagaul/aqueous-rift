@@ -11,7 +11,6 @@ import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -19,6 +18,8 @@ import main.MainFXApplication;
 import model.ReportDataObject;
 import classes.WaterSourceReport;
 import netscape.javascript.JSObject;
+
+import java.util.Map;
 
 public class MapController implements IController,
         MapComponentInitializedListener {
@@ -42,7 +43,6 @@ public class MapController implements IController,
     @FXML
     public void initialize() {
         mapView.addMapInializedListener(this);
-        System.out.println("map is initialized");
     }
 
     @Override
