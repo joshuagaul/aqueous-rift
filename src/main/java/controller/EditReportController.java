@@ -171,7 +171,6 @@ public class EditReportController implements IController {
                     Date date = new Date();
                     WaterType type = waterType.getValue();
                     WaterCondition condition = waterCondition.getValue();
-
                     if (!purityReport.get()) {
                         //update source report
                         WaterSourceReport report = new WaterSourceReport(

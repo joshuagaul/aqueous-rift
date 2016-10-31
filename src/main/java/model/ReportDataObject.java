@@ -274,6 +274,7 @@ public class ReportDataObject {
      */
     public void editSourceReport(WaterSourceReport reportToAdd,
             String reportId) {
+        deleteSourceReport(reportId);
         addSourceReport(reportToAdd);
     }
 

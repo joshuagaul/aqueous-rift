@@ -67,7 +67,7 @@ public class ViewAllReportsController implements IController {
         reportDAO = ReportDataObject.getInstance();
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);
-
+        setReportView(false);
         user.setCellValueFactory(
                 new PropertyValueFactory<WaterReport, String>("reporterId"));
         location.setCellValueFactory(
@@ -128,7 +128,7 @@ public class ViewAllReportsController implements IController {
             reportView.getColumns().addAll(user, location, date,
                     condition, contamination, virus);
         } else {
-            reportView.getColumns().addAll(location, date, type,
+            reportView.getColumns().addAll(user, location, date, type,
                     condition);
         }
         reportView.getItems().setAll(parseReportList(reportDAO));
