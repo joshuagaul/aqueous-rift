@@ -1,7 +1,11 @@
 package controller;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Label;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,7 +14,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.util.Map;
 import java.util.Optional;
 import main.MainFXApplication;
 import classes.UserType;
@@ -30,9 +33,6 @@ public class MenuBarController implements IController {
             = new SimpleStringProperty(UserType.GeneralUser.toString());
 
     @FXML
-    private MenuBar header;
-
-    @FXML
     private Menu hello;
 
     @FXML
@@ -45,32 +45,29 @@ public class MenuBarController implements IController {
     private Menu reports;
 
     @FXML
-    private Menu help;
+    private Menu home;
 
     @FXML
-    private MenuItem Bottled;
+    private MenuItem bottled;
     @FXML
-    private MenuItem Well;
+    private MenuItem well;
     @FXML
-    private MenuItem Stream;
+    private MenuItem stream;
     @FXML
-    private MenuItem Lake;
+    private MenuItem lake;
     @FXML
-    private MenuItem Spring;
+    private MenuItem spring;
     @FXML
-    private MenuItem Other;
+    private MenuItem other;
 
     @FXML
-    private MenuItem Waste;
+    private MenuItem waste;
     @FXML
-    private MenuItem Treatable_Clear;
+    private MenuItem treatableClear;
     @FXML
-    private MenuItem Treatable_Muddy;
+    private MenuItem treatableMuddy;
     @FXML
-    private MenuItem Potable;
-
-    @FXML
-    private MenuItem AllPins;
+    private MenuItem potable;
 
     /**
      * Initializes variable bindings and login handler
@@ -83,7 +80,6 @@ public class MenuBarController implements IController {
         login.visibleProperty().bind(userLoggedIn.not());
         hello.textProperty().bind(username);
         userOptions.textProperty().bind(userType);
-        //TODO Make the menu options in userOptions dynamic based on userType
         Label loginLabel = new Label("Login");
         loginLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -91,6 +87,15 @@ public class MenuBarController implements IController {
             }
         });
         login.setGraphic(loginLabel);
+        Label homeLabel = new Label("Home");
+        homeLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                mainApplication.showMap();
+                mainApplication.showMainScreen();
+            }
+        });
+        home.setGraphic(homeLabel);
+
     }
 
     /**
@@ -143,31 +148,24 @@ public class MenuBarController implements IController {
     }
 
     /**
-     * go back to the main screen
-     */
-    @FXML
-    private void handleMainMenu() {
-        mainApplication.showMap();
-        mainApplication.showMainScreen();
-    }
-
-    /**
      * filters by water type
+     *
+     * @param event clic    king the water type
      */
     @FXML
     private void handleWaterType(ActionEvent event) {
         MapController.setWaterType("null");
-        if (event.getSource() == Bottled) {
+        if (event.getSource() == bottled) {
             MapController.setWaterType("Bottled");
-        } else if (event.getSource() == Well) {
+        } else if (event.getSource() == well) {
             MapController.setWaterType("Well");
-        } else if (event.getSource() == Stream) {
+        } else if (event.getSource() == stream) {
             MapController.setWaterType("Stream");
-        } else if (event.getSource() == Lake) {
+        } else if (event.getSource() == lake) {
             MapController.setWaterType("Lake");
-        } else if (event.getSource() == Spring) {
+        } else if (event.getSource() == spring) {
             MapController.setWaterType("Spring");
-        } else if (event.getSource() == Other) {
+        } else if (event.getSource() == other) {
             MapController.setWaterType("Other");
         }
         MapController.setWaterCondition("null");
@@ -178,17 +176,19 @@ public class MenuBarController implements IController {
 
     /**
      * filters by water condition
+     *
+     * @param event clicking the condition of the water
      */
     @FXML
     private void handleWaterCondition(ActionEvent event) {
         MapController.setWaterCondition("null");
-        if (event.getSource() == Waste) {
+        if (event.getSource() == waste) {
             MapController.setWaterCondition("Waste");
-        } else if (event.getSource() == Treatable_Clear) {
+        } else if (event.getSource() == treatableClear) {
             MapController.setWaterCondition("Treatable_Clear");
-        } else if (event.getSource() == Treatable_Muddy) {
+        } else if (event.getSource() == treatableMuddy) {
             MapController.setWaterCondition("Treatable_Muddy");
-        } else if (event.getSource() == Potable) {
+        } else if (event.getSource() == potable) {
             MapController.setWaterCondition("Potable");
         }
         MapController.setWaterType("null");

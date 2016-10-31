@@ -11,11 +11,11 @@
         <menus>
           <Menu fx:id="hello" mnemonicParsing="false">
           </Menu>
+            <Menu fx:id="home" mnemonicParsing="false" />
           <Menu fx:id="login" mnemonicParsing="false">
           </Menu>
           <Menu fx:id="userOptions" mnemonicParsing="false">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleMainMenu" text="Main" />
               <MenuItem mnemonicParsing="false" onAction="#handleEditMenu" text="Edit profile" />
               <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#handleLogoutMenu" text="Logout" />
             </items>
@@ -30,23 +30,23 @@
                <items>
                   <Menu mnemonicParsing="false" text="Water Type">
                     <items>
-                      <MenuItem fx:id="Bottled" mnemonicParsing="false" onAction="#handleWaterType" text="Bottled" />
-                        <MenuItem fx:id="Well" mnemonicParsing="false" onAction="#handleWaterType" text="Well" />
-                        <MenuItem fx:id="Stream" mnemonicParsing="false" onAction="#handleWaterType" text="Stream" />
-                        <MenuItem fx:id="Lake" mnemonicParsing="false" onAction="#handleWaterType" text="Lake" />
-                        <MenuItem fx:id="Spring" mnemonicParsing="false" onAction="#handleWaterType" text="Spring" />
-                        <MenuItem fx:id="Other" mnemonicParsing="false" onAction="#handleWaterType" text="Other" />
+                      <MenuItem fx:id="bottled" mnemonicParsing="false" onAction="#handleWaterType" text="Bottled" />
+                        <MenuItem fx:id="well" mnemonicParsing="false" onAction="#handleWaterType" text="Well" />
+                        <MenuItem fx:id="stream" mnemonicParsing="false" onAction="#handleWaterType" text="Stream" />
+                        <MenuItem fx:id="lake" mnemonicParsing="false" onAction="#handleWaterType" text="Lake" />
+                        <MenuItem fx:id="spring" mnemonicParsing="false" onAction="#handleWaterType" text="Spring" />
+                        <MenuItem fx:id="other" mnemonicParsing="false" onAction="#handleWaterType" text="Other" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Water Condition">
                     <items>
-                        <MenuItem fx:id="Waste" mnemonicParsing="false" onAction="#handleWaterCondition" text="Waste" />
-                        <MenuItem fx:id="Treatable_Clear" mnemonicParsing="false" onAction="#handleWaterCondition" text="Treatable_Clear" />
-                        <MenuItem fx:id="Treatable_Muddy" mnemonicParsing="false" onAction="#handleWaterCondition" text="Treatable_Muddy" />
-                        <MenuItem fx:id="Potable" mnemonicParsing="false" onAction="#handleWaterCondition" text="Potable" />
+                        <MenuItem fx:id="waste" mnemonicParsing="false" onAction="#handleWaterCondition" text="Waste" />
+                        <MenuItem fx:id="treatableClear" mnemonicParsing="false" onAction="#handleWaterCondition" text="Treatable_Clear" />
+                        <MenuItem fx:id="treatableMuddy" mnemonicParsing="false" onAction="#handleWaterCondition" text="Treatable_Muddy" />
+                        <MenuItem fx:id="potable" mnemonicParsing="false" onAction="#handleWaterCondition" text="Potable" />
                     </items>
                   </Menu>
-                  <MenuItem fx:id="AllPins" mnemonicParsing="false" onAction="#handleViewAllPins" text="All Pins" />
+                  <MenuItem fx:id="allPins" mnemonicParsing="false" onAction="#handleViewAllPins" text="All Pins" />
                </items>
             </Menu>
           <Menu fx:id="help" mnemonicParsing="false" text="Help">

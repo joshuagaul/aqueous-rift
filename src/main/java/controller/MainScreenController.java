@@ -15,7 +15,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import main.MainFXApplication;
-import model.ReportDataObject;
 
 import java.util.Optional;
 
@@ -48,8 +47,6 @@ public class MainScreenController implements IController {
     @FXML private Label contaminationLabel;
     @FXML private Text virus;
     @FXML private Text contamination;
-    ReportDataObject reportDAO =
-            ReportDataObject.getInstance();
 
     /**
      * Initializes the buttons
@@ -153,7 +150,8 @@ public class MainScreenController implements IController {
             WaterPurityReport purityReport = (WaterPurityReport) report;
             if (report != null && isLoggedIn.get()) {
                 condition.setText(purityReport.getCondition().toString());
-                contamination.setText(Double.toString(purityReport.getContaminantPPM()));
+                contamination.setText(Double.toString(
+                        purityReport.getContaminantPPM()));
                 virus.setText(Double.toString(purityReport.getVirusPPM()));
             }
         }

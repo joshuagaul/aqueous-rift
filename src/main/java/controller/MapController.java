@@ -1,7 +1,6 @@
 package controller;
 
 import classes.WaterPurityReport;
-import classes.WaterType;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
@@ -12,7 +11,6 @@ import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -25,7 +23,7 @@ public class MapController implements IController,
         MapComponentInitializedListener {
 
 
-    public static StringProperty filterType = new SimpleStringProperty();
+    private static StringProperty filterType = new SimpleStringProperty();
     private static StringProperty filterCondition = new SimpleStringProperty();
     private static StringProperty filterAll = new SimpleStringProperty();
 
@@ -95,6 +93,12 @@ public class MapController implements IController,
             }
         }
     }
+
+    /**
+     * place the pins for water purity reports.
+     *
+     * @param report water purity report
+     */
     private void putPurePins(WaterPurityReport report) {
         double lat = Double.parseDouble(report.getLocation().getLatitude());
         double lng = Double.parseDouble(report.getLocation()
@@ -110,19 +114,25 @@ public class MapController implements IController,
         InfoWindow window = new InfoWindow(infoWindowOptions);
 
         map.addUIEventHandler(marker,
-                UIEventType.click,
-                (JSObject obj) -> {
-                    mainApplication.setCurrentPurityReport(report);
-                    if (opened) {
-                        window.close();
-                        opened = false;
-                    } else {
-                        window.open(map, marker);
-                        opened = true;
-                    }
+            UIEventType.click,
+            (JSObject obj) -> {
+                mainApplication.setCurrentPurityReport(report);
+                if (opened) {
+                    window.close();
+                    opened = false;
+                } else {
+                    window.open(map, marker);
+                    opened = true;
                 }
+            }
         );
     }
+
+    /**
+     * place the pins for water source reports.
+     *
+     * @param report water source report
+     */
     private void putSourcePins(WaterSourceReport report) {
         double lat = Double.parseDouble(report.getLocation().getLatitude());
         double lng = Double.parseDouble(report.getLocation()
@@ -140,19 +150,20 @@ public class MapController implements IController,
         InfoWindow window = new InfoWindow(infoWindowOptions);
 
         map.addUIEventHandler(marker,
-                UIEventType.click,
-                (JSObject obj) -> {
-                    mainApplication.setCurrentReport(report);
-                    if (opened) {
-                        window.close();
-                        opened = false;
-                    } else {
-                        window.open(map, marker);
-                        opened = true;
-                    }
+            UIEventType.click,
+            (JSObject obj) -> {
+                mainApplication.setCurrentReport(report);
+                if (opened) {
+                    window.close();
+                    opened = false;
+                } else {
+                    window.open(map, marker);
+                    opened = true;
                 }
+            }
         );
     }
+
     /**
      * Gives the controller access to mainApplication.
      *
@@ -165,7 +176,7 @@ public class MapController implements IController,
     /**
      * Sets the water type of the report for filtering the pins.
      *
-     * @param
+     * @param inputType type of the water
      */
     public static void setWaterType(String inputType) {
         filterType.set(inputType);
@@ -174,7 +185,7 @@ public class MapController implements IController,
     /**
      * Sets the water type of the report for filtering the pins.
      *
-     * @param
+     * @param inputType condition of the water
      */
     public static void setWaterCondition(String inputType) {
         filterCondition.set(inputType);
@@ -183,7 +194,7 @@ public class MapController implements IController,
     /**
      * Sets the water type of the report for filtering the pins.
      *
-     * @param
+     * @param inputType sets the pins to show all.
      */
     public static void setAllPins(String inputType) {
         filterAll.set(inputType);
