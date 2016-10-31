@@ -67,7 +67,6 @@ public class ViewAllReportsController implements IController {
         reportDAO = ReportDataObject.getInstance();
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);
-        switchTable.visibleProperty().bind(isAuthorized);
 
         user.setCellValueFactory(
                 new PropertyValueFactory<WaterReport, String>("reporterId"));
@@ -96,7 +95,7 @@ public class ViewAllReportsController implements IController {
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
 
-        //TODO update and delete button by selecting
+        //TODO update and delete button by selecting each item
         // the report directly from the table
         if (event.getSource() == back) {
             MapController.setAllPins("All");
@@ -109,10 +108,10 @@ public class ViewAllReportsController implements IController {
             if (showPurityReports.get()) {
                 setReportView(false);
                 header.setText("SOURCE REPORTS");
-                switchTable.setText("View Purity Reports");
+                switchTable.setText("View Confirmed Reports");
             } else {
                 setReportView(true);
-                header.setText("PURITY REPORTS");
+                header.setText("CONFIRMED REPORTS");
                 switchTable.setText("View Resource Reports");
             }
             switchViews();
@@ -125,11 +124,11 @@ public class ViewAllReportsController implements IController {
      */
     private void switchViews() {
         reportView.getColumns().clear();
-        if (showPurityReports.get()) {
+        if (isAuthorized.get() && showPurityReports.get()) {
             reportView.getColumns().addAll(user, location, date,
                     condition, contamination, virus);
         } else {
-            reportView.getColumns().addAll(user, location, date, type,
+            reportView.getColumns().addAll(location, date, type,
                     condition);
         }
         reportView.getItems().setAll(parseReportList(reportDAO));
