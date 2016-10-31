@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,99 +12,135 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.IOException;
+
+import javafx.scene.text.Text;
 import main.MainFXApplication;
 import model.ReportDataObject;
 import classes.WaterReport;
-import classes.WaterSourceReport;
-
 
 /**
  * Created by ahjin on 10/17/2016.
  */
 public class ViewAllReportsController implements IController {
-
+    private static BooleanProperty isAuthorized
+            = new SimpleBooleanProperty(false);
+    private static BooleanProperty isLoggedIn
+            = new SimpleBooleanProperty(false);
+    private static BooleanProperty showPurityReports
+            = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
-
     @FXML private static StackPane pane;
     @FXML private Button back;
     @FXML private Button submit;
-
+    @FXML private Text header;
     @FXML
     private TableView<WaterReport> reportView;
 
-    // @FXML
-    // private TableColumn<WaterSourceReport, String> num;
-    //
     @FXML
-    private TableColumn<WaterSourceReport, String> date;
-    //
-    // @FXML
-    // private TableColumn<WaterSourceReport, String> location;
-    //
-    @FXML
-    private TableColumn<WaterSourceReport, String> type;
+    private Button delete;
 
     @FXML
-    private TableColumn<WaterSourceReport, String> condition;
+    private Button update;
 
-    // @FXML
-    // private TableColumn<WaterSourceReport, String> virus;
-    //
-    // @FXML
-    // private TableColumn<WaterSourceReport, String> contamination;
-    //
     @FXML
-    private TableColumn<WaterReport, String> user;
+    private Button switchTable;
 
-    /**
-     * Button handler for login page.
-     * Clicking "Login" should check validity of info and count login attempts.
-     * Cllicking "Cancel" will redirect to main screen.
-     *
-     * @throws IOException throws an exception when fxml is not found.
-     * @param event the button user clicks.
-     */
-    @FXML
-    private void handleButtonClicked(ActionEvent event) throws IOException {
-        if (event.getSource() == back) {
-            mainApplication.showMap();
-            mainApplication.showMainScreen();
-        } else if (event.getSource() == submit) {
-            mainApplication.showMap();
-            mainApplication.showReportScreen();
-        }
-    }
+    private TableColumn<WaterReport, String> user
+            = new TableColumn<>("Username");
+    private TableColumn<WaterReport, String> location
+            = new TableColumn<>("Location");
+    private TableColumn<WaterReport, String> date
+            = new TableColumn<>("Date");
+    private TableColumn<WaterReport, String> type
+            = new TableColumn<>("Type");
+    private TableColumn<WaterReport, String> condition
+            = new TableColumn<>("Condition");
+    private TableColumn<WaterReport, String> contamination
+            = new TableColumn<>("Contamination (ppm)");
+    private TableColumn<WaterReport, String> virus
+            = new TableColumn<>("Virus (ppm)");
+    private ReportDataObject reportDAO;
 
     /**
      * Loads report data
      */
     @FXML
     private void initialize() {
-        TableColumn<WaterReport, String> location
-            = new TableColumn<>("Location");
-        TableColumn<WaterReport, String> date  
-            = new TableColumn<>("Date");
-        TableColumn<WaterReport, String> type  
-            = new TableColumn<>("Type");
-        TableColumn<WaterReport, String> condition  
-            = new TableColumn<>("Condition");
-        ReportDataObject reportDAO = ReportDataObject.getInstance();
-        location.setCellValueFactory(
-            new PropertyValueFactory<WaterReport, String>("location"));
-        date.setCellValueFactory(
-            new PropertyValueFactory<WaterReport, String>("date"));
-        type.setCellValueFactory(
-            new PropertyValueFactory<WaterReport, String>("type"));
-
-        condition.setCellValueFactory(
-            new PropertyValueFactory<WaterReport, String>("condition"));
+        reportDAO = ReportDataObject.getInstance();
+        delete.visibleProperty().bind(isAuthorized);
+        update.visibleProperty().bind(isAuthorized);
+        setReportView(false);
         user.setCellValueFactory(
-            new PropertyValueFactory<WaterReport, String>("reporterId"));
-        System.out.println(parseReportList(reportDAO));
-        reportView.getColumns().addAll(location, date,
-            type, condition);
-        reportView.getItems().setAll(parseReportList(reportDAO));
+                new PropertyValueFactory<WaterReport, String>("reporterId"));
+        location.setCellValueFactory(
+                new PropertyValueFactory<WaterReport, String>("location"));
+        date.setCellValueFactory(
+                new PropertyValueFactory<WaterReport, String>("date"));
+        type.setCellValueFactory(
+                new PropertyValueFactory<WaterReport, String>("type"));
+        condition.setCellValueFactory(
+                new PropertyValueFactory<WaterReport, String>("condition"));
+        virus.setCellValueFactory(
+                new PropertyValueFactory<WaterReport, String>("virusPPM"));
+        contamination.setCellValueFactory(
+                new PropertyValueFactory<WaterReport, String>(
+                        "contaminantPPM"));
+        switchViews();
+    }
 
+    /**
+     * Button handler for view reports page
+     *
+     * @throws IOException throws an exception when fxml is not found.
+     * @param event the button user clicks.
+     */
+    @FXML
+    private void handleButtonClicked(ActionEvent event) throws IOException {
+
+        //TODO update and delete button by selecting each item
+        // the report directly from the table
+        if (event.getSource() == back) {
+            MapController.setAllPins("All");
+            mainApplication.showMap();
+            mainApplication.showMainScreen();
+        } else if (event.getSource() == submit) {
+            if (isLoggedIn.get()) {
+                mainApplication.showMap();
+                mainApplication.showReportScreen();
+            } else {
+                mainApplication.showMap();
+                mainApplication.showLoginScreen();
+            }
+        } else if (event.getSource() == switchTable) {
+            if (showPurityReports.get()) {
+                setReportView(false);
+                header.setText("SOURCE REPORTS");
+                switchTable.setText("View Confirmed Reports");
+            } else {
+                setReportView(true);
+                header.setText("CONFIRMED REPORTS");
+                switchTable.setText("View Resource Reports");
+            }
+            switchViews();
+        }
+    }
+
+    /**
+     * Updates the columns based on the view mode.
+     *
+     */
+    private void switchViews() {
+        reportView.getColumns().clear();
+        if (isAuthorized.get() && showPurityReports.get()) {
+            reportView.getColumns().addAll(user, location, date,
+                    condition, contamination, virus);
+        } else {
+            reportView.getColumns().addAll(user, location, date, type,
+                    condition);
+        }
+        reportView.getItems().setAll(parseReportList(reportDAO));
+        reportView.setColumnResizePolicy(
+                TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     /**
@@ -111,10 +149,41 @@ public class ViewAllReportsController implements IController {
      * @return           ArrayList of water reports
      */
     private List<WaterReport> parseReportList(ReportDataObject reportDAO) {
-        System.out.println(reportDAO.getAllSourceReports().values());
-        return new ArrayList<WaterReport>(
-                reportDAO.getAllSourceReports().values());
+        if (showPurityReports.get()) {
+            return new ArrayList<WaterReport>(
+                    reportDAO.getAllPurityReports().values());
+        } else {
+            return new ArrayList<WaterReport>(
+                    reportDAO.getAllSourceReports().values());
+        }
     }
+
+    /**
+     * set the visibility of the buttons based on the user type.
+     * @param set true if the user is authorized (worker, admin, manager).
+     *            false if the user is not logged in or a general user.
+     */
+    public static void setAuthority(boolean set) {
+        isAuthorized.set(set);
+    }
+
+    /**
+     * set the functionality of the buttons based on the login status.
+     * @param set true if the user is logged in.
+     */
+    public static void setLoggedIn(boolean set) {
+        isLoggedIn.set(set);
+    }
+
+    /**
+     * switches the view by clicking the button.
+     * @param set true if purity reports are shown.
+     */
+    public static void setReportView(boolean set) {
+        showPurityReports.setValue(set);
+    }
+
+
     /**
      * Gives the controller access to mainApplication.
      *

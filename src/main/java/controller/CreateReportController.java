@@ -5,30 +5,32 @@ package controller;
  */
 
 import java.util.Date;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.text.Text;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.CheckBox;
-import main.MainFXApplication;
-import java.io.IOException;
-import java.util.Optional;
 
-import javafx.scene.text.Text;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import classes.State;
 import classes.WaterCondition;
 import classes.WaterType;
 import classes.UserType;
 import classes.Location;
 import classes.WaterSourceReport;
+import classes.WaterPurityReport;
+
+import main.MainFXApplication;
+import java.io.IOException;
+import java.util.Optional;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import model.ReportDataObject;
 
 /**
@@ -36,8 +38,11 @@ import model.ReportDataObject;
  *
  */
 public class CreateReportController implements IController {
-
+    private BooleanProperty purityReport
+            = new SimpleBooleanProperty(false);
     private static BooleanProperty isAuthorized
+            = new SimpleBooleanProperty(false);
+    private static BooleanProperty showConfirm
             = new SimpleBooleanProperty(false);
     private ObjectProperty<UserType> userType = new SimpleObjectProperty<>();
     private MainFXApplication mainApplication;
@@ -85,18 +90,13 @@ public class CreateReportController implements IController {
     private Label contaminationLabel;
 
     @FXML
-    private CheckBox checkbox;
-    //TODO checking this will confirm the report
-    // and change the pin on the map
+    private Button confirmButton;
 
     @FXML
     private Button submit;
 
     @FXML
     private Button cancel;
-
-    @FXML
-    private Button test;
 
     /**
      * Initializes items (combobox's)
@@ -109,13 +109,13 @@ public class CreateReportController implements IController {
         state.getItems().setAll(State.values());
         //Bind event handler and set binding variables
         userType.set(UserType.GeneralUser);
-        ppm1.visibleProperty().bind(isAuthorized);
-        ppm2.visibleProperty().bind(isAuthorized);
-        virusLabel.visibleProperty().bind(isAuthorized);
-        contaminationLabel.visibleProperty().bind(isAuthorized);
-        virus.visibleProperty().bind(isAuthorized);
-        contamination.visibleProperty().bind(isAuthorized);
-        checkbox.visibleProperty().bind(isAuthorized);
+        ppm1.visibleProperty().bind(showConfirm);
+        ppm2.visibleProperty().bind(showConfirm);
+        virusLabel.visibleProperty().bind(showConfirm);
+        contaminationLabel.visibleProperty().bind(showConfirm);
+        virus.visibleProperty().bind(showConfirm);
+        contamination.visibleProperty().bind(showConfirm);
+        confirmButton.visibleProperty().bind(isAuthorized);
     }
 
     /**
@@ -194,6 +194,24 @@ public class CreateReportController implements IController {
     private void handleButtonClicked(ActionEvent event) throws IOException {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
+        } else if (event.getSource() == confirmButton) {
+            System.out.println(showConfirm.get());
+            if (showConfirm.get()) {
+                //create resource report
+                purityReport.setValue(false);
+                confirmButton.setId("button-confirm");
+                showConfirm.setValue(false);
+                confirmButton.setText("Purity");
+                System.out.println(showConfirm.get());
+            } else {
+                //creating purity report
+                purityReport.setValue(true);
+                confirmButton.setId("button-delete");
+                showConfirm.setValue(true);
+                confirmButton.setText("Source");
+                System.out.println(showConfirm.get());
+            }
+
         } else if (event.getSource() == submit) {
             ReportDataObject reportDAO = ReportDataObject.getInstance();
             String reporterId = mainApplication.getCurrentUsername();
@@ -207,9 +225,17 @@ public class CreateReportController implements IController {
             Date date = new Date();
             WaterType type = waterType.getValue();
             WaterCondition condition = waterCondition.getValue();
-            WaterSourceReport report = new WaterSourceReport(reporterId,
-                loc, type, condition, date);
-            reportDAO.addSourceReport(report);
+            if (!purityReport.get()) {
+                WaterSourceReport report = new WaterSourceReport(reporterId,
+                        loc, type, condition, date);
+                reportDAO.addSourceReport(report);
+            } else {
+                WaterPurityReport report = new WaterPurityReport(reporterId,
+                        date, loc, condition,
+                        Double.parseDouble(virus.getText()),
+                        Double.parseDouble(contamination.getText()));
+                reportDAO.addPurityReport(report);
+            }
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Report Submitted");

@@ -3,6 +3,8 @@
  */
 package controller;
 import classes.WaterSourceReport;
+import classes.WaterPurityReport;
+import classes.WaterReport;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -10,8 +12,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import main.MainFXApplication;
+import model.ReportDataObject;
+
 import java.util.Optional;
 
 /**
@@ -31,29 +36,20 @@ public class MainScreenController implements IController {
     private static BooleanProperty isLoggedIn
             = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
-    @FXML
-    private Text longitude;
-
-    @FXML
-    private Text latitude;
-
-    @FXML
-    private Button report;
-
-    @FXML
-    private Text condition;
-
-    @FXML
-    private Text type;
-
-    @FXML
-    private Text date;
-
-    @FXML
-    private Button update;
-
-    @FXML
-    private Button delete;
+    @FXML private Text longitude;
+    @FXML private Text latitude;
+    @FXML private Button report;
+    @FXML private Text condition;
+    @FXML private Text type;
+    @FXML private Text date;
+    @FXML private Button update;
+    @FXML private Button delete;
+    @FXML private Label virusLabel;
+    @FXML private Label contaminationLabel;
+    @FXML private Text virus;
+    @FXML private Text contamination;
+    ReportDataObject reportDAO =
+            ReportDataObject.getInstance();
 
     /**
      * Initializes the buttons
@@ -62,6 +58,10 @@ public class MainScreenController implements IController {
     private void initialize() {
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);
+        virus.visibleProperty().bind(isAuthorized);
+        contamination.visibleProperty().bind(isAuthorized);
+        virusLabel.visibleProperty().bind(isAuthorized);
+        contaminationLabel.visibleProperty().bind(isAuthorized);
 
         // WaterSourceReport curReport = mainApplication.getCurrentReport();
         // if (curReport != null && isLoggedIn.get()) {
@@ -99,7 +99,8 @@ public class MainScreenController implements IController {
                 mainApplication.showReportScreen();
             }
         } else if (event.getSource() == update) {
-            if (mainApplication.getCurrentReport() != null) {
+            if (mainApplication.getCurrentSourceReport() != null
+                    || mainApplication.getCurrentPurityReport() != null) {
                 mainApplication.showEditReportScreen();
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -113,7 +114,6 @@ public class MainScreenController implements IController {
             alert.setHeaderText("Are you sure you want to delete this report?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                //TODO delete the report and clear the texts
                 mainApplication.showMainScreen();
             }
         }
@@ -142,16 +142,26 @@ public class MainScreenController implements IController {
      * Sets the current report
      * @param report Report to set
      */
-    public void setCurrentReport(WaterSourceReport report) {
-        if (report != null && isLoggedIn.get()) {
-            delete.visibleProperty().bind(isAuthorized);
-            update.visibleProperty().bind(isAuthorized);
-            date.setText(report.getDateAsString());
-            type.setText(report.getType().toString());
-            condition.setText(report.getCondition().toString());
-            longitude.setText(report.getLocation().getLongitude());
-            latitude.setText(report.getLocation().getLatitude());
+    public void setCurrentReport(WaterReport report) {
+        if (report instanceof WaterSourceReport) {
+            WaterSourceReport sourceReport = (WaterSourceReport) report;
+            if (report != null && isLoggedIn.get()) {
+                type.setText(sourceReport.getType().toString());
+                condition.setText(sourceReport.getCondition().toString());
+            }
+        } else if (report instanceof WaterPurityReport) {
+            WaterPurityReport purityReport = (WaterPurityReport) report;
+            if (report != null && isLoggedIn.get()) {
+                condition.setText(purityReport.getCondition().toString());
+                contamination.setText(Double.toString(purityReport.getContaminantPPM()));
+                virus.setText(Double.toString(purityReport.getVirusPPM()));
+            }
         }
+        delete.visibleProperty().bind(isAuthorized);
+        update.visibleProperty().bind(isAuthorized);
+        date.setText(report.getDateAsString());
+        longitude.setText(report.getLocation().getLongitude());
+        latitude.setText(report.getLocation().getLatitude());
     }
 
     /**

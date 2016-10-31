@@ -26,6 +26,29 @@
                   <MenuItem mnemonicParsing="false" text="Check My Reports" />
               </items>
             </Menu>
+            <Menu fx:id="hello1" mnemonicParsing="false" text="View By">
+               <items>
+                  <Menu mnemonicParsing="false" text="Water Type">
+                    <items>
+                      <MenuItem fx:id="Bottled" mnemonicParsing="false" onAction="#handleWaterType" text="Bottled" />
+                        <MenuItem fx:id="Well" mnemonicParsing="false" onAction="#handleWaterType" text="Well" />
+                        <MenuItem fx:id="Stream" mnemonicParsing="false" onAction="#handleWaterType" text="Stream" />
+                        <MenuItem fx:id="Lake" mnemonicParsing="false" onAction="#handleWaterType" text="Lake" />
+                        <MenuItem fx:id="Spring" mnemonicParsing="false" onAction="#handleWaterType" text="Spring" />
+                        <MenuItem fx:id="Other" mnemonicParsing="false" onAction="#handleWaterType" text="Other" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Water Condition">
+                    <items>
+                        <MenuItem fx:id="Waste" mnemonicParsing="false" onAction="#handleWaterCondition" text="Waste" />
+                        <MenuItem fx:id="Treatable_Clear" mnemonicParsing="false" onAction="#handleWaterCondition" text="Treatable_Clear" />
+                        <MenuItem fx:id="Treatable_Muddy" mnemonicParsing="false" onAction="#handleWaterCondition" text="Treatable_Muddy" />
+                        <MenuItem fx:id="Potable" mnemonicParsing="false" onAction="#handleWaterCondition" text="Potable" />
+                    </items>
+                  </Menu>
+                  <MenuItem fx:id="AllPins" mnemonicParsing="false" onAction="#handleViewAllPins" text="All Pins" />
+               </items>
+            </Menu>
           <Menu fx:id="help" mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleAboutMenu" text="About" />

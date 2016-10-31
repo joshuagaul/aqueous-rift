@@ -1,17 +1,16 @@
 package controller;
 
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
+
+import java.util.Map;
 import java.util.Optional;
 import main.MainFXApplication;
 import classes.UserType;
@@ -48,6 +47,31 @@ public class MenuBarController implements IController {
     @FXML
     private Menu help;
 
+    @FXML
+    private MenuItem Bottled;
+    @FXML
+    private MenuItem Well;
+    @FXML
+    private MenuItem Stream;
+    @FXML
+    private MenuItem Lake;
+    @FXML
+    private MenuItem Spring;
+    @FXML
+    private MenuItem Other;
+
+    @FXML
+    private MenuItem Waste;
+    @FXML
+    private MenuItem Treatable_Clear;
+    @FXML
+    private MenuItem Treatable_Muddy;
+    @FXML
+    private MenuItem Potable;
+
+    @FXML
+    private MenuItem AllPins;
+
     /**
      * Initializes variable bindings and login handler
      */
@@ -55,7 +79,7 @@ public class MenuBarController implements IController {
     private void initialize() {
         //Help is a static Menu
         userOptions.visibleProperty().bind(userLoggedIn);
-        reports.visibleProperty().bind(userLoggedIn);
+        reports.setText("Reports");
         login.visibleProperty().bind(userLoggedIn.not());
         hello.textProperty().bind(username);
         userOptions.textProperty().bind(userType);
@@ -126,6 +150,64 @@ public class MenuBarController implements IController {
     }
 
     /**
+     * filters by water type
+     */
+    @FXML
+    private void handleWaterType(ActionEvent event) {
+        MapController.setWaterType("null");
+        if (event.getSource() == Bottled) {
+            MapController.setWaterType("Bottled");
+        } else if (event.getSource() == Well) {
+            MapController.setWaterType("Well");
+        } else if (event.getSource() == Stream) {
+            MapController.setWaterType("Stream");
+        } else if (event.getSource() == Lake) {
+            MapController.setWaterType("Lake");
+        } else if (event.getSource() == Spring) {
+            MapController.setWaterType("Spring");
+        } else if (event.getSource() == Other) {
+            MapController.setWaterType("Other");
+        }
+        MapController.setWaterCondition("null");
+        MapController.setAllPins("null");
+        mainApplication.showMap();
+        mainApplication.showMainScreen();
+    }
+
+    /**
+     * filters by water condition
+     */
+    @FXML
+    private void handleWaterCondition(ActionEvent event) {
+        MapController.setWaterCondition("null");
+        if (event.getSource() == Waste) {
+            MapController.setWaterCondition("Waste");
+        } else if (event.getSource() == Treatable_Clear) {
+            MapController.setWaterCondition("Treatable_Clear");
+        } else if (event.getSource() == Treatable_Muddy) {
+            MapController.setWaterCondition("Treatable_Muddy");
+        } else if (event.getSource() == Potable) {
+            MapController.setWaterCondition("Potable");
+        }
+        MapController.setWaterType("null");
+        MapController.setAllPins("null");
+        mainApplication.showMap();
+        mainApplication.showMainScreen();
+    }
+
+    /**
+     * Show all water source report pins on the map.
+     */
+    @FXML
+    private void handleViewAllPins() {
+        MapController.setAllPins("All");
+        MapController.setWaterType("null");
+        MapController.setWaterCondition("null");
+        mainApplication.showMap();
+        mainApplication.showMainScreen();
+    }
+
+    /**
      * Lets the user edit profile
      */
     @FXML
@@ -172,6 +254,5 @@ public class MenuBarController implements IController {
         username.set("Hello, " + mainApplication.getCurrentUsername());
         userLoggedIn.set(true);
         userType.set(user.getUserType());
-        reports.setText("Reports");
     }
 }
