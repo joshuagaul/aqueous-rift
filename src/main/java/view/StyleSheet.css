@@ -45,6 +45,19 @@
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
+#button-confirm {
+    -fx-padding: 5 22 5 22;
+    -fx-border-width: 0.5;
+    -fx-background-radius: 2;
+    -fx-background-color: #4CAF50;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+
+
 .button:hover {
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.2) , 5, 0 , 0 , 2 );
 }
