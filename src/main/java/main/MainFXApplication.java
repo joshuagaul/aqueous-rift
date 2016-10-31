@@ -33,7 +33,7 @@ public class MainFXApplication extends Application {
     private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private static User currentUser;
     private static String currentUsername;
-    private static WaterSourceReport currentReport;
+    private static WaterSourceReport currentSourceReport;
     private static WaterPurityReport currentPurityReport;
     private static MenuBarController menuBarController;
     private static MainScreenController mainScreenController;
@@ -119,11 +119,14 @@ public class MainFXApplication extends Application {
                 mainScreenController = (MainScreenController) (controller);
             } else if (controller instanceof EditReportController) {
                 EditReportController c = (EditReportController) (controller);
+                //TODO populate the edit info based on the report type
                 c.populateReportInformation(
-                        getCurrentReport().getLocation().getLongitude(),
-                        getCurrentReport().getLocation().getLatitude(),
-                        getCurrentReport().getType(),
-                        getCurrentReport().getCondition(), 0, 0);
+                        getCurrentSourceReport().getLocation().getLongitude(),
+                        getCurrentSourceReport().getLocation().getLatitude(),
+                        getCurrentSourceReport().getType(),
+                        getCurrentSourceReport().getCondition(),
+                        getCurrentPurityReport().getVirusPPM(),
+                        getCurrentPurityReport().getContaminantPPM());
             }
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to find "
@@ -229,23 +232,23 @@ public class MainFXApplication extends Application {
     }
 
     /**
-     * update the buttons for main screen based on the user type.
+     * update the buttons for main screen based on the user type & login status.
      */
     public void checkAuthority() {
         if (currentUser.getUserType().equals("Manager")
                 || currentUser.getUserType().equals("Worker")
                 || currentUser.getUserType().equals("Admin")) {
             MainScreenController.setAuthority(true);
-            MainScreenController.setLoggedIn(true);
             CreateReportController.setAuthority(true);
             ViewAllReportsController.setAuthority(true);
 
         } else {
             MainScreenController.setAuthority(false);
             CreateReportController.setAuthority(false);
-            MainScreenController.setLoggedIn(true);
             ViewAllReportsController.setAuthority(false);
         }
+        MainScreenController.setLoggedIn(true);
+        ViewAllReportsController.setLoggedIn(true);
     }
 
     /**
@@ -284,8 +287,8 @@ public class MainFXApplication extends Application {
      * Gets the report that is currently being viewed in the application.
      * @return currentReport
      */
-    public WaterSourceReport getCurrentReport() {
-        return currentReport;
+    public WaterSourceReport getCurrentSourceReport() {
+        return currentSourceReport;
     }
 
     /**
@@ -293,10 +296,10 @@ public class MainFXApplication extends Application {
      * @param report report currently active
      */
     public void setCurrentReport(WaterSourceReport report) {
-        currentReport = report;
+        currentSourceReport = report;
         mainScreenController.setCurrentReport(report);
     }
-    
+
     /**
      * Gets the report that is currently being viewed in the application.
      * @return currentReport
@@ -304,7 +307,7 @@ public class MainFXApplication extends Application {
     public WaterPurityReport getCurrentPurityReport() {
         return currentPurityReport;
     }
-    
+
     /**
      * Sets the report that is being viewed in the application.
      * @param report report currently active

@@ -24,6 +24,8 @@ import classes.WaterReport;
 public class ViewAllReportsController implements IController {
     private static BooleanProperty isAuthorized
             = new SimpleBooleanProperty(false);
+    private static BooleanProperty isLoggedIn
+            = new SimpleBooleanProperty(false);
     private static BooleanProperty showPurityReports
             = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
@@ -102,8 +104,13 @@ public class ViewAllReportsController implements IController {
             mainApplication.showMap();
             mainApplication.showMainScreen();
         } else if (event.getSource() == submit) {
-            mainApplication.showMap();
-            mainApplication.showReportScreen();
+            if (isLoggedIn.get()) {
+                mainApplication.showMap();
+                mainApplication.showReportScreen();
+            } else {
+                mainApplication.showMap();
+                mainApplication.showLoginScreen();
+            }
         } else if (event.getSource() == switchTable) {
             if (showPurityReports.get()) {
                 setReportView(false);
@@ -158,6 +165,14 @@ public class ViewAllReportsController implements IController {
      */
     public static void setAuthority(boolean set) {
         isAuthorized.set(set);
+    }
+
+    /**
+     * set the functionality of the buttons based on the login status.
+     * @param set true if the user is logged in.
+     */
+    public static void setLoggedIn(boolean set) {
+        isLoggedIn.set(set);
     }
 
     /**

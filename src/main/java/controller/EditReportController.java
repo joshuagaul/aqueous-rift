@@ -159,7 +159,7 @@ public class EditReportController implements IController {
                 if (result.get() == ButtonType.OK) {
                     ReportDataObject reportDAO = ReportDataObject.getInstance();
                     WaterSourceReport prevReportInfo =
-                            mainApplication.getCurrentReport();
+                            mainApplication.getCurrentSourceReport();
                     String reporterId = prevReportInfo.getReporterId();
                     Location loc = new Location("0", "0");
                     try {
