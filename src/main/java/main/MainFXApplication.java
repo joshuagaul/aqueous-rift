@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import classes.User;
 import classes.WaterSourceReport;
-
+import classes.WaterPurityReport;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +34,7 @@ public class MainFXApplication extends Application {
     private static User currentUser;
     private static String currentUsername;
     private static WaterSourceReport currentReport;
+    private static WaterPurityReport currentPurityReport;
     private static MenuBarController menuBarController;
     private static MainScreenController mainScreenController;
 
@@ -123,7 +124,6 @@ public class MainFXApplication extends Application {
                         getCurrentReport().getLocation().getLatitude(),
                         getCurrentReport().getType(),
                         getCurrentReport().getCondition(), 0, 0);
-                //TODO get virus and contamination
             }
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to find "
@@ -294,6 +294,23 @@ public class MainFXApplication extends Application {
      */
     public void setCurrentReport(WaterSourceReport report) {
         currentReport = report;
+        mainScreenController.setCurrentReport(report);
+    }
+    
+    /**
+     * Gets the report that is currently being viewed in the application.
+     * @return currentReport
+     */
+    public WaterPurityReport getCurrentPurityReport() {
+        return currentPurityReport;
+    }
+    
+    /**
+     * Sets the report that is being viewed in the application.
+     * @param report report currently active
+     */
+    public void setCurrentPurityReport(WaterPurityReport report) {
+        currentPurityReport = report;
         mainScreenController.setCurrentReport(report);
     }
 

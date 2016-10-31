@@ -3,6 +3,8 @@
  */
 package controller;
 import classes.WaterSourceReport;
+import classes.WaterPurityReport;
+import classes.WaterReport;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -142,16 +144,24 @@ public class MainScreenController implements IController {
      * Sets the current report
      * @param report Report to set
      */
-    public void setCurrentReport(WaterSourceReport report) {
-        if (report != null && isLoggedIn.get()) {
-            delete.visibleProperty().bind(isAuthorized);
-            update.visibleProperty().bind(isAuthorized);
-            date.setText(report.getDateAsString());
-            type.setText(report.getType().toString());
-            condition.setText(report.getCondition().toString());
-            longitude.setText(report.getLocation().getLongitude());
-            latitude.setText(report.getLocation().getLatitude());
+    public void setCurrentReport(WaterReport report) {
+        if (report instanceof WaterSourceReport) {
+            WaterSourceReport sourceReport = (WaterSourceReport) report;
+            if (report != null && isLoggedIn.get()) {
+                type.setText(sourceReport.getType().toString());
+                condition.setText(sourceReport.getCondition().toString());
+            }
+        } else if (report instanceof WaterPurityReport) {
+            WaterPurityReport purityReport = (WaterPurityReport) report;
+            if (report != null && isLoggedIn.get()) {
+                type.setText(purityReport.getCondition().toString());
+            }
         }
+        delete.visibleProperty().bind(isAuthorized);
+        update.visibleProperty().bind(isAuthorized);
+        date.setText(report.getDateAsString());
+        longitude.setText(report.getLocation().getLongitude());
+        latitude.setText(report.getLocation().getLatitude());
     }
 
     /**

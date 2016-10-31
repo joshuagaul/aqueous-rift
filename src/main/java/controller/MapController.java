@@ -1,5 +1,6 @@
 package controller;
 
+import classes.WaterPurityReport;
 import classes.WaterType;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
@@ -11,6 +12,7 @@ import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -18,8 +20,6 @@ import main.MainFXApplication;
 import model.ReportDataObject;
 import classes.WaterSourceReport;
 import netscape.javascript.JSObject;
-
-import java.util.Map;
 
 public class MapController implements IController,
         MapComponentInitializedListener {
@@ -78,15 +78,52 @@ public class MapController implements IController,
             String type = report.getType().toString();
             String condition = report.getCondition().toString();
             if (type.equals(filterType.get())) {
-                putPins(report);
+                putSourcePins(report);
             } else if (condition.equals(filterCondition.get())) {
-                putPins(report);
+                putSourcePins(report);
             } else if ("All".equals(filterAll.get())) {
-                putPins(report);
+                putSourcePins(report);
+            }
+        }
+        for (WaterPurityReport report
+                : reportDAO.getAllPurityReports().values()) {
+            String condition = report.getCondition().toString();
+            if (condition.equals(filterCondition.get())) {
+                putPurePins(report);
+            } else if ("All".equals(filterAll.get())) {
+                putPurePins(report);
             }
         }
     }
-    private void putPins(WaterSourceReport report) {
+    private void putPurePins(WaterPurityReport report) {
+        double lat = Double.parseDouble(report.getLocation().getLatitude());
+        double lng = Double.parseDouble(report.getLocation()
+                .getLongitude());
+        LatLong location = new LatLong(lat, lng);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(location);
+        Marker marker = new Marker(markerOptions);
+        map.addMarker(marker);
+        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+        infoWindowOptions.content("Water Condition: "
+                + report.getCondition() + "<br>Water Type: ");
+        InfoWindow window = new InfoWindow(infoWindowOptions);
+
+        map.addUIEventHandler(marker,
+                UIEventType.click,
+                (JSObject obj) -> {
+                    mainApplication.setCurrentPurityReport(report);
+                    if (opened) {
+                        window.close();
+                        opened = false;
+                    } else {
+                        window.open(map, marker);
+                        opened = true;
+                    }
+                }
+        );
+    }
+    private void putSourcePins(WaterSourceReport report) {
         double lat = Double.parseDouble(report.getLocation().getLatitude());
         double lng = Double.parseDouble(report.getLocation()
                 .getLongitude());
