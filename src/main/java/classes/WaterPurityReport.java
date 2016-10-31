@@ -8,7 +8,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 
 public class WaterPurityReport extends WaterReport {
 
-    private static int number = 0;
     private ObjectProperty<WaterCondition> condition =
         new SimpleObjectProperty<>();
     private DoubleProperty virusPPM = new SimpleDoubleProperty();
@@ -28,26 +27,9 @@ public class WaterPurityReport extends WaterReport {
     public WaterPurityReport(String reporterId, Date date, Location location,
         WaterCondition condition, double virusPPM, double contaminantPPM) {
         super(date, reporterId, location);
-        number++;
         this.condition.set(condition);
         this.virusPPM.set(virusPPM);
         this.contaminantPPM.set(contaminantPPM);
-    }
-
-    /**
-     * Gets number of WaterPurityReports.
-     * @return Returns number of water source reports
-     */
-    public int getNumber() {
-        return number;
-    }
-
-    /**
-     * Sets number of WaterPurityReports.
-     * @param n New number of reports.
-     */
-    public static void setNumber(int n) {
-        number = n;
     }
 
     /**

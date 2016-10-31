@@ -10,6 +10,7 @@ import java.text.ParsePosition;
 
 public abstract class WaterReport {
 
+    private String id = null;
     private Date date;
     private StringProperty reporterId = new SimpleStringProperty();
     private ObjectProperty<Location> location = new SimpleObjectProperty<>();
@@ -32,6 +33,22 @@ public abstract class WaterReport {
      */
     public WaterReport() {
 
+    }
+
+    /**
+     * Gets id of the Report.
+     * @return Returns Id of Report.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets Id of water Report.
+     * @param id New id of the Report.
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
