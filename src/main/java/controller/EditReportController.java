@@ -177,16 +177,14 @@ public class EditReportController implements IController {
                         WaterSourceReport report = new WaterSourceReport(
                                 reporterId, loc, type,
                                 condition, date);
-                        //STILL WORKING ON UPDATING THE REPORT
-                        //reportDAO.editSourceReport(report, );
+                        reportDAO.editSourceReport(report, prevReportInfo.getId());
                     } else {
                         //update as a purity report
                         WaterPurityReport report = new WaterPurityReport(
                                 reporterId, date, loc, condition,
                                 Double.parseDouble(virus.getText()),
                                 Double.parseDouble(contamination.getText()));
-                        //STILL WORKING ON UPDATING THE REPORT
-                        //reportDAO.confirmPurityReport(report);
+                        reportDAO.confirmPurityReport(report, prevReportInfo.getId());
                     }
 
                     mainApplication.showMap();

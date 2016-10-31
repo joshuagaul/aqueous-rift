@@ -1,17 +1,16 @@
 package controller;
 
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
+
+import java.util.Map;
 import java.util.Optional;
 import main.MainFXApplication;
 import classes.UserType;
@@ -48,6 +47,16 @@ public class MenuBarController implements IController {
     @FXML
     private Menu help;
 
+    @FXML
+    private MenuItem Bottled;
+    @FXML
+    private MenuItem Stream;
+    @FXML
+    private MenuItem Lake;
+    @FXML
+    private MenuItem Spring;
+
+
     /**
      * Initializes variable bindings and login handler
      */
@@ -55,7 +64,7 @@ public class MenuBarController implements IController {
     private void initialize() {
         //Help is a static Menu
         userOptions.visibleProperty().bind(userLoggedIn);
-        reports.visibleProperty().bind(userLoggedIn);
+        reports.setText("Reports");
         login.visibleProperty().bind(userLoggedIn.not());
         hello.textProperty().bind(username);
         userOptions.textProperty().bind(userType);
@@ -126,6 +135,28 @@ public class MenuBarController implements IController {
     }
 
     /**
+     * filters by water type
+     */
+    @FXML
+    private void handleWaterType(ActionEvent event) {
+        if (event.getSource() == Bottled) {
+            MapController.setWaterType("Bottled");
+        }
+        System.out.println("filter type is : " + MapController.filterType);
+        mainApplication.showMap();
+        mainApplication.showMainScreen();
+    }
+
+    /**
+     * filters by water condition
+     */
+    @FXML
+    private void handleWaterCondition(ActionEvent event) {
+
+    }
+
+
+    /**
      * Lets the user edit profile
      */
     @FXML
@@ -172,6 +203,5 @@ public class MenuBarController implements IController {
         username.set("Hello, " + mainApplication.getCurrentUsername());
         userLoggedIn.set(true);
         userType.set(user.getUserType());
-        reports.setText("Reports");
     }
 }

@@ -32,6 +32,28 @@
               <MenuItem mnemonicParsing="false" onAction="#handleContactMenu" text="Contact" />
             </items>
           </Menu>
+            <Menu fx:id="hello1" mnemonicParsing="false" text="View By">
+               <items>
+                  <Menu mnemonicParsing="false" text="Water Type">
+                    <items>
+                      <MenuItem fx:id="Bottled" mnemonicParsing="false" onAction="#handleWaterType" text="Bottled" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWaterType" text="Well" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWaterType" text="Stream" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWaterType" text="Lake" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWaterType" text="Spring" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWaterType" text="Other" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Water Condition">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleWaterCondition" text="Waste" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWaterCondition" text="Treatable_Clear" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWaterCondition" text="Treatable_Muddy" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleWaterCondition" text="Potable" />
+                    </items>
+                  </Menu>
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>

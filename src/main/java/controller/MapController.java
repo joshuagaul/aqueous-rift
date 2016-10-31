@@ -1,5 +1,6 @@
 package controller;
 
+import classes.WaterType;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
@@ -10,6 +11,9 @@ import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import main.MainFXApplication;
 import model.ReportDataObject;
@@ -18,6 +22,10 @@ import netscape.javascript.JSObject;
 
 public class MapController implements IController,
         MapComponentInitializedListener {
+
+
+    public static StringProperty filterType = new SimpleStringProperty();
+
 
     private boolean opened = false;
 
@@ -66,39 +74,36 @@ public class MapController implements IController,
         ReportDataObject reportDAO = ReportDataObject.getInstance();
         for (WaterSourceReport report
             : reportDAO.getAllSourceReports().values()) {
-            System.out.println("reports!");
-            double lat = Double.parseDouble(report.getLocation().getLatitude());
-            double lng = Double.parseDouble(report.getLocation()
-                .getLongitude());
-            LatLong location = new LatLong(lat, lng);
+            String type = report.getType().toString();
+            if (type.equals(filterType.get())) {
+                double lat = Double.parseDouble(report.getLocation().getLatitude());
+                double lng = Double.parseDouble(report.getLocation()
+                        .getLongitude());
+                LatLong location = new LatLong(lat, lng);
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(location);
+                Marker marker = new Marker(markerOptions);
+                map.addMarker(marker);
+                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                infoWindowOptions.content("Water Condition: "
+                        + report.getCondition() + "<br>Water Type: "
+                        + report.getType());
+                InfoWindow window = new InfoWindow(infoWindowOptions);
 
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(location);
-            Marker marker = new Marker(markerOptions);
-            map.addMarker(marker);
-            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-            infoWindowOptions.content("Water Condition: "
-                + report.getCondition() + "<br>Water Type: "
-                + report.getType());
-            InfoWindow window = new InfoWindow(infoWindowOptions);
-
-            map.addUIEventHandler(marker,
-                UIEventType.click,
-                (JSObject obj) -> {
-                    mainApplication.setCurrentReport(report);
-                    // InfoWindowOptions cur = new InfoWindowOptions();
-                    // cur.content("Water Condition: " + report.getCondition()
-                    // + "<br>Water Type: " + report.getType());
-                    // InfoWindow win = new InfoWindow(infoWindowOptions);
-                    // wind.open(map, marker);
-                    if (opened) {
-                        window.close();
-                        opened = false;
-                    } else {
-                        window.open(map, marker);
-                        opened = true;
-                    }
-                });
+                map.addUIEventHandler(marker,
+                        UIEventType.click,
+                        (JSObject obj) -> {
+                            mainApplication.setCurrentReport(report);
+                            if (opened) {
+                                window.close();
+                                opened = false;
+                            } else {
+                                window.open(map, marker);
+                                opened = true;
+                            }
+                        }
+                );
+            }
         }
     }
 
@@ -110,5 +115,15 @@ public class MapController implements IController,
     public void setMainApp(MainFXApplication mainFXApplication) {
         mainApplication = mainFXApplication;
     }
+
+    /**
+     * Sets the water type of the report for filtering the pins.
+     *
+     * @param
+     */
+    public static void setWaterType(String inputType) {
+        filterType.set(inputType);
+    }
+
 
 }

@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -41,18 +40,7 @@
          <children>
             <ScrollPane hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="1088.0" vbarPolicy="ALWAYS" GridPane.columnSpan="9" GridPane.rowIndex="2" GridPane.rowSpan="8">
                <content>
-                  <TableView fx:id="reportView" prefHeight="495.0" prefWidth="983.0">
-                    <columns>
-                        <!-- <TableColumn fx:id="num" prefWidth="41.0" resizable="false" text="No." />
-                        <TableColumn fx:id="date" editable="false" prefWidth="98.0" resizable="false" text="Date" />
-                        <TableColumn fx:id="location" prefWidth="237.0" resizable="false" text="Location" />
-                        <TableColumn fx:id="type" prefWidth="95.0" resizable="false" text="Type" />
-                        <TableColumn fx:id="condition" prefWidth="121.0" resizable="false" text="Condition" />
-                        <TableColumn fx:id="virus" prefWidth="100.0" text="Virus" />
-                        <TableColumn fx:id="contamination" prefWidth="146.0" text="Contamination" /> -->
-                        <TableColumn fx:id="user" minWidth="8.0" prefWidth="144.0" text="User" />
-                    </columns>
-                  </TableView>
+                  <TableView fx:id="reportView" prefHeight="495.0" prefWidth="983.0" />
                </content>
             </ScrollPane>
             <Text id="heading" strokeType="OUTSIDE" strokeWidth="0.0" text="VIEW ALL REPORTS" wrappingWidth="329.74609375" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowSpan="2" />

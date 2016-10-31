@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,13 +16,13 @@ import main.MainFXApplication;
 import model.ReportDataObject;
 import classes.WaterReport;
 import classes.WaterSourceReport;
-
+import classes.WaterPurityReport;
 
 /**
  * Created by ahjin on 10/17/2016.
  */
 public class ViewAllReportsController implements IController {
-
+    private static BooleanProperty isAuthorized = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
 
     @FXML private static StackPane pane;
@@ -44,15 +46,6 @@ public class ViewAllReportsController implements IController {
 
     @FXML
     private TableColumn<WaterSourceReport, String> condition;
-
-    // @FXML
-    // private TableColumn<WaterSourceReport, String> virus;
-    //
-    // @FXML
-    // private TableColumn<WaterSourceReport, String> contamination;
-    //
-    @FXML
-    private TableColumn<WaterReport, String> user;
 
     /**
      * Button handler for login page.
@@ -78,6 +71,10 @@ public class ViewAllReportsController implements IController {
      */
     @FXML
     private void initialize() {
+        TableColumn<WaterReport, String> reportType
+                = new TableColumn<>("Report Type");
+        TableColumn<WaterReport, String> user
+                = new TableColumn<>("Username");
         TableColumn<WaterReport, String> location
             = new TableColumn<>("Location");
         TableColumn<WaterReport, String> date  
@@ -86,20 +83,26 @@ public class ViewAllReportsController implements IController {
             = new TableColumn<>("Type");
         TableColumn<WaterReport, String> condition  
             = new TableColumn<>("Condition");
+        TableColumn<WaterReport, String> contamination
+                = new TableColumn<>("Contamination");
+        TableColumn<WaterReport, String> virus
+                = new TableColumn<>("Virus");
+
         ReportDataObject reportDAO = ReportDataObject.getInstance();
+/*
+        reportType.setCellValueFactory(
+                new PropertyValueFactory<WaterReport, String>(""));*/
+        user.setCellValueFactory(
+                new PropertyValueFactory<WaterReport, String>("reporterId"));
         location.setCellValueFactory(
             new PropertyValueFactory<WaterReport, String>("location"));
         date.setCellValueFactory(
             new PropertyValueFactory<WaterReport, String>("date"));
         type.setCellValueFactory(
             new PropertyValueFactory<WaterReport, String>("type"));
-
         condition.setCellValueFactory(
             new PropertyValueFactory<WaterReport, String>("condition"));
-        user.setCellValueFactory(
-            new PropertyValueFactory<WaterReport, String>("reporterId"));
-        System.out.println(parseReportList(reportDAO));
-        reportView.getColumns().addAll(location, date,
+        reportView.getColumns().addAll(reportType, user, location, date,
             type, condition);
         reportView.getItems().setAll(parseReportList(reportDAO));
 
@@ -111,7 +114,6 @@ public class ViewAllReportsController implements IController {
      * @return           ArrayList of water reports
      */
     private List<WaterReport> parseReportList(ReportDataObject reportDAO) {
-        System.out.println(reportDAO.getAllSourceReports().values());
         return new ArrayList<WaterReport>(
                 reportDAO.getAllSourceReports().values());
     }
