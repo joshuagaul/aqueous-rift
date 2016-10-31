@@ -1,11 +1,6 @@
 package main;
 
-import controller.IController;
-import controller.MainScreenController;
-import controller.EditReportController;
-import controller.MenuBarController;
-import controller.CreateReportController;
-import controller.EditProfileController;
+import controller.*;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -45,6 +40,7 @@ public class MainFXApplication extends Application {
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
         initRootLayout(mainScreen);
+        MapController.setAllPins("All");
         showMap();
         showMainScreen();
     }

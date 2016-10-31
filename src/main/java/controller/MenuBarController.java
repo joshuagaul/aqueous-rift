@@ -50,12 +50,27 @@ public class MenuBarController implements IController {
     @FXML
     private MenuItem Bottled;
     @FXML
+    private MenuItem Well;
+    @FXML
     private MenuItem Stream;
     @FXML
     private MenuItem Lake;
     @FXML
     private MenuItem Spring;
+    @FXML
+    private MenuItem Other;
 
+    @FXML
+    private MenuItem Waste;
+    @FXML
+    private MenuItem Treatable_Clear;
+    @FXML
+    private MenuItem Treatable_Muddy;
+    @FXML
+    private MenuItem Potable;
+
+    @FXML
+    private MenuItem AllPins;
 
     /**
      * Initializes variable bindings and login handler
@@ -139,10 +154,22 @@ public class MenuBarController implements IController {
      */
     @FXML
     private void handleWaterType(ActionEvent event) {
+        MapController.setWaterType("null");
         if (event.getSource() == Bottled) {
             MapController.setWaterType("Bottled");
+        } else if (event.getSource() == Well) {
+            MapController.setWaterType("Well");
+        } else if (event.getSource() == Stream) {
+            MapController.setWaterType("Stream");
+        } else if (event.getSource() == Lake) {
+            MapController.setWaterType("Lake");
+        } else if (event.getSource() == Spring) {
+            MapController.setWaterType("Spring");
+        } else if (event.getSource() == Other) {
+            MapController.setWaterType("Other");
         }
-        System.out.println("filter type is : " + MapController.filterType);
+        MapController.setWaterCondition("null");
+        MapController.setAllPins("null");
         mainApplication.showMap();
         mainApplication.showMainScreen();
     }
@@ -152,9 +179,33 @@ public class MenuBarController implements IController {
      */
     @FXML
     private void handleWaterCondition(ActionEvent event) {
-
+        MapController.setWaterCondition("null");
+        if (event.getSource() == Waste) {
+            MapController.setWaterCondition("Waste");
+        } else if (event.getSource() == Treatable_Clear) {
+            MapController.setWaterCondition("Treatable_Clear");
+        } else if (event.getSource() == Treatable_Muddy) {
+            MapController.setWaterCondition("Treatable_Muddy");
+        } else if (event.getSource() == Potable) {
+            MapController.setWaterCondition("Potable");
+        }
+        MapController.setWaterType("null");
+        MapController.setAllPins("null");
+        mainApplication.showMap();
+        mainApplication.showMainScreen();
     }
 
+    /**
+     * Show all water source report pins on the map.
+     */
+    @FXML
+    private void handleViewAllPins() {
+        MapController.setAllPins("All");
+        MapController.setWaterType("null");
+        MapController.setWaterCondition("null");
+        mainApplication.showMap();
+        mainApplication.showMainScreen();
+    }
 
     /**
      * Lets the user edit profile

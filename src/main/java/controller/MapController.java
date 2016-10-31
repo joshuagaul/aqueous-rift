@@ -25,7 +25,8 @@ public class MapController implements IController,
 
 
     public static StringProperty filterType = new SimpleStringProperty();
-
+    private static StringProperty filterCondition = new SimpleStringProperty();
+    private static StringProperty filterAll = new SimpleStringProperty();
 
     private boolean opened = false;
 
@@ -75,38 +76,46 @@ public class MapController implements IController,
         for (WaterSourceReport report
             : reportDAO.getAllSourceReports().values()) {
             String type = report.getType().toString();
+            String condition = report.getCondition().toString();
             if (type.equals(filterType.get())) {
-                double lat = Double.parseDouble(report.getLocation().getLatitude());
-                double lng = Double.parseDouble(report.getLocation()
-                        .getLongitude());
-                LatLong location = new LatLong(lat, lng);
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(location);
-                Marker marker = new Marker(markerOptions);
-                map.addMarker(marker);
-                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                infoWindowOptions.content("Water Condition: "
-                        + report.getCondition() + "<br>Water Type: "
-                        + report.getType());
-                InfoWindow window = new InfoWindow(infoWindowOptions);
-
-                map.addUIEventHandler(marker,
-                        UIEventType.click,
-                        (JSObject obj) -> {
-                            mainApplication.setCurrentReport(report);
-                            if (opened) {
-                                window.close();
-                                opened = false;
-                            } else {
-                                window.open(map, marker);
-                                opened = true;
-                            }
-                        }
-                );
+                putPins(report);
+            } else if (condition.equals(filterCondition.get())) {
+                putPins(report);
+            } else if ("All".equals(filterAll.get())) {
+                putPins(report);
             }
         }
     }
+    private void putPins(WaterSourceReport report) {
+        double lat = Double.parseDouble(report.getLocation().getLatitude());
+        double lng = Double.parseDouble(report.getLocation()
+                .getLongitude());
+        LatLong location = new LatLong(lat, lng);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(location)
+            .icon("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
+        Marker marker = new Marker(markerOptions);
+        map.addMarker(marker);
+        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+        infoWindowOptions.content("Water Condition: "
+                + report.getCondition() + "<br>Water Type: "
+                + report.getType());
+        InfoWindow window = new InfoWindow(infoWindowOptions);
 
+        map.addUIEventHandler(marker,
+                UIEventType.click,
+                (JSObject obj) -> {
+                    mainApplication.setCurrentReport(report);
+                    if (opened) {
+                        window.close();
+                        opened = false;
+                    } else {
+                        window.open(map, marker);
+                        opened = true;
+                    }
+                }
+        );
+    }
     /**
      * Gives the controller access to mainApplication.
      *
@@ -125,5 +134,21 @@ public class MapController implements IController,
         filterType.set(inputType);
     }
 
+    /**
+     * Sets the water type of the report for filtering the pins.
+     *
+     * @param
+     */
+    public static void setWaterCondition(String inputType) {
+        filterCondition.set(inputType);
+    }
 
+    /**
+     * Sets the water type of the report for filtering the pins.
+     *
+     * @param
+     */
+    public static void setAllPins(String inputType) {
+        filterAll.set(inputType);
+    }
 }
