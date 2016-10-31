@@ -55,7 +55,7 @@
             <Label fx:id="contaminationLabel" text="Contamination" wrapText="true" GridPane.rowIndex="7" />
             <Text fx:id="ppm1" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <Text fx:id="ppm2" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <Button id="button-confirm" fx:id="confirmButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="46.0" prefWidth="128.0" text="Purity" textAlignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="9" GridPane.valignment="TOP" />
+            <Button id="button-confirm" fx:id="confirmButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="46.0" prefWidth="391.0" text="Confirm This Report" textAlignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="9" GridPane.valignment="TOP" />
          </children>
          <padding>
             <Insets bottom="50.0" left="25.0" right="25.0" top="25.0" />

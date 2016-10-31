@@ -40,9 +40,6 @@ public class ViewAllReportsController implements IController {
     private Button delete;
 
     @FXML
-    private Button update;
-
-    @FXML
     private Button switchTable;
 
     private TableColumn<WaterReport, String> user
@@ -68,7 +65,6 @@ public class ViewAllReportsController implements IController {
     private void initialize() {
         reportDAO = ReportDataObject.getInstance();
         delete.visibleProperty().bind(isAuthorized);
-        update.visibleProperty().bind(isAuthorized);
         setReportView(false);
         user.setCellValueFactory(
                 new PropertyValueFactory<WaterReport, String>("reporterId"));
@@ -97,7 +93,7 @@ public class ViewAllReportsController implements IController {
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
 
-        //TODO update and delete button by selecting each item
+        //TODO delete button by selecting each item
         // the report directly from the table
         if (event.getSource() == back) {
             MapController.setAllPins("All");
@@ -119,7 +115,7 @@ public class ViewAllReportsController implements IController {
             } else {
                 setReportView(true);
                 header.setText("CONFIRMED REPORTS");
-                switchTable.setText("View Resource Reports");
+                switchTable.setText("View Source Reports");
             }
             switchViews();
         }
@@ -134,6 +130,9 @@ public class ViewAllReportsController implements IController {
         if (isAuthorized.get() && showPurityReports.get()) {
             reportView.getColumns().addAll(user, location, date,
                     condition, contamination, virus);
+        } else if (showPurityReports.get()) {
+            reportView.getColumns().addAll(user, location, date,
+                    condition);
         } else {
             reportView.getColumns().addAll(user, location, date, type,
                     condition);

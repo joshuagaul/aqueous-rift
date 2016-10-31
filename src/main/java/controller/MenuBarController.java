@@ -128,6 +128,8 @@ public class MenuBarController implements IController {
             MainScreenController.setAuthority(false);
             MainScreenController.setLoggedIn(false);
             CreateReportController.setAuthority(false);
+            ViewAllReportsController.setLoggedIn(false);
+            ViewAllReportsController.setAuthority(false);
         }
     }
 

@@ -131,13 +131,13 @@ public class EditReportController implements IController {
                 purityReport.setValue(false);
                 confirmButton.setId("button-confirm");
                 showConfirm.setValue(false);
-                confirmButton.setText("Purity");
+                confirmButton.setText("Confirm This Report");
             } else {
                 //creating purity report
                 purityReport.setValue(true);
                 confirmButton.setId("button-delete");
                 showConfirm.setValue(true);
-                confirmButton.setText("Source");
+                confirmButton.setText("Back to Source Report");
             }
 
         } else if (event.getSource() == submit) {
