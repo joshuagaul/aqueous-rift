@@ -6,17 +6,27 @@ package controller;
 
 import java.util.Date;
 
-import classes.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.text.Text;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+
+import classes.State;
+import classes.WaterCondition;
+import classes.WaterType;
+import classes.UserType;
+import classes.Location;
+import classes.WaterSourceReport;
+import classes.WaterPurityReport;
+
 import main.MainFXApplication;
 import java.io.IOException;
 import java.util.Optional;
-import javafx.scene.text.Text;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.BooleanProperty;
@@ -186,7 +196,7 @@ public class CreateReportController implements IController {
             mainApplication.showMainScreen();
         } else if (event.getSource() == confirmButton) {
             System.out.println(showConfirm.get());
-            if (showConfirm.get() == true) {
+            if (showConfirm.get()) {
                 //create resource report
                 purityReport.setValue(false);
                 confirmButton.setId("button-confirm");
@@ -215,13 +225,14 @@ public class CreateReportController implements IController {
             Date date = new Date();
             WaterType type = waterType.getValue();
             WaterCondition condition = waterCondition.getValue();
-            if (purityReport.get() == false) {
+            if (!purityReport.get()) {
                 WaterSourceReport report = new WaterSourceReport(reporterId,
                         loc, type, condition, date);
                 reportDAO.addSourceReport(report);
             } else {
                 WaterPurityReport report = new WaterPurityReport(reporterId,
-                        date, loc, condition, Double.parseDouble(virus.getText()),
+                        date, loc, condition,
+                        Double.parseDouble(virus.getText()),
                         Double.parseDouble(contamination.getText()));
                 reportDAO.addPurityReport(report);
             }

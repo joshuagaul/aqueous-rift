@@ -6,13 +6,25 @@ package controller;
 
 import java.util.Date;
 
-import classes.*;
+import classes.State;
+import classes.WaterCondition;
+import classes.WaterType;
+import classes.Location;
+import classes.WaterSourceReport;
+import classes.WaterPurityReport;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+
 import main.MainFXApplication;
 import java.io.IOException;
 import java.util.Optional;
@@ -114,7 +126,7 @@ public class EditReportController implements IController {
             mainApplication.showMainScreen();
         } else if (event.getSource() == confirmButton) {
             System.out.println(showConfirm.get());
-            if (showConfirm.get() == true) {
+            if (showConfirm.get()) {
                 //create resource report
                 purityReport.setValue(false);
                 confirmButton.setId("button-confirm");
@@ -160,17 +172,20 @@ public class EditReportController implements IController {
                     WaterType type = waterType.getValue();
                     WaterCondition condition = waterCondition.getValue();
 
-                    if (purityReport.get() == false) {
+                    if (!purityReport.get()) {
                         //update source report
-                        WaterSourceReport report = new WaterSourceReport(reporterId,
-                                loc, type, condition, date);
-                        reportDAO.editSourceReport(report, reporterId);
+                        WaterSourceReport report = new WaterSourceReport(
+                                reporterId, loc, type,
+                                condition, date);
+                        //STILL WORKING ON UPDATING THE REPORT
+                        //reportDAO.editSourceReport(report, );
                     } else {
                         //update as a purity report
-                        WaterPurityReport report = new WaterPurityReport(reporterId,
-                                date, loc, condition, Double.parseDouble(virus.getText()),
+                        WaterPurityReport report = new WaterPurityReport(
+                                reporterId, date, loc, condition,
+                                Double.parseDouble(virus.getText()),
                                 Double.parseDouble(contamination.getText()));
-                        //reportDAO.addPurityReport(report);
+                        //STILL WORKING ON UPDATING THE REPORT
                         //reportDAO.confirmPurityReport(report);
                     }
 
