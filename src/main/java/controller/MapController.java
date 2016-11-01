@@ -26,8 +26,7 @@ public class MapController implements IController,
     private static StringProperty filterType = new SimpleStringProperty();
     private static StringProperty filterCondition = new SimpleStringProperty();
     private static StringProperty filterAll = new SimpleStringProperty();
-
-    private boolean opened = false;
+    private InfoWindow opened = null;
 
     @FXML
     private GoogleMapView mapView;
@@ -40,6 +39,8 @@ public class MapController implements IController,
      */
     @FXML
     public void initialize() {
+        //Defaults to all pins
+        filterAll.set("All");
         mapView.addMapInializedListener(this);
     }
 
@@ -48,8 +49,7 @@ public class MapController implements IController,
 
         //Set the initial properties of the map.
         MapOptions mapOptions = new MapOptions();
-
-        mapOptions.center(new LatLong(66, 45.2))
+        mapOptions.center(new LatLong(35, 120))
                 //.mapType(MapTypeIdEnum.TERRAIN)
                 .overviewMapControl(false)
                 .panControl(false)
@@ -57,9 +57,15 @@ public class MapController implements IController,
                 .scaleControl(false)
                 .streetViewControl(false)
                 .zoomControl(false)
-                .zoom(12);
+                .zoom(3);
 
         map = mapView.createMap(mapOptions);
+        map.addUIEventHandler(map, UIEventType.click, (JSObject obj) -> {
+            if (opened != null) {
+                opened.close();
+            }
+            opened = null;
+        });
 
         //Because the reportDAO loads the reports asynchronously
         //  must pause execution to guarantee loading
@@ -72,7 +78,7 @@ public class MapController implements IController,
         }
         ReportDataObject reportDAO = ReportDataObject.getInstance();
         for (WaterSourceReport report
-            : reportDAO.getAllSourceReports().values()) {
+                : reportDAO.getAllSourceReports().values()) {
             String type = report.getType().toString();
             String condition = report.getCondition().toString();
             if (type.equals(filterType.get())) {
@@ -100,12 +106,14 @@ public class MapController implements IController,
      * @param report water purity report
      */
     private void putPurePins(WaterPurityReport report) {
+        System.out.println(report.getLocation());
         double lat = Double.parseDouble(report.getLocation().getLatitude());
         double lng = Double.parseDouble(report.getLocation()
                 .getLongitude());
         LatLong location = new LatLong(lat, lng);
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(location);
+        markerOptions.position(location)
+            .icon("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
         Marker marker = new Marker(markerOptions);
         map.addMarker(marker);
         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
@@ -116,14 +124,12 @@ public class MapController implements IController,
         map.addUIEventHandler(marker,
             UIEventType.click,
             (JSObject obj) -> {
-                mainApplication.setCurrentPurityReport(report);
-                if (opened) {
-                    window.close();
-                    opened = false;
-                } else {
-                    window.open(map, marker);
-                    opened = true;
+                mainApplication.setCurrentReport(report);
+                if (opened != null) {
+                    opened.close();
                 }
+                window.open(map, marker);
+                opened = window;
             }
         );
     }
@@ -134,13 +140,13 @@ public class MapController implements IController,
      * @param report water source report
      */
     private void putSourcePins(WaterSourceReport report) {
+        System.out.println(report.getLocation());
         double lat = Double.parseDouble(report.getLocation().getLatitude());
         double lng = Double.parseDouble(report.getLocation()
                 .getLongitude());
         LatLong location = new LatLong(lat, lng);
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(location)
-            .icon("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
+        markerOptions.position(location);
         Marker marker = new Marker(markerOptions);
         map.addMarker(marker);
         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
@@ -153,13 +159,11 @@ public class MapController implements IController,
             UIEventType.click,
             (JSObject obj) -> {
                 mainApplication.setCurrentReport(report);
-                if (opened) {
-                    window.close();
-                    opened = false;
-                } else {
-                    window.open(map, marker);
-                    opened = true;
+                if (opened != null) {
+                    opened.close();
                 }
+                window.open(map, marker);
+                opened = window;
             }
         );
     }

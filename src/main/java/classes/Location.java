@@ -83,6 +83,6 @@ public class Location {
 
     @Override
     public String toString() {
-        return latitude + ", " + longitude;
+        return "lat: " + latitude + ", lng: " + longitude;
     }
 }

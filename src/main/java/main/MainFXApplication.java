@@ -20,8 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import classes.User;
-import classes.WaterSourceReport;
-import classes.WaterPurityReport;
+import classes.WaterReport;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,10 +32,10 @@ public class MainFXApplication extends Application {
     private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private static User currentUser;
     private static String currentUsername;
-    private static WaterSourceReport currentSourceReport;
-    private static WaterPurityReport currentPurityReport;
+    private static WaterReport currentReport;
     private static MenuBarController menuBarController;
     private static MainScreenController mainScreenController;
+    private static EditReportController editReportControl;
 
     //the main container for the application window
     private Stage mainScreen;
@@ -118,15 +117,9 @@ public class MainFXApplication extends Application {
             } else if (controller instanceof MainScreenController) {
                 mainScreenController = (MainScreenController) (controller);
             } else if (controller instanceof EditReportController) {
-                EditReportController c = (EditReportController) (controller);
+                editReportControl = (EditReportController) (controller);
                 //TODO populate the edit info based on the report type
-                c.populateReportInformation(
-                        getCurrentSourceReport().getLocation().getLongitude(),
-                        getCurrentSourceReport().getLocation().getLatitude(),
-                        getCurrentSourceReport().getType(),
-                        getCurrentSourceReport().getCondition(),
-                        getCurrentPurityReport().getVirusPPM(),
-                        getCurrentPurityReport().getContaminantPPM());
+                editReportControl.populateReportInformation(currentReport);
             }
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to find "
@@ -287,34 +280,20 @@ public class MainFXApplication extends Application {
      * Gets the report that is currently being viewed in the application.
      * @return currentReport
      */
-    public WaterSourceReport getCurrentSourceReport() {
-        return currentSourceReport;
+    public WaterReport getCurrentReport() {
+        return currentReport;
     }
 
     /**
      * Sets the report that is being viewed in the application.
-     * @param report report currently active
+     * @param report Active Report.
      */
-    public void setCurrentReport(WaterSourceReport report) {
-        currentSourceReport = report;
+    public void setCurrentReport(WaterReport report) {
+        currentReport = report;
         mainScreenController.setCurrentReport(report);
-    }
-
-    /**
-     * Gets the report that is currently being viewed in the application.
-     * @return currentReport
-     */
-    public WaterPurityReport getCurrentPurityReport() {
-        return currentPurityReport;
-    }
-
-    /**
-     * Sets the report that is being viewed in the application.
-     * @param report report currently active
-     */
-    public void setCurrentPurityReport(WaterPurityReport report) {
-        currentPurityReport = report;
-        mainScreenController.setCurrentReport(report);
+        if (editReportControl != null) {
+            editReportControl.populateReportInformation(currentReport);
+        }
     }
 
     /**

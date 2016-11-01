@@ -155,7 +155,7 @@ public class ReportDataObject {
      * @param  reportToAdd - report instance to add
      */
     public void addSourceReport(WaterSourceReport reportToAdd) {
-        String reportId = UUID.randomUUID().toString().substring(0, 9);
+        String reportId = UUID.randomUUID().toString().substring(0, 8);
         reportToAdd.setId(reportId);
         DatabaseReference report = getSourceReports().child("/" + reportId);
         report.setValue(reportToAdd);
@@ -166,7 +166,7 @@ public class ReportDataObject {
      * @param  reportToAdd - report instance to add
      */
     public void addPurityReport(WaterPurityReport reportToAdd) {
-        String reportId = UUID.randomUUID().toString().substring(0, 9);
+        String reportId = UUID.randomUUID().toString().substring(0, 8);
         reportToAdd.setId(reportId);
         DatabaseReference report = getPurityReports().child("/" + reportId);
         report.setValue(reportToAdd);

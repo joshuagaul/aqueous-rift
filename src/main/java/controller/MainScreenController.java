@@ -96,8 +96,7 @@ public class MainScreenController implements IController {
                 mainApplication.showReportScreen();
             }
         } else if (event.getSource() == update) {
-            if (mainApplication.getCurrentSourceReport() != null
-                    || mainApplication.getCurrentPurityReport() != null) {
+            if (mainApplication.getCurrentReport() != null) {
                 mainApplication.showEditReportScreen();
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -142,17 +141,18 @@ public class MainScreenController implements IController {
     public void setCurrentReport(WaterReport report) {
         if (report instanceof WaterSourceReport) {
             WaterSourceReport sourceReport = (WaterSourceReport) report;
-            if (report != null && isLoggedIn.get()) {
+            if (report != null) {
                 type.setText(sourceReport.getType().toString());
                 condition.setText(sourceReport.getCondition().toString());
             }
         } else if (report instanceof WaterPurityReport) {
             WaterPurityReport purityReport = (WaterPurityReport) report;
-            if (report != null && isLoggedIn.get()) {
+            if (report != null) {
                 condition.setText(purityReport.getCondition().toString());
                 contamination.setText(Double.toString(
                         purityReport.getContaminantPPM()));
                 virus.setText(Double.toString(purityReport.getVirusPPM()));
+                type.setText(null);
             }
         }
         delete.visibleProperty().bind(isAuthorized);

@@ -12,6 +12,7 @@ import classes.WaterType;
 import classes.Location;
 import classes.WaterSourceReport;
 import classes.WaterPurityReport;
+import classes.WaterReport;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -125,7 +126,6 @@ public class EditReportController implements IController {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
         } else if (event.getSource() == confirmButton) {
-            System.out.println(showConfirm.get());
             if (showConfirm.get()) {
                 //create resource report
                 purityReport.setValue(false);
@@ -158,8 +158,8 @@ public class EditReportController implements IController {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     ReportDataObject reportDAO = ReportDataObject.getInstance();
-                    WaterSourceReport prevReportInfo =
-                            mainApplication.getCurrentSourceReport();
+                    WaterReport prevReportInfo =
+                            mainApplication.getCurrentReport();
                     String reporterId = prevReportInfo.getReporterId();
                     Location loc = new Location("0", "0");
                     try {
@@ -221,26 +221,41 @@ public class EditReportController implements IController {
 
     /**
      * populates the report data from the pin
-     * @param  longitude longitude of the report
-     * @param  latitude latitude of the report
-     * @param watertype water type
-     * @param condition water condition
-     * @param virus virus
-     * @param contamination contamination
+     * @param  report Report object that contains information for UI.
      *
      */
-    public void populateReportInformation(String longitude,
-                                          String latitude,
-                                          WaterType watertype,
-                                          WaterCondition condition,
-                                          double virus,
-                                          double contamination) {
+    public void populateReportInformation(WaterReport report) {
+        //TODO Add reportedBy to report information
+        String latitude = report.getLocation().getLatitude();
+        String longitude = report.getLocation().getLongitude();
+        WaterType watertype = null;
+        WaterCondition condition = null;
+        Double virus = null;
+        Double contamination = null;
+        if (report instanceof WaterSourceReport) {
+            WaterSourceReport sourceReport = (WaterSourceReport) (report);
+            watertype = sourceReport.getType();
+            condition = sourceReport.getCondition();
+        } else {
+            WaterPurityReport purityReport = (WaterPurityReport) (report);
+            virus = purityReport.getVirusPPM();
+            contamination = purityReport.getContaminantPPM();
+            condition = purityReport.getCondition();
+        }
         this.longitude.setText(longitude);
         this.latitude.setText(latitude);
         waterType.setValue(watertype);
         waterCondition.setValue(condition);
-        this.virus.setText(Double.toString(virus));
-        this.contamination.setText(Double.toString(contamination));
+        if (virus == null) {
+            this.virus.setText("");
+        } else {
+            this.virus.setText(Double.toString(virus));
+        }
+        if (contamination == null) {
+            this.contamination.setText("");
+        } else {
+            this.contamination.setText(Double.toString(contamination));
+        }
     }
 
 
