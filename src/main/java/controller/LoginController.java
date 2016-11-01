@@ -91,19 +91,50 @@ public class LoginController implements IController {
     protected boolean checkValid() {
         String user = username.getText();
         if (userDAO.userExists(user)) {
+            username.setStyle("-fx-border-width: 0px ;");
+
             User queriedUser = userDAO.getUser(user);
             System.out.println(queriedUser.getPassword());
-            if (queriedUser.getPassword().equals(password.getText())) {
-                mainApplication.setCurrentUsername(user);
-                mainApplication.setCurrentUser(queriedUser);
-                return true;
+            int tries = 0;
+
+            Alert wrongPasswordAlert = new Alert(Alert.AlertType.WARNING);
+            wrongPasswordAlert.setTitle("Wrong Password");
+
+            while (tries < 3) {
+                if (queriedUser.getPassword().equals(password.getText())) {
+                    mainApplication.setCurrentUsername(user);
+                    mainApplication.setCurrentUser(queriedUser);
+                    return true;
+                } else {
+                    password.setStyle(
+                        "-fx-border-color: red ; -fx-border-width: 2px ;");
+                    tries++;
+                    wrongPasswordAlert.setHeaderText("The password you entered "
+                        + "was wrong.\nYou have "
+                        + (3 - tries) + "/3 tries left.");
+
+                    wrongPasswordAlert.showAndWait();
+                }
             }
+            Alert threeTriesAlert = new Alert(Alert.AlertType.WARNING);
+            threeTriesAlert.setTitle("Three failed login attempts");
+            threeTriesAlert.setHeaderText("You made 3 failed login attempts."
+                + "\nContact an admin to have your account unblocked.");
+
             return false;
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Aqueous Rift");
-            alert.setHeaderText("Login Failed. # out of 3 attempts.");
-            alert.showAndWait();
+            password.setStyle("-fx-border-width: 0px ;");
+            username.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+
+            // Alert doesntExistAlert = new Alert(Alert.AlertType.WARNING);
+            // doesntExistAlert.setTitle("Wrong Username");
+            // doesntExistAlert.setHeaderText("This user doesn't exist.\n"
+            //     + "Please enter a valid username.");
+
+            // doesntExistAlert.showAndWait();
+
+
             return false;
         }
     }
