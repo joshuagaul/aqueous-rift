@@ -37,7 +37,7 @@ public class LoginController implements IController {
     @FXML
     private Button login;
 
-
+    private int tries = 0;
     /**
      * Button handler for login page.
      * Clicking "Login" should check validity of info and count login attempts.
@@ -90,12 +90,11 @@ public class LoginController implements IController {
     @FXML
     protected boolean checkValid() {
         String user = username.getText();
+        
         if (userDAO.userExists(user)) {
             username.setStyle("-fx-border-width: 0px ;");
-
             User queriedUser = userDAO.getUser(user);
             System.out.println(queriedUser.getPassword());
-            int tries = 0;
 
             Alert wrongPasswordAlert = new Alert(Alert.AlertType.WARNING);
             wrongPasswordAlert.setTitle("Wrong Password");
@@ -105,9 +104,9 @@ public class LoginController implements IController {
                 mainApplication.setCurrentUser(queriedUser);
                 return true;
             } else if (tries < 3) {
+                tries++;
                 password.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
-                tries++;
                 wrongPasswordAlert.setHeaderText("The password you entered "
                     + "was wrong.\nYou have "
                     + (3 - tries) + "/3 tries left.");
