@@ -216,11 +216,14 @@ public class CreateReportController implements IController {
             ReportDataObject reportDAO = ReportDataObject.getInstance();
             String reporterId = mainApplication.getCurrentUsername();
             Location loc = new Location("0", "0");
-            try {
-                loc.setLongitude(longitude.getText());
-                loc.setLatitude(latitude.getText());
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+
+            if (validateLatAndLon(latitude.getText(), longitude.getText())) {
+                try {
+                    loc.setLongitude(longitude.getText());
+                    loc.setLatitude(latitude.getText());
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
             }
             Date date = new Date();
             WaterType type = waterType.getValue();
@@ -293,4 +296,37 @@ public class CreateReportController implements IController {
         mainApplication = mainFXApplication;
     }
 
+
+    /**
+     * Validates latitude and longitude values
+     * to make sure they are in range.
+     *
+     * @param lat String value for latitude
+     * @param lon String value for longitude
+     * @return boolean value representing if valid data was given.
+     */
+    private Boolean validateLatAndLon(String lat, String lon) {
+        int latVal = Integer.parseInt(lat);
+        int lonVal = Integer.parseInt(lon);
+
+        if ((latVal >= -90) && (latVal <= 90)
+            && (lonVal >= -180) && (lonVal <= 180)) {
+            latitude.setStyle("-fx-border-width: 0px ;");
+            longitude.setStyle("-fx-border-width: 0px ;");
+            
+            return true;
+
+        } else {
+            if ((latVal < -90) || (latVal > 90)) {
+                latitude.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            }
+            if ((lonVal < -180) || (lonVal > 180)) {
+                longitude.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            }
+
+            return false;
+        }
+    }
 }
