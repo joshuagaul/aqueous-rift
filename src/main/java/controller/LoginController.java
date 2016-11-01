@@ -52,6 +52,7 @@ public class LoginController implements IController {
             mainApplication.showMainScreen();
         } else if (event.getSource() == login) {
             if (checkValid()) {
+                mainApplication.showMap();
                 mainApplication.showMainScreen();
                 mainApplication.updateMenuBar();
                 mainApplication.checkAuthority();

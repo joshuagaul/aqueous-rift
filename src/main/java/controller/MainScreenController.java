@@ -144,6 +144,8 @@ public class MainScreenController implements IController {
             if (report != null) {
                 type.setText(sourceReport.getType().toString());
                 condition.setText(sourceReport.getCondition().toString());
+                virus.setText(null);
+                contamination.setText(null);
             }
         } else if (report instanceof WaterPurityReport) {
             WaterPurityReport purityReport = (WaterPurityReport) report;
