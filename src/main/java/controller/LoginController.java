@@ -100,28 +100,28 @@ public class LoginController implements IController {
             Alert wrongPasswordAlert = new Alert(Alert.AlertType.WARNING);
             wrongPasswordAlert.setTitle("Wrong Password");
 
-            while (tries < 3) {
-                if (queriedUser.getPassword().equals(password.getText())) {
-                    mainApplication.setCurrentUsername(user);
-                    mainApplication.setCurrentUser(queriedUser);
-                    return true;
-                } else {
-                    password.setStyle(
-                        "-fx-border-color: red ; -fx-border-width: 2px ;");
-                    tries++;
-                    wrongPasswordAlert.setHeaderText("The password you entered "
-                        + "was wrong.\nYou have "
-                        + (3 - tries) + "/3 tries left.");
+            if (queriedUser.getPassword().equals(password.getText())) {
+                mainApplication.setCurrentUsername(user);
+                mainApplication.setCurrentUser(queriedUser);
+                return true;
+            } else if (tries < 3) {
+                password.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                tries++;
+                wrongPasswordAlert.setHeaderText("The password you entered "
+                    + "was wrong.\nYou have "
+                    + (3 - tries) + "/3 tries left.");
+                wrongPasswordAlert.showAndWait();
+                return false;
+            } else {
+                Alert threeTriesAlert = new Alert(Alert.AlertType.WARNING);
+                threeTriesAlert.setTitle("Three failed login attempts");
+                threeTriesAlert.setHeaderText(
+                    "You made 3 failed login attempts."
+                    + "\nContact an admin to have your account unblocked.");
 
-                    wrongPasswordAlert.showAndWait();
-                }
+                return false;
             }
-            Alert threeTriesAlert = new Alert(Alert.AlertType.WARNING);
-            threeTriesAlert.setTitle("Three failed login attempts");
-            threeTriesAlert.setHeaderText("You made 3 failed login attempts."
-                + "\nContact an admin to have your account unblocked.");
-
-            return false;
         } else {
             password.setStyle("-fx-border-width: 0px ;");
             username.setStyle(
