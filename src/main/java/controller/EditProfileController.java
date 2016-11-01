@@ -88,11 +88,10 @@ public class EditProfileController implements IController {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
         } else if (event.getSource() == ok) {
-            String alertMessage = validateEditProfile();
-            if (alertMessage.length() != 0) {
+            Boolean emptyFieldsExist = validateEditProfile();
+            if (emptyFieldsExist) {
                 Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
                 emptyAlert.setTitle("Empty fields");
-                emptyAlert.setContentText(alertMessage);
                 emptyAlert.setHeaderText("Please fill out all "
                         + "the required fields.");
                 emptyAlert.showAndWait();
@@ -102,6 +101,15 @@ public class EditProfileController implements IController {
                 passAlert.setTitle("Password");
                 passAlert.setHeaderText("Your confirmed password "
                         + "doesn't match the new password field!!");
+
+                fname.setStyle("-fx-border-width: 0px ;");
+                lname.setStyle("-fx-border-width: 0px ;");
+                email.setStyle("-fx-border-width: 0px ;");
+                newPassword.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                confirmPassword.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+
                 passAlert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -136,27 +144,54 @@ public class EditProfileController implements IController {
      * @return An alert message describing the input errors, empty String
      * if input is valid.
      */
-    private String validateEditProfile() {
-        StringBuilder alertMessage = new StringBuilder();
-        if (username.getText().length() == 0) {
-            alertMessage.append("Username\n");
-        }
+    private Boolean validateEditProfile() {
+        int emptyFields = 0;
+        
         if (newPassword.getText().length() == 0) {
-            alertMessage.append("Password\n");
+            newPassword.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+            confirmPassword.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+        } else {
+            newPassword.setStyle("-fx-border-width: 0px ;");
+            confirmPassword.setStyle("-fx-border-width: 0px ;");
         }
+
         if (fname.getText().length() == 0) {
-            alertMessage.append("First name\n");
+            fname.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            fname.setStyle("-fx-border-width: 0px ;");
         }
+
         if (lname.getText().length() == 0) {
-            alertMessage.append("Last name\n");
+            lname.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            lname.setStyle("-fx-border-width: 0px ;");
         }
+
+
         if (email.getText().length() == 0) {
-            alertMessage.append("Email\n");
+            email.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            email.setStyle("-fx-border-width: 0px ;");
         }
+
         if (pnumber.getText().length() == 0) {
-            alertMessage.append("P number\n");
+            pnumber.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            pnumber.setStyle("-fx-border-width: 0px ;");
         }
-        return alertMessage.toString();
+
+        return (emptyFields != 0);
     }
 
 

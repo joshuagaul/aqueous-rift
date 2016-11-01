@@ -94,21 +94,31 @@ public class RegisterController implements IController {
                 passAlert.setTitle("Password");
                 passAlert.setHeaderText("Your confirmed password "
                         + "doesn't match the new password field!!");
+
+                fname.setStyle("-fx-border-width: 0px ;");
+                lname.setStyle("-fx-border-width: 0px ;");
+                email.setStyle("-fx-border-width: 0px ;");
                 password.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
                 confirmPassword.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
+
                 passAlert.showAndWait();
             } else if (userDAO.userExists(username.getText())) {
-                password.setStyle("-fx-border-width: 0px ;");
-                confirmPassword.setStyle("-fx-border-width: 0px ;");
                 Alert takenAlert = new Alert(Alert.AlertType.WARNING);
                 takenAlert.setTitle("Password");
-                username.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
                 takenAlert.setHeaderText("Your chosen username "
                         + "is already taken! Please choose "
                         + "another username for yourself.");
+                
+                password.setStyle("-fx-border-width: 0px ;");
+                confirmPassword.setStyle("-fx-border-width: 0px ;");
+                fname.setStyle("-fx-border-width: 0px ;");
+                lname.setStyle("-fx-border-width: 0px ;");
+                email.setStyle("-fx-border-width: 0px ;");
+                username.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+
                 takenAlert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -149,6 +159,7 @@ public class RegisterController implements IController {
      */
     private Boolean validateUserRegistration() {
         int emptyFields = 0;
+
         if (username.getText().length() == 0) {
             username.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -175,6 +186,7 @@ public class RegisterController implements IController {
         } else {
             fname.setStyle("-fx-border-width: 0px ;");
         }
+
         if (lname.getText().length() == 0) {
             lname.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -182,6 +194,8 @@ public class RegisterController implements IController {
         } else {
             lname.setStyle("-fx-border-width: 0px ;");
         }
+
+
         if (email.getText().length() == 0) {
             email.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -189,6 +203,15 @@ public class RegisterController implements IController {
         } else {
             email.setStyle("-fx-border-width: 0px ;");
         }
+
+        if (pnumber.getText().length() == 0) {
+            pnumber.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            pnumber.setStyle("-fx-border-width: 0px ;");
+        }
+
         return (emptyFields != 0);
     }
 
