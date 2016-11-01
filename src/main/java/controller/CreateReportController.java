@@ -217,6 +217,7 @@ public class CreateReportController implements IController {
             String reporterId = mainApplication.getCurrentUsername();
             Location loc = new Location("0", "0");
 
+
             if (validateLatAndLon(latitude.getText(), longitude.getText())) {
                 try {
                     loc.setLongitude(longitude.getText());
@@ -252,38 +253,79 @@ public class CreateReportController implements IController {
     }
 
     /**
-     * Validates the user Report inputs. (Checking null fields for now.)
-     * @return An alert message describing the input errors.
+     * checks all fields for null values
+     *
+     * @return A boolean value showing if there are null values.
      */
-    private String validateWaterReport() {
-        StringBuilder alertMessage = new StringBuilder();
+    private Boolean emptyFieldsExist() {
+        int emptyFields = 0;
+
         if (waterCondition.getValue() == null) {
-            alertMessage.append("Water Condition\n");
+            waterCondition.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            waterCondition.setStyle("-fx-border-width: 0px ;");
         }
+
         if (waterType.getValue() == null) {
-            alertMessage.append("Water Type\n");
+            waterType.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            waterType.setStyle("-fx-border-width: 0px ;");
         }
+
         if (street.getText().length() == 0) {
-            alertMessage.append("Street\n");
+            street.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            street.setStyle("-fx-border-width: 0px ;");
         }
+
         if (city.getText().length() == 0) {
-            alertMessage.append("City\n");
+            city.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            city.setStyle("-fx-border-width: 0px ;");
         }
+
         if (state.getValue() == null) {
-            alertMessage.append("State\n");
+            state.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            state.setStyle("-fx-border-width: 0px ;");
         }
+
         if (zipCode.getText().length() == 0) {
-            alertMessage.append("Zip Code\n");
+            zipCode.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            zipCode.setStyle("-fx-border-width: 0px ;");
         }
+
         if (isAuthorized.getValue()) {
             if (virus.getText().length() == 0) {
-                alertMessage.append("Virus\n");
+                virus.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                emptyFields++;
+            } else {
+                virus.setStyle("-fx-border-width: 0px ;");
             }
             if (contamination.getText().length() == 0) {
-                alertMessage.append("Contamination\n");
+                contamination.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                emptyFields++;
+            } else {
+                contamination.setStyle("-fx-border-width: 0px ;");
             }
         }
-        return alertMessage.toString();
+
+        return (emptyFields != 0);
     }
 
 
