@@ -217,37 +217,56 @@ public class CreateReportController implements IController {
             String reporterId = mainApplication.getCurrentUsername();
             Location loc = new Location("0", "0");
 
-
-            if (validateLatAndLon(latitude.getText(), longitude.getText())) {
-                try {
-                    loc.setLongitude(longitude.getText());
-                    loc.setLatitude(latitude.getText());
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-            Date date = new Date();
-            WaterType type = waterType.getValue();
-            WaterCondition condition = waterCondition.getValue();
-            if (!purityReport.get()) {
-                WaterSourceReport report = new WaterSourceReport(reporterId,
-                        loc, type, condition, date);
-                reportDAO.addSourceReport(report);
+            if (emptyFieldsExist()) {
+                Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
+                emptyAlert.setTitle("Empty fields");
+                emptyAlert.setHeaderText("Please fill out all "
+                        + "the required fields.");
+                emptyAlert.showAndWait();
             } else {
-                WaterPurityReport report = new WaterPurityReport(reporterId,
-                        date, loc, condition,
-                        Double.parseDouble(virus.getText()),
-                        Double.parseDouble(contamination.getText()));
-                reportDAO.addPurityReport(report);
-            }
+                waterCondition.setStyle("-fx-border-width: 0px ;");
+                waterType.setStyle("-fx-border-width: 0px ;");
+                street.setStyle("-fx-border-width: 0px ;");
+                city.setStyle("-fx-border-width: 0px ;");
+                state.setStyle("-fx-border-width: 0px ;");
+                zipCode.setStyle("-fx-border-width: 0px ;");
+                virus.setStyle("-fx-border-width: 0px ;");
+                contamination.setStyle("-fx-border-width: 0px ;");
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Report Submitted");
-            alert.setHeaderText("Your report has been submitted.");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                mainApplication.showMap();
-                mainApplication.showMainScreen();
+                if (validateLatAndLon(latitude.getText(),
+                    longitude.getText())) {
+                    try {
+                        loc.setLongitude(longitude.getText());
+                        loc.setLatitude(latitude.getText());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    Date date = new Date();
+                    WaterType type = waterType.getValue();
+                    WaterCondition condition = waterCondition.getValue();
+                    if (!purityReport.get()) {
+                        WaterSourceReport report
+                            = new WaterSourceReport(reporterId,
+                            loc, type, condition, date);
+                        reportDAO.addSourceReport(report);
+                    } else {
+                        WaterPurityReport report 
+                            = new WaterPurityReport(reporterId,
+                            date, loc, condition,
+                            Double.parseDouble(virus.getText()),
+                            Double.parseDouble(contamination.getText()));
+                        reportDAO.addPurityReport(report);
+                    }
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Report Submitted");
+                    alert.setHeaderText("Your report has been submitted.");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        mainApplication.showMap();
+                        mainApplication.showMainScreen();
+                    }
+                }
             }
         }
     }
