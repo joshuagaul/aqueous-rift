@@ -16,13 +16,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
-import classes.State;
 import classes.WaterCondition;
 import classes.WaterType;
 import classes.UserType;
 import classes.Location;
 import classes.WaterSourceReport;
 import classes.WaterPurityReport;
+import classes.OverallCondition;
 
 import main.MainFXApplication;
 import java.io.IOException;
@@ -38,6 +38,7 @@ import model.ReportDataObject;
  *
  */
 public class CreateReportController implements IController {
+
     private BooleanProperty purityReport
             = new SimpleBooleanProperty(false);
     private static BooleanProperty isAuthorized
@@ -46,18 +47,6 @@ public class CreateReportController implements IController {
             = new SimpleBooleanProperty(false);
     private ObjectProperty<UserType> userType = new SimpleObjectProperty<>();
     private MainFXApplication mainApplication;
-
-    @FXML
-    private TextField street;
-
-    @FXML
-    private TextField city;
-
-    @FXML
-    private TextField zipCode;
-
-    @FXML
-    private ComboBox<State> state = new ComboBox();
 
     @FXML
     private ComboBox<WaterType> waterType = new ComboBox<>();
@@ -106,15 +95,14 @@ public class CreateReportController implements IController {
         //Populate static combobox data
         waterType.getItems().setAll(WaterType.values());
         waterCondition.getItems().setAll(WaterCondition.values());
-        state.getItems().setAll(State.values());
         //Bind event handler and set binding variables
         userType.set(UserType.GeneralUser);
-        ppm1.visibleProperty().bind(showConfirm);
-        ppm2.visibleProperty().bind(showConfirm);
-        virusLabel.visibleProperty().bind(showConfirm);
-        contaminationLabel.visibleProperty().bind(showConfirm);
-        virus.visibleProperty().bind(showConfirm);
-        contamination.visibleProperty().bind(showConfirm);
+        ppm1.visibleProperty().bind(isAuthorized);
+        ppm2.visibleProperty().bind(isAuthorized);
+        virusLabel.visibleProperty().bind(isAuthorized);
+        contaminationLabel.visibleProperty().bind(isAuthorized);
+        virus.visibleProperty().bind(isAuthorized);
+        contamination.visibleProperty().bind(isAuthorized);
         confirmButton.visibleProperty().bind(isAuthorized);
     }
 
@@ -202,14 +190,12 @@ public class CreateReportController implements IController {
                 confirmButton.setId("button-confirm");
                 showConfirm.setValue(false);
                 confirmButton.setText("Confirm This Report");
-                System.out.println(showConfirm.get());
             } else {
                 //creating purity report
                 purityReport.setValue(true);
                 confirmButton.setId("button-delete");
                 showConfirm.setValue(true);
                 confirmButton.setText("Back to Source Report");
-                System.out.println(showConfirm.get());
             }
 
         } else if (event.getSource() == submit) {
@@ -226,10 +212,6 @@ public class CreateReportController implements IController {
             } else {
                 waterCondition.setStyle("-fx-border-width: 0px ;");
                 waterType.setStyle("-fx-border-width: 0px ;");
-                street.setStyle("-fx-border-width: 0px ;");
-                city.setStyle("-fx-border-width: 0px ;");
-                state.setStyle("-fx-border-width: 0px ;");
-                zipCode.setStyle("-fx-border-width: 0px ;");
                 virus.setStyle("-fx-border-width: 0px ;");
                 contamination.setStyle("-fx-border-width: 0px ;");
 
@@ -250,9 +232,9 @@ public class CreateReportController implements IController {
                             loc, type, condition, date);
                         reportDAO.addSourceReport(report);
                     } else {
-                        WaterPurityReport report 
+                        WaterPurityReport report
                             = new WaterPurityReport(reporterId,
-                            date, loc, condition,
+                            date, loc, OverallCondition.Safe,
                             Double.parseDouble(virus.getText()),
                             Double.parseDouble(contamination.getText()));
                         reportDAO.addPurityReport(report);
@@ -294,39 +276,6 @@ public class CreateReportController implements IController {
         } else {
             waterType.setStyle("-fx-border-width: 0px ;");
         }
-
-        if (street.getText().length() == 0) {
-            street.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-            emptyFields++;
-        } else {
-            street.setStyle("-fx-border-width: 0px ;");
-        }
-
-        if (city.getText().length() == 0) {
-            city.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-            emptyFields++;
-        } else {
-            city.setStyle("-fx-border-width: 0px ;");
-        }
-
-        if (state.getValue() == null) {
-            state.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-            emptyFields++;
-        } else {
-            state.setStyle("-fx-border-width: 0px ;");
-        }
-
-        if (zipCode.getText().length() == 0) {
-            zipCode.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-            emptyFields++;
-        } else {
-            zipCode.setStyle("-fx-border-width: 0px ;");
-        }
-
         if (isAuthorized.getValue()) {
             if (virus.getText().length() == 0) {
                 virus.setStyle(
@@ -374,7 +323,7 @@ public class CreateReportController implements IController {
             && (lonVal >= -180) && (lonVal <= 180)) {
             latitude.setStyle("-fx-border-width: 0px ;");
             longitude.setStyle("-fx-border-width: 0px ;");
-            
+
             return true;
 
         } else {

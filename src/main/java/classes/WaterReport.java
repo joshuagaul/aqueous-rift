@@ -14,8 +14,7 @@ public abstract class WaterReport {
     private Date date;
     private StringProperty reporterId = new SimpleStringProperty();
     private ObjectProperty<Location> location = new SimpleObjectProperty<>();
-    private ObjectProperty<WaterCondition> condition =
-        new SimpleObjectProperty<>();
+
 
     /**
      * Instantiates an abstract WaterReport. WaterSourceReport and
@@ -23,14 +22,11 @@ public abstract class WaterReport {
      * @param  date     The date report was created
      * @param  reporterId The username of the report creator.
      * @param  location The location that the water report comes from.
-     * @param  condition The water condition
      */
-    public WaterReport(Date date, String reporterId, Location location,
-            WaterCondition condition) {
+    public WaterReport(Date date, String reporterId, Location location) {
         this.date = date;
         this.reporterId.set(reporterId);
         this.location.set(location);
-        this.condition.set(condition);
     }
 
     /**
@@ -38,22 +34,6 @@ public abstract class WaterReport {
      */
     public WaterReport() {
 
-    }
-
-    /**
-     * Sets condition of the water
-     * @param condition OverallCondition of the water to be set.
-     */
-    public void setCondition(WaterCondition condition) {
-        this.condition.set(condition);
-    }
-
-    /**
-     * Gets OverallCondition
-     * @return Returns overall condition of water
-     */
-    public WaterCondition getCondition() {
-        return this.condition.get();
     }
 
     /**

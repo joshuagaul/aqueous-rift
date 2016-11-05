@@ -45,14 +45,16 @@
             <TextField fx:id="latitude" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="128.0" promptText="Latitude" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <ComboBox fx:id="waterType" prefWidth="150.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ComboBox fx:id="waterCondition" prefWidth="150.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="overallCondition" prefWidth="150.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <TextField fx:id="virus" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextField fx:id="contamination" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Button id="button-primary" fx:id="submit" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="385.0" text="OK" GridPane.columnSpan="3" GridPane.rowIndex="10" />
             <Button id="button-secondary" fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="386.0" text="Cancel" GridPane.columnSpan="3" GridPane.rowIndex="11" />
-            <Label text="Water Type" GridPane.rowIndex="4" />
-            <Label text="Condition" GridPane.rowIndex="5" />
+            <Label fx:id="typeLabel" text="Type" GridPane.rowIndex="4" />
+            <Label fx:id="conditionLabel" text="Condition" GridPane.rowIndex="5" />
             <Label fx:id="virusLabel" text="Virus" GridPane.rowIndex="6" />
             <Label fx:id="contaminationLabel" text="Contamination" wrapText="true" GridPane.rowIndex="7" />
+            <Label fx:id="overallConditionLabel" text="Overall Condition" wrapText="true" GridPane.rowIndex="8" />
             <Text fx:id="ppm1" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <Text fx:id="ppm2" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Button id="button-confirm" fx:id="confirmButton" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="46.0" prefWidth="388.0" text="Confirm This Report" GridPane.columnSpan="3" GridPane.rowIndex="9" />

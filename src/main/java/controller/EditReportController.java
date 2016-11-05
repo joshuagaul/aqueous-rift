@@ -1,19 +1,13 @@
 package controller;
 
-/**
- * Created by ahjin on 10/25/2016.
- */
-
 import java.util.Date;
-
-import classes.State;
 import classes.WaterCondition;
 import classes.WaterType;
 import classes.Location;
 import classes.WaterSourceReport;
 import classes.WaterPurityReport;
 import classes.WaterReport;
-
+import classes.OverallCondition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -25,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-
 import main.MainFXApplication;
 import java.io.IOException;
 import java.util.Optional;
@@ -37,64 +30,30 @@ import model.ReportDataObject;
  */
 public class EditReportController implements IController {
 
-    private BooleanProperty purityReport
-            = new SimpleBooleanProperty(false);
-
+    private BooleanProperty isSourceReport
+            = new SimpleBooleanProperty(true);
     private static BooleanProperty showConfirm
             = new SimpleBooleanProperty(false);
-
     private MainFXApplication mainApplication;
 
-    @FXML
-    private TextField street;
-
-    @FXML
-    private TextField city;
-
-    @FXML
-    private TextField zipCode;
-
-    @FXML
-    private ComboBox<State> state = new ComboBox();
-
-    @FXML
-    private ComboBox<WaterType> waterType = new ComboBox<>();
-
-    @FXML
-    private ComboBox<WaterCondition> waterCondition = new ComboBox<>();
-
-    @FXML
-    private TextField longitude;
-
-    @FXML
-    private TextField latitude;
-
-    @FXML
-    private TextField virus;
-
-    @FXML
-    private TextField contamination;
-
-    @FXML
-    private Text ppm1;
-
-    @FXML
-    private Text ppm2;
-
-    @FXML
-    private Label virusLabel;
-
-    @FXML
-    private Label contaminationLabel;
-
-    @FXML
-    private Button confirmButton;
-
-    @FXML
-    private Button submit;
-
-    @FXML
-    private Button cancel;
+    @FXML private ComboBox<WaterType> waterType = new ComboBox<>();
+    @FXML private ComboBox<WaterCondition> waterCondition = new ComboBox<>();
+    @FXML private ComboBox<OverallCondition> overallCondition =
+        new ComboBox<>();
+    @FXML private TextField longitude;
+    @FXML private TextField latitude;
+    @FXML private TextField virus;
+    @FXML private TextField contamination;
+    @FXML private Text ppm1;
+    @FXML private Text ppm2;
+    @FXML private Label virusLabel;
+    @FXML private Label contaminationLabel;
+    @FXML private Label typeLabel;
+    @FXML private Label conditionLabel;
+    @FXML private Label overallConditionLabel;
+    @FXML private Button confirmButton;
+    @FXML private Button submit;
+    @FXML private Button cancel;
 
     /**
      * Initializes items (combobox's)
@@ -103,13 +62,23 @@ public class EditReportController implements IController {
     private void initialize() {
         waterType.getItems().setAll(WaterType.values());
         waterCondition.getItems().setAll(WaterCondition.values());
-        state.getItems().setAll(State.values());
-        ppm1.visibleProperty().bind(showConfirm);
-        ppm2.visibleProperty().bind(showConfirm);
-        virusLabel.visibleProperty().bind(showConfirm);
-        contaminationLabel.visibleProperty().bind(showConfirm);
-        virus.visibleProperty().bind(showConfirm);
-        contamination.visibleProperty().bind(showConfirm);
+        overallCondition.getItems().setAll(OverallCondition.values());
+        ppm1.visibleProperty().bind(isSourceReport.not().or(showConfirm));
+        ppm2.visibleProperty().bind(isSourceReport.not().or(showConfirm));
+        virusLabel.visibleProperty().bind(isSourceReport.not().or(showConfirm));
+        contaminationLabel.visibleProperty().bind(isSourceReport.not()
+            .or(showConfirm));
+        virus.visibleProperty().bind(isSourceReport.not().or(showConfirm));
+        contamination.visibleProperty().bind(isSourceReport.not()
+            .or(showConfirm));
+        overallCondition.visibleProperty().bind(isSourceReport.not()
+            .or(showConfirm));
+        overallConditionLabel.visibleProperty().bind(isSourceReport.not()
+            .or(showConfirm));
+        waterType.visibleProperty().bind(isSourceReport);
+        waterCondition.visibleProperty().bind(isSourceReport);
+        typeLabel.visibleProperty().bind(isSourceReport);
+        conditionLabel.visibleProperty().bind(isSourceReport);
     }
 
     /**
@@ -128,13 +97,11 @@ public class EditReportController implements IController {
         } else if (event.getSource() == confirmButton) {
             if (showConfirm.get()) {
                 //create resource report
-                purityReport.setValue(false);
                 confirmButton.setId("button-confirm");
                 showConfirm.setValue(false);
                 confirmButton.setText("Confirm This Report");
             } else {
                 //creating purity report
-                purityReport.setValue(true);
                 confirmButton.setId("button-delete");
                 showConfirm.setValue(true);
                 confirmButton.setText("Back to Source Report");
@@ -171,7 +138,7 @@ public class EditReportController implements IController {
                     Date date = new Date();
                     WaterType type = waterType.getValue();
                     WaterCondition condition = waterCondition.getValue();
-                    if (!purityReport.get()) {
+                    if (isSourceReport.get()) {
                         //update source report
                         WaterSourceReport report = new WaterSourceReport(
                                 reporterId, loc, type,
@@ -181,7 +148,7 @@ public class EditReportController implements IController {
                     } else {
                         //update as a purity report
                         WaterPurityReport report = new WaterPurityReport(
-                                reporterId, date, loc, condition,
+                                reporterId, date, loc, OverallCondition.Safe,
                                 Double.parseDouble(virus.getText()),
                                 Double.parseDouble(contamination.getText()));
                         reportDAO.confirmPurityReport(report,
@@ -229,23 +196,30 @@ public class EditReportController implements IController {
         String latitude = report.getLocation().getLatitude();
         String longitude = report.getLocation().getLongitude();
         WaterType watertype = null;
-        WaterCondition condition = null;
         Double virus = null;
         Double contamination = null;
+        WaterCondition condition = null;
+        OverallCondition ovrCondition = null;
         if (report instanceof WaterSourceReport) {
             WaterSourceReport sourceReport = (WaterSourceReport) (report);
             watertype = sourceReport.getType();
             condition = sourceReport.getCondition();
+            isSourceReport.set(true);
         } else {
             WaterPurityReport purityReport = (WaterPurityReport) (report);
             virus = purityReport.getVirusPPM();
             contamination = purityReport.getContaminantPPM();
-            condition = purityReport.getCondition();
+            ovrCondition = purityReport.getOverallCondition();
+            isSourceReport.set(false);
         }
         this.longitude.setText(longitude);
         this.latitude.setText(latitude);
-        waterType.setValue(watertype);
-        waterCondition.setValue(condition);
+        if (waterType != null) {
+            this.waterType.setValue(watertype);
+        }
+        if (condition != null) {
+            this.waterCondition.setValue(condition);
+        }
         if (virus == null) {
             this.virus.setText("");
         } else {
@@ -255,6 +229,9 @@ public class EditReportController implements IController {
             this.contamination.setText("");
         } else {
             this.contamination.setText(Double.toString(contamination));
+        }
+        if (overallCondition != null) {
+            this.overallCondition.setValue(ovrCondition);
         }
     }
 

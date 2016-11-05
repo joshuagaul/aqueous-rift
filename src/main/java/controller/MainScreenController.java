@@ -1,7 +1,5 @@
-/*
- * Created by AhJin Noh on 9/22/2016.
- */
 package controller;
+
 import classes.WaterSourceReport;
 import classes.WaterPurityReport;
 import classes.WaterReport;
@@ -15,7 +13,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import main.MainFXApplication;
-
 import java.util.Optional;
 
 /**
@@ -30,6 +27,9 @@ import java.util.Optional;
  * Someone please detail this.
  */
 public class MainScreenController implements IController {
+
+    private static BooleanProperty isSourceReport
+            = new SimpleBooleanProperty(true);
     private static BooleanProperty isAuthorized
             = new SimpleBooleanProperty(false);
     private static BooleanProperty isLoggedIn
@@ -37,37 +37,43 @@ public class MainScreenController implements IController {
     private MainFXApplication mainApplication;
     @FXML private Text longitude;
     @FXML private Text latitude;
-    @FXML private Button report;
-    @FXML private Text condition;
-    @FXML private Text type;
     @FXML private Text date;
-    @FXML private Button update;
-    @FXML private Button delete;
-    @FXML private Label virusLabel;
-    @FXML private Label contaminationLabel;
+    @FXML private Text condition;
+    @FXML private Text overallCondition;
+    @FXML private Text type;
     @FXML private Text virus;
     @FXML private Text contamination;
+    @FXML private Label typeLabel;
+    @FXML private Label conditionLabel;
+    @FXML private Label overallConditionLabel;
+    @FXML private Label virusLabel;
+    @FXML private Label contaminationLabel;
+    @FXML private Button update;
+    @FXML private Button delete;
+    @FXML private Button report;
 
     /**
      * Initializes the buttons
      */
     @FXML
     private void initialize() {
+        // WaterReport curReport = mainApplication.getCurrentReport();
+        // if (curReport != null && isLoggedIn.get()) {
+        //     isSourceReport.set(curReport instanceof WaterSourceReport);
+        // }
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);
-        virus.visibleProperty().bind(isAuthorized);
-        contamination.visibleProperty().bind(isAuthorized);
-        virusLabel.visibleProperty().bind(isAuthorized);
-        contaminationLabel.visibleProperty().bind(isAuthorized);
 
-        // WaterSourceReport curReport = mainApplication.getCurrentReport();
-        // if (curReport != null && isLoggedIn.get()) {
-        //     date.setText(curReport.getDate());
-        //     type.setText(curReport.getType().toString());
-        //     condition.setText(curReport.getCondition().toString());
-        //     longitude.setText(curReport.getLocation().getLongitude());
-        //     latitude.setText(curReport.getLocation().getLatitude());
-        // }
+        virus.visibleProperty().bind(isSourceReport.not());
+        virusLabel.visibleProperty().bind(isSourceReport.not());
+        contamination.visibleProperty().bind(isSourceReport.not());
+        contaminationLabel.visibleProperty().bind(isSourceReport.not());
+        overallCondition.visibleProperty().bind(isSourceReport.not());
+        overallConditionLabel.visibleProperty().bind(isSourceReport.not());
+        type.visibleProperty().bind(isSourceReport);
+        typeLabel.visibleProperty().bind(isSourceReport);
+        condition.visibleProperty().bind(isSourceReport);
+        conditionLabel.visibleProperty().bind(isSourceReport);
     }
 
     /**
@@ -147,15 +153,18 @@ public class MainScreenController implements IController {
                 virus.setText(null);
                 contamination.setText(null);
             }
+            isSourceReport.set(true);
         } else if (report instanceof WaterPurityReport) {
             WaterPurityReport purityReport = (WaterPurityReport) report;
             if (report != null) {
-                condition.setText(purityReport.getCondition().toString());
-                contamination.setText(Double.toString(
-                        purityReport.getContaminantPPM()));
+                overallCondition.setText(purityReport.getOverallCondition()
+                    .toString());
+                contamination.setText(Double.toString(purityReport
+                    .getContaminantPPM()));
                 virus.setText(Double.toString(purityReport.getVirusPPM()));
                 type.setText(null);
             }
+            isSourceReport.set(false);
         }
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);

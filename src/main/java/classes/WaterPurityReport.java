@@ -3,28 +3,33 @@ package classes;
 import java.util.Date;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 public class WaterPurityReport extends WaterReport {
 
     private DoubleProperty virusPPM = new SimpleDoubleProperty();
     private DoubleProperty contaminantPPM = new SimpleDoubleProperty();
+    private ObjectProperty<OverallCondition> overallCondition =
+        new SimpleObjectProperty();
 
     /**
      * Creates a WaterPurityReportObject
      * @param  reporterId Username of the person creating the report
      * @param  date       Date report was created
      * @param  location   Location of the water
-     * @param  condition  Overall condition of the water
-     * (Safe/Treatable/Unsafe)
+     * @param overallCondition Safe/Treatable/Unsafe
      * @param virusPPM The parts per million of viruses in the water.
      * @param  contaminantPPM The parats per million
      *                        of contaminants in the water.
      */
     public WaterPurityReport(String reporterId, Date date, Location location,
-        WaterCondition condition, double virusPPM, double contaminantPPM) {
-        super(date, reporterId, location, condition);
+        OverallCondition overallCondition, double virusPPM,
+            double contaminantPPM) {
+        super(date, reporterId, location);
         this.virusPPM.set(virusPPM);
         this.contaminantPPM.set(contaminantPPM);
+        this.overallCondition.set(overallCondition);
     }
 
     /**
@@ -57,6 +62,22 @@ public class WaterPurityReport extends WaterReport {
      */
     public double getContaminantPPM() {
         return contaminantPPM.get();
+    }
+
+    /**
+     * Sets condition of the water
+     * @param condition OverallCondition of the water to be set.
+     */
+    public void setOverallCondition(OverallCondition condition) {
+        this.overallCondition.set(condition);
+    }
+
+    /**
+     * Gets OverallCondition
+     * @return Returns overall condition of water
+     */
+    public OverallCondition getOverallCondition() {
+        return this.overallCondition.get();
     }
 
     /**

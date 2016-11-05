@@ -86,7 +86,7 @@ public class MapController implements IController,
         }
         for (WaterPurityReport report
                 : reportDAO.getAllPurityReports().values()) {
-            String condition = report.getCondition().toString();
+            String condition = report.getOverallCondition().toString();
             if (condition.equals(filterCondition.get())) {
                 putPurePins(report);
             } else if ("All".equals(filterAll.get())) {
@@ -115,8 +115,8 @@ public class MapController implements IController,
         Marker marker = new Marker(markerOptions);
         map.addMarker(marker);
         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-        infoWindowOptions.content("Water Condition: "
-                + report.getCondition() + "<br>Water Type: ");
+        infoWindowOptions.content("Overall Condition: "
+                + report.getOverallCondition());
         InfoWindow window = new InfoWindow(infoWindowOptions);
 
         map.addUIEventHandler(marker,
@@ -148,8 +148,8 @@ public class MapController implements IController,
         Marker marker = new Marker(markerOptions);
         map.addMarker(marker);
         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-        infoWindowOptions.content("Water Condition: "
-                + report.getCondition() + "<br>Water Type: "
+        infoWindowOptions.content("Condition: "
+                + report.getCondition() + "<br>Type: "
                 + report.getType());
         InfoWindow window = new InfoWindow(infoWindowOptions);
 

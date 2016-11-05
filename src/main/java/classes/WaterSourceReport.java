@@ -7,6 +7,8 @@ import javafx.beans.property.SimpleObjectProperty;
 public class WaterSourceReport extends WaterReport {
 
     private ObjectProperty<WaterType> type = new SimpleObjectProperty<>();
+    private ObjectProperty<WaterCondition> condition =
+        new SimpleObjectProperty<>();
 
     /**
      * Constructor used specifically for the editing call chain in
@@ -20,8 +22,9 @@ public class WaterSourceReport extends WaterReport {
      */
     public WaterSourceReport(String reporterId, Location location,
             WaterType type, WaterCondition condition, Date date) {
-        super(date, reporterId, location, condition);
+        super(date, reporterId, location);
         this.type.set(type);
+        this.condition.set(condition);
     }
 
     /**
@@ -40,6 +43,22 @@ public class WaterSourceReport extends WaterReport {
      */
     public void setType(WaterType type) {
         this.type.set(type);
+    }
+
+    /**
+     * Sets condition of the water
+     * @param condition WaterCondition of the water to be set.
+     */
+    public void setCondition(WaterCondition condition) {
+        this.condition.set(condition);
+    }
+
+    /**
+     * Gets WaterCondition
+     * @return Returns WaterCondition of water
+     */
+    public WaterCondition getCondition() {
+        return this.condition.get();
     }
 
     /**
