@@ -90,7 +90,7 @@ public class LoginController implements IController {
     @FXML
     protected boolean checkValid() {
         String user = username.getText();
-        
+
         if (userDAO.userExists(user)) {
             username.setStyle("-fx-border-width: 0px ;");
             User queriedUser = userDAO.getUser(user);

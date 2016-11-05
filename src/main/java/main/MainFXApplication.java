@@ -3,7 +3,6 @@ import controller.IController;
 import controller.ViewAllReportsController;
 import controller.CreateReportController;
 import controller.EditReportController;
-import controller.MapController;
 import controller.EditProfileController;
 import controller.MainScreenController;
 import controller.MenuBarController;
@@ -47,7 +46,6 @@ public class MainFXApplication extends Application {
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
         initRootLayout(mainScreen);
-        MapController.setAllPins("All");
         showMap();
         showMainScreen();
     }

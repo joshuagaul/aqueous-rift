@@ -39,8 +39,6 @@ public class MapController implements IController,
      */
     @FXML
     public void initialize() {
-        //Defaults to all pins
-        filterAll.set("All");
         mapView.addMapInializedListener(this);
     }
 
@@ -67,10 +65,6 @@ public class MapController implements IController,
             opened = null;
         });
 
-        //Because the reportDAO loads the reports asynchronously
-        //  must pause execution to guarantee loading
-        //  TODO think about other solutions to fix this
-        //      Maybe don't load locations on map initialization.
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -85,7 +79,8 @@ public class MapController implements IController,
                 putSourcePins(report);
             } else if (condition.equals(filterCondition.get())) {
                 putSourcePins(report);
-            } else if ("All".equals(filterAll.get())) {
+            } else if (filterAll.get() == null && filterCondition.get() == null
+                    && filterType.get() == null) {
                 putSourcePins(report);
             }
         }
@@ -95,6 +90,9 @@ public class MapController implements IController,
             if (condition.equals(filterCondition.get())) {
                 putPurePins(report);
             } else if ("All".equals(filterAll.get())) {
+                putPurePins(report);
+            } else if (filterAll.get() == null && filterCondition.get() == null
+                    && filterType.get() == null) {
                 putPurePins(report);
             }
         }

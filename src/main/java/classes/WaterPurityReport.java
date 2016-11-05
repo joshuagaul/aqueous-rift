@@ -1,15 +1,11 @@
 package classes;
 
 import java.util.Date;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
 public class WaterPurityReport extends WaterReport {
 
-    private ObjectProperty<WaterCondition> condition =
-        new SimpleObjectProperty<>();
     private DoubleProperty virusPPM = new SimpleDoubleProperty();
     private DoubleProperty contaminantPPM = new SimpleDoubleProperty();
 
@@ -26,26 +22,9 @@ public class WaterPurityReport extends WaterReport {
      */
     public WaterPurityReport(String reporterId, Date date, Location location,
         WaterCondition condition, double virusPPM, double contaminantPPM) {
-        super(date, reporterId, location);
-        this.condition.set(condition);
+        super(date, reporterId, location, condition);
         this.virusPPM.set(virusPPM);
         this.contaminantPPM.set(contaminantPPM);
-    }
-
-    /**
-     * Sets condition of the water
-     * @param condition OverallCondition of the water to be set.
-     */
-    public void setCondition(WaterCondition condition) {
-        this.condition.set(condition);
-    }
-
-    /**
-     * Gets OverallCondition
-     * @return Returns overall condition of water
-     */
-    public WaterCondition getCondition() {
-        return this.condition.get();
     }
 
     /**
