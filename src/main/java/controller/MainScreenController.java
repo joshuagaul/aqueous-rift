@@ -13,6 +13,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import main.MainFXApplication;
+import model.ReportDataObject;
+
 import java.util.Optional;
 
 /**
@@ -113,33 +115,32 @@ public class MainScreenController implements IController {
                 alert.showAndWait();
             }
         } else if (event.getSource() == delete) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete this report");
-            alert.setHeaderText("Are you sure you want to delete this report?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                mainApplication.showMainScreen();
+            if (mainApplication.getCurrentReport() != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete this report");
+                alert.setHeaderText(
+                        "Are you sure you want to delete this report?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    ReportDataObject reportDAO = ReportDataObject.getInstance();
+                    WaterReport currentReport =
+                            mainApplication.getCurrentReport();
+                    if (isSourceReport.get()) {
+                        reportDAO.deleteSourceReport(currentReport.getId());
+                    } else {
+                        reportDAO.deleteSourceReport(currentReport.getId());
+                    }
+                    mainApplication.showMap();
+                    mainApplication.showMainScreen();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Click a pin to update a report");
+                alert.setHeaderText("Please select a report to delete.");
+                alert.showAndWait();
             }
+
         }
-    }
-
-    /**
-     * Shows a report when the user clicks the pin on map.
-     *
-     * @param event user clicks a pin.
-     */
-    @FXML
-    private void handlePinClicked(ActionEvent event) {
-        //TODO (see below)
-        //Set the text to the information pulled from the map & report
-    }
-
-    /**
-     * NOTE: THIS IS TEMPORARY - to show the data info on the main screen
-     * @param set true if the user is logged in.
-     */
-    public static void setLoggedIn(boolean set) {
-        isLoggedIn.set(set);
     }
 
     /**

@@ -31,6 +31,8 @@ public class MenuBarController implements IController {
     private StringProperty username = new SimpleStringProperty("Hello, Guest");
     private StringProperty userType
             = new SimpleStringProperty(UserType.GeneralUser.toString());
+    private static BooleanProperty isAuthorized =
+            new SimpleBooleanProperty(false);
 
     @FXML
     private Menu hello;
@@ -43,6 +45,9 @@ public class MenuBarController implements IController {
 
     @FXML
     private Menu reports;
+
+    @FXML
+    private MenuItem historicalGraph;
 
     @FXML
     private Menu home;
@@ -76,6 +81,7 @@ public class MenuBarController implements IController {
     private void initialize() {
         //Help is a static Menu
         userOptions.visibleProperty().bind(userLoggedIn);
+        historicalGraph.visibleProperty().bind(isAuthorized);
         reports.setText("Reports");
         login.visibleProperty().bind(userLoggedIn.not());
         hello.textProperty().bind(username);
@@ -107,6 +113,16 @@ public class MenuBarController implements IController {
     }
 
     /**
+     * shows menuitems based on the usertypes
+     * @param set true if the user is authorized (worker, admin, manager).
+     *            false if the user is not logged in or a general user.
+     */
+    public static void setAuthority(boolean set) {
+        isAuthorized.set(set);
+    }
+
+
+    /**
      * allow for calling back to the main application code if necessary
      * @param main   the reference to the FX Application instance
      * */
@@ -131,10 +147,10 @@ public class MenuBarController implements IController {
             username.set("Hello, Guest");
             userLoggedIn.set(false);
             MainScreenController.setAuthority(false);
-            MainScreenController.setLoggedIn(false);
             CreateReportController.setAuthority(false);
             ViewAllReportsController.setLoggedIn(false);
             ViewAllReportsController.setAuthority(false);
+            MenuBarController.setAuthority(false);
         }
     }
 
@@ -150,7 +166,7 @@ public class MenuBarController implements IController {
     /**
      * filters by water type
      *
-     * @param event clic    king the water type
+     * @param event clicking the water type
      */
     @FXML
     private void handleWaterType(ActionEvent event) {
@@ -208,6 +224,15 @@ public class MenuBarController implements IController {
         mainApplication.showMap();
         mainApplication.showMainScreen();
     }
+
+    /**
+     * Lets the authorized user to view historical graph;
+     */
+    @FXML
+    private void handleViewGraph() {
+        mainApplication.showGraph();
+    }
+
 
     /**
      * Lets the user edit profile

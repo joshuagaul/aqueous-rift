@@ -6,6 +6,7 @@ import controller.EditReportController;
 import controller.EditProfileController;
 import controller.MainScreenController;
 import controller.MenuBarController;
+import javafx.scene.layout.AnchorPane;
 import model.ReportDataObject;
 import model.DataManager;
 import model.UserDataObject;
@@ -212,6 +213,16 @@ public class MainFXApplication extends Application {
         showScreen("view/ViewMap.fxml",
                 "Map", "LEFT");
     }
+
+    /**
+     * sets the screen to view all recents reports.
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
+    public void showGraph() {
+        showScreen("view/ViewHistoricalGraph.fxml",
+                "ViewHistoricalGraph", "LEFT");
+    }
     /**
      * Passes login information from LoginController to MenuBarController.
      * Main Application calls a controller, not ideal but only solution I
@@ -232,13 +243,14 @@ public class MainFXApplication extends Application {
             MainScreenController.setAuthority(true);
             CreateReportController.setAuthority(true);
             ViewAllReportsController.setAuthority(true);
+            MenuBarController.setAuthority(true);
 
         } else {
             MainScreenController.setAuthority(false);
             CreateReportController.setAuthority(false);
             ViewAllReportsController.setAuthority(false);
+            MenuBarController.setAuthority(false);
         }
-        MainScreenController.setLoggedIn(true);
         ViewAllReportsController.setLoggedIn(true);
     }
 
@@ -306,7 +318,7 @@ public class MainFXApplication extends Application {
      * @param pane pane to be animated
      */
     private void animate(Pane pane) {
-        if (pane instanceof StackPane) {
+        if (pane instanceof StackPane || pane instanceof AnchorPane) {
             TranslateTransition transition
                     = new TranslateTransition(Duration.seconds(0.3), pane);
             transition.setFromX(400);
