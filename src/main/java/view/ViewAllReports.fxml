@@ -47,7 +47,7 @@
             <Text id="heading" fx:id="header" strokeType="OUTSIDE" strokeWidth="0.0" text="SOURCE REPORTS" textAlignment="CENTER" wrappingWidth="585.74609375" GridPane.columnIndex="2" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowSpan="2" />
             <Button id="button-secondary" fx:id="back" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="52.0" prefWidth="208.0" text="Back to Main" GridPane.columnSpan="2" GridPane.rowIndex="9" GridPane.rowSpan="2" />
             <Button id="button-primary" fx:id="submit" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="53.0" prefWidth="458.0" text="Submit a Report" GridPane.columnIndex="8" GridPane.columnSpan="2" GridPane.rowIndex="9" GridPane.rowSpan="2" />
-            <Button id="button-secondary" fx:id="switchTable" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="53.0" prefWidth="249.0" text="Show Purity Reports" GridPane.columnIndex="7" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowSpan="2" />
+            <Button id="button-secondary" fx:id="switchTable" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="53.0" prefWidth="249.0" text="Show Confirmed Reports" GridPane.columnIndex="7" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowSpan="2" />
             <Button id="button-delete" fx:id="delete" mnemonicParsing="false" prefHeight="53.0" prefWidth="204.0" text="Delete" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="9" GridPane.rowSpan="2" />
          </children>
          <padding>

@@ -63,11 +63,13 @@ public class MainScreenController implements IController {
         // }
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);
-
-        virus.visibleProperty().bind(isSourceReport.not());
-        virusLabel.visibleProperty().bind(isSourceReport.not());
-        contamination.visibleProperty().bind(isSourceReport.not());
-        contaminationLabel.visibleProperty().bind(isSourceReport.not());
+        virus.visibleProperty().bind(isAuthorized.and(isSourceReport.not()));
+        virusLabel.visibleProperty().bind(
+                isAuthorized.and(isSourceReport.not()));
+        contamination.visibleProperty().bind(
+                isAuthorized.and(isSourceReport.not()));
+        contaminationLabel.visibleProperty().bind(
+                isAuthorized.and(isSourceReport.not()));
         overallCondition.visibleProperty().bind(isSourceReport.not());
         overallConditionLabel.visibleProperty().bind(isSourceReport.not());
         type.visibleProperty().bind(isSourceReport);
@@ -166,8 +168,6 @@ public class MainScreenController implements IController {
             }
             isSourceReport.set(false);
         }
-        delete.visibleProperty().bind(isAuthorized);
-        update.visibleProperty().bind(isAuthorized);
         date.setText(report.getDateAsString());
         longitude.setText(report.getLocation().getLongitude());
         latitude.setText(report.getLocation().getLatitude());

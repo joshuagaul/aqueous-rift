@@ -61,7 +61,9 @@ public class EditReportController implements IController {
     @FXML
     private void initialize() {
         waterType.getItems().setAll(WaterType.values());
+        waterType.visibleProperty().bind(showConfirm.not());
         waterCondition.getItems().setAll(WaterCondition.values());
+        waterCondition.visibleProperty().bind(showConfirm.not());
         overallCondition.getItems().setAll(OverallCondition.values());
         ppm1.visibleProperty().bind(isSourceReport.not().or(showConfirm));
         ppm2.visibleProperty().bind(isSourceReport.not().or(showConfirm));
@@ -75,10 +77,15 @@ public class EditReportController implements IController {
             .or(showConfirm));
         overallConditionLabel.visibleProperty().bind(isSourceReport.not()
             .or(showConfirm));
-        waterType.visibleProperty().bind(isSourceReport);
-        waterCondition.visibleProperty().bind(isSourceReport);
-        typeLabel.visibleProperty().bind(isSourceReport);
-        conditionLabel.visibleProperty().bind(isSourceReport);
+        waterType.visibleProperty().bind(
+                isSourceReport.and(showConfirm.not()));
+        waterCondition.visibleProperty().bind(
+                isSourceReport.and(showConfirm.not()));
+        typeLabel.visibleProperty().bind(
+                isSourceReport.and(showConfirm.not()));
+        conditionLabel.visibleProperty().bind(
+                isSourceReport.and(showConfirm.not()));
+        confirmButton.visibleProperty().bind(isSourceReport);
     }
 
     /**

@@ -55,10 +55,19 @@ public class CreateReportController implements IController {
     private ComboBox<WaterCondition> waterCondition = new ComboBox<>();
 
     @FXML
+    private ComboBox<OverallCondition> overallCondition = new ComboBox<>();
+
+    @FXML
     private TextField longitude;
 
     @FXML
     private TextField latitude;
+
+    @FXML
+    private Label typeLabel;
+
+    @FXML
+    private Label conditionLabel;
 
     @FXML
     private TextField virus;
@@ -87,6 +96,9 @@ public class CreateReportController implements IController {
     @FXML
     private Button cancel;
 
+    @FXML
+    private Label overallConditionLabel;
+
     /**
      * Initializes items (combobox's)
      */
@@ -94,15 +106,24 @@ public class CreateReportController implements IController {
     private void initialize() {
         //Populate static combobox data
         waterType.getItems().setAll(WaterType.values());
+        waterType.visibleProperty().bind(showConfirm.not());
+        typeLabel.visibleProperty().bind(showConfirm.not());
         waterCondition.getItems().setAll(WaterCondition.values());
+        waterCondition.visibleProperty().bind(showConfirm.not());
+        conditionLabel.visibleProperty().bind(showConfirm.not());
         //Bind event handler and set binding variables
         userType.set(UserType.GeneralUser);
-        ppm1.visibleProperty().bind(isAuthorized);
-        ppm2.visibleProperty().bind(isAuthorized);
-        virusLabel.visibleProperty().bind(isAuthorized);
-        contaminationLabel.visibleProperty().bind(isAuthorized);
-        virus.visibleProperty().bind(isAuthorized);
-        contamination.visibleProperty().bind(isAuthorized);
+        ppm1.visibleProperty().bind(isAuthorized.and(showConfirm));
+        ppm2.visibleProperty().bind(isAuthorized.and(showConfirm));
+        virusLabel.visibleProperty().bind(isAuthorized.and(showConfirm));
+        contaminationLabel.visibleProperty().bind(
+                isAuthorized.and(showConfirm));
+        virus.visibleProperty().bind(isAuthorized.and(showConfirm));
+        contamination.visibleProperty().bind(isAuthorized.and(showConfirm));
+        overallCondition.getItems().setAll(OverallCondition.values());
+        overallCondition.visibleProperty().bind(isAuthorized.and(showConfirm));
+        overallConditionLabel.visibleProperty().bind(
+                isAuthorized.and(showConfirm));
         confirmButton.visibleProperty().bind(isAuthorized);
     }
 
@@ -226,6 +247,8 @@ public class CreateReportController implements IController {
                     Date date = new Date();
                     WaterType type = waterType.getValue();
                     WaterCondition condition = waterCondition.getValue();
+                    OverallCondition overallcondition =
+                            overallCondition.getValue();
                     if (!purityReport.get()) {
                         WaterSourceReport report
                             = new WaterSourceReport(reporterId,
@@ -234,7 +257,7 @@ public class CreateReportController implements IController {
                     } else {
                         WaterPurityReport report
                             = new WaterPurityReport(reporterId,
-                            date, loc, OverallCondition.Safe,
+                            date, loc, overallcondition,
                             Double.parseDouble(virus.getText()),
                             Double.parseDouble(contamination.getText()));
                         reportDAO.addPurityReport(report);
@@ -291,8 +314,14 @@ public class CreateReportController implements IController {
             } else {
                 contamination.setStyle("-fx-border-width: 0px ;");
             }
+            if (overallCondition.getValue() == null) {
+                overallCondition.setStyle(
+                        "-fx-border-color: red ; -fx-border-width: 2px ;");
+                emptyFields++;
+            } else {
+                overallCondition.setStyle("-fx-border-width: 0px ;");
+            }
         }
-
         return (emptyFields != 0);
     }
 
