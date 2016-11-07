@@ -56,6 +56,8 @@ public class ViewAllReportsController implements IController {
             = new TableColumn<>("Contamination (ppm)");
     private TableColumn<WaterReport, String> virus
             = new TableColumn<>("Virus (ppm)");
+    private TableColumn<WaterReport, String> overallcondition
+            = new TableColumn<>("Overall Condition");
     private ReportDataObject reportDAO;
 
     /**
@@ -81,6 +83,9 @@ public class ViewAllReportsController implements IController {
         contamination.setCellValueFactory(
                 new PropertyValueFactory<WaterReport, String>(
                         "contaminantPPM"));
+        overallcondition.setCellValueFactory(
+                new PropertyValueFactory<WaterReport, String>(
+                        "overallCondition"));
         switchViews();
     }
 
@@ -129,10 +134,10 @@ public class ViewAllReportsController implements IController {
         reportView.getColumns().clear();
         if (isAuthorized.get() && showPurityReports.get()) {
             reportView.getColumns().addAll(user, location, date,
-                    condition, contamination, virus);
+                    overallcondition, contamination, virus);
         } else if (showPurityReports.get()) {
             reportView.getColumns().addAll(user, location, date,
-                    condition);
+                    overallcondition);
         } else {
             reportView.getColumns().addAll(user, location, date, type,
                     condition);
