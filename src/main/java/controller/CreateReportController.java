@@ -283,45 +283,48 @@ public class CreateReportController implements IController {
      */
     private Boolean emptyFieldsExist() {
         int emptyFields = 0;
-
-        if (waterCondition.getValue() == null) {
-            waterCondition.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-            emptyFields++;
-        } else {
-            waterCondition.setStyle("-fx-border-width: 0px ;");
-        }
-
-        if (waterType.getValue() == null) {
-            waterType.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-            emptyFields++;
-        } else {
-            waterType.setStyle("-fx-border-width: 0px ;");
-        }
-        if (isAuthorized.getValue()) {
-            if (virus.getText().length() == 0) {
-                virus.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-                emptyFields++;
-            } else {
-                virus.setStyle("-fx-border-width: 0px ;");
-            }
-            if (contamination.getText().length() == 0) {
-                contamination.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-                emptyFields++;
-            } else {
-                contamination.setStyle("-fx-border-width: 0px ;");
-            }
-            if (overallCondition.getValue() == null) {
-                overallCondition.setStyle(
+        if (showConfirm.not().get()) {
+            if (waterCondition.getValue() == null) {
+                waterCondition.setStyle(
                         "-fx-border-color: red ; -fx-border-width: 2px ;");
                 emptyFields++;
             } else {
-                overallCondition.setStyle("-fx-border-width: 0px ;");
+                waterCondition.setStyle("-fx-border-width: 0px ;");
+            }
+
+            if (waterType.getValue() == null) {
+                waterType.setStyle(
+                        "-fx-border-color: red ; -fx-border-width: 2px ;");
+                emptyFields++;
+            } else {
+                waterType.setStyle("-fx-border-width: 0px ;");
+            }
+        } else {
+            if (isAuthorized.getValue()) {
+                if (virus.getText().length() == 0) {
+                    virus.setStyle(
+                            "-fx-border-color: red ; -fx-border-width: 2px ;");
+                    emptyFields++;
+                } else {
+                    virus.setStyle("-fx-border-width: 0px ;");
+                }
+                if (contamination.getText().length() == 0) {
+                    contamination.setStyle(
+                            "-fx-border-color: red ; -fx-border-width: 2px ;");
+                    emptyFields++;
+                } else {
+                    contamination.setStyle("-fx-border-width: 0px ;");
+                }
+                if (overallCondition.getValue() == null) {
+                    overallCondition.setStyle(
+                            "-fx-border-color: red ; -fx-border-width: 2px ;");
+                    emptyFields++;
+                } else {
+                    overallCondition.setStyle("-fx-border-width: 0px ;");
+                }
             }
         }
+
         return (emptyFields != 0);
     }
 

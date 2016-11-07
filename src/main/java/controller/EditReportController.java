@@ -181,11 +181,23 @@ public class EditReportController implements IController {
         if (latitude.getText().length() == 0) {
             alertMessage.append("Latitude\n");
         }
-        if (waterCondition.getValue() == null) {
-            alertMessage.append("Water Condition\n");
-        }
-        if (waterType.getValue() == null) {
-            alertMessage.append("Water Type\n");
+        if (showConfirm.not().get()) {
+            if (waterCondition.getValue() == null) {
+                alertMessage.append("Water Condition\n");
+            }
+            if (waterType.getValue() == null) {
+                alertMessage.append("Water Type\n");
+            }
+        } else {
+            if (overallCondition.getValue() == null) {
+                alertMessage.append("Overall Condition\n");
+            }
+            if (virus.getText() == null) {
+                alertMessage.append("Virus\n");
+            }
+            if (contamination.getText() == null) {
+                alertMessage.append("Contamination\n");
+            }
         }
         return alertMessage.toString();
     }

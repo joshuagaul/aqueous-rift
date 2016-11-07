@@ -43,7 +43,7 @@ public class ViewHistoricalGraphController implements IController {
     @FXML
     private void setView() {
         if (virusButton.isSelected()) {
-           System.out.println("view graph by virus");
+            System.out.println("view graph by virus");
         } else {
             System.out.println("view graph by contaminant");
         }
@@ -67,6 +67,7 @@ public class ViewHistoricalGraphController implements IController {
     @FXML
     private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == ok) {
+            System.out.println("update the graph.");
             //TODO update the graph
         } else if (event.getSource() == back) {
             mainApplication.showMap();
