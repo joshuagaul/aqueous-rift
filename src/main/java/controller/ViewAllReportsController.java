@@ -5,7 +5,12 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.List;
@@ -128,7 +133,8 @@ public class ViewAllReportsController implements IController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 ReportDataObject reportDAO = ReportDataObject.getInstance();
-                WaterReport report = reportView.getSelectionModel().getSelectedItem();
+                WaterReport report =
+                        reportView.getSelectionModel().getSelectedItem();
                 if (report instanceof WaterSourceReport) {
                     reportDAO.deleteSourceReport(report.getId());
                 } else {
