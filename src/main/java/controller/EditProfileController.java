@@ -202,12 +202,14 @@ public class EditProfileController implements IController {
      */
     public void populateUserInformation(User user, String username) {
         this.username.setText(username);
-        //Don't fill password sections
+
         prefix.setValue(user.getName().getPrefix());
         fname.setText(user.getName().getFirstName());
         lname.setText(user.getName().getLastName());
         email.setText(user.getEmail());
         pnumber.setText(user.getPhoneNum());
+        newPassword.setText(user.getPassword());
+        confirmPassword.setText(user.getPassword());
     }
 
     /**
