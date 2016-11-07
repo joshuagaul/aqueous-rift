@@ -37,7 +37,7 @@ public class LoginController implements IController {
     @FXML
     private Button login;
 
-    private int tries = 0;
+    private int tries = 2;
     /**
      * Button handler for login page.
      * Clicking "Login" should check validity of info and count login attempts.
@@ -95,6 +95,7 @@ public class LoginController implements IController {
             username.setStyle("-fx-border-width: 0px ;");
             User queriedUser = userDAO.getUser(user);
             System.out.println(queriedUser.getPassword());
+            String alertMessage = "";
 
             Alert wrongPasswordAlert = new Alert(Alert.AlertType.WARNING);
             wrongPasswordAlert.setTitle("Wrong Password");
@@ -103,22 +104,27 @@ public class LoginController implements IController {
                 mainApplication.setCurrentUsername(user);
                 mainApplication.setCurrentUser(queriedUser);
                 return true;
-            } else if (tries < 3) {
-                tries++;
-                password.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-                wrongPasswordAlert.setHeaderText("The password you entered "
-                    + "was wrong.\nYou have "
-                    + (3 - tries) + "/3 tries left.");
-                wrongPasswordAlert.showAndWait();
-                return false;
             } else {
-                Alert threeTriesAlert = new Alert(Alert.AlertType.WARNING);
-                threeTriesAlert.setTitle("Three failed login attempts");
-                threeTriesAlert.setHeaderText(
-                    "You made 3 failed login attempts."
-                    + "\nContact an admin to have your account unblocked.");
+                if (tries > 0) {
+                    password.setStyle(
+                        "-fx-border-color: red ; -fx-border-width: 2px ;");
 
+                    alertMessage = "The password you entered "
+                        + "was wrong.\nYou have " + tries
+                        + " out of 3 tries left.";
+
+                    wrongPasswordAlert.setHeaderText(alertMessage);
+                    wrongPasswordAlert.showAndWait();
+                } else {
+                    //TODO ban the user
+                    Alert threeTriesAlert = new Alert(Alert.AlertType.WARNING);
+                    threeTriesAlert.setTitle("Three failed login attempts");
+                    threeTriesAlert.setHeaderText(
+                        "You made 3 failed login attempts."
+                        + "\nContact an admin to have your account unblocked.");
+                    threeTriesAlert.showAndWait();
+                }
+                tries--;
                 return false;
             }
         } else {
@@ -126,12 +132,12 @@ public class LoginController implements IController {
             username.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
 
-            // Alert doesntExistAlert = new Alert(Alert.AlertType.WARNING);
-            // doesntExistAlert.setTitle("Wrong Username");
-            // doesntExistAlert.setHeaderText("This user doesn't exist.\n"
-            //     + "Please enter a valid username.");
+            Alert doesntExistAlert = new Alert(Alert.AlertType.WARNING);
+            doesntExistAlert.setTitle("Wrong Username");
+            doesntExistAlert.setHeaderText("This user doesn't exist.\n"
+                + "Please enter a valid username.");
 
-            // doesntExistAlert.showAndWait();
+            doesntExistAlert.showAndWait();
 
 
             return false;
