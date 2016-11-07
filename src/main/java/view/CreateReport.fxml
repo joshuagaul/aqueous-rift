@@ -47,6 +47,7 @@
             <ComboBox fx:id="waterCondition" prefHeight="31.0" prefWidth="156.0" promptText="Select" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
             <TextField fx:id="virus" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="contamination" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="overallCondition" prefWidth="150.0" promptText="Select" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
             <Button id="button-primary" fx:id="submit" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="385.0" text="OK" GridPane.columnSpan="3" GridPane.rowIndex="10" />
             <Button id="button-secondary" fx:id="cancel" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="386.0" text="Cancel" GridPane.columnSpan="3" GridPane.rowIndex="11" />
             <Label fx:id="typeLabel" text="Type" GridPane.rowIndex="4" />
@@ -55,9 +56,8 @@
             <Label fx:id="contaminationLabel" text="Contamination" visible="false" wrapText="true" GridPane.rowIndex="5" />
             <Text fx:id="ppm1" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Text fx:id="ppm2" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <ComboBox fx:id="overallCondition" prefWidth="150.0" promptText="Select" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-            <Button id="button-confirm" fx:id="confirmButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="46.0" prefWidth="391.0" text="Confirm This Report" textAlignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="9" GridPane.valignment="TOP" />
             <Label fx:id="overallConditionLabel" text="Overall Condition" visible="false" GridPane.rowIndex="6" />
+            <Button id="button-confirm" fx:id="confirmButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="46.0" prefWidth="391.0" text="Confirm This Report" textAlignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="9" GridPane.valignment="TOP" />
          </children>
          <padding>
             <Insets bottom="50.0" left="25.0" right="25.0" top="25.0" />

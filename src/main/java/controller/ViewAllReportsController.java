@@ -1,17 +1,17 @@
 package controller;
 
+import classes.WaterSourceReport;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.util.Optional;
 
 import javafx.scene.text.Text;
 import main.MainFXApplication;
@@ -97,9 +97,6 @@ public class ViewAllReportsController implements IController {
      */
     @FXML
     private void handleButtonClicked(ActionEvent event) throws IOException {
-
-        //TODO delete button by selecting each item
-        // the report directly from the table
         if (event.getSource() == back) {
             MapController.setAllPins("All");
             mainApplication.showMap();
@@ -123,6 +120,25 @@ public class ViewAllReportsController implements IController {
                 switchTable.setText("View Source Reports");
             }
             switchViews();
+        } else if (event.getSource() == delete) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete this report");
+            alert.setHeaderText(
+                    "Are you sure you want to delete this report?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                ReportDataObject reportDAO = ReportDataObject.getInstance();
+                WaterReport report = reportView.getSelectionModel().getSelectedItem();
+                if (report instanceof WaterSourceReport) {
+                    reportDAO.deleteSourceReport(report.getId());
+                } else {
+                    reportDAO.deletePurityReport(report.getId());
+                }
+                mainApplication.showViewAllReportsScreen();
+            }
+
+
+
         }
     }
 

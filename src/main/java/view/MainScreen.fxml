@@ -66,12 +66,12 @@
             <Text id="data" fx:id="overallCondition" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Latitude" GridPane.rowIndex="1" />
             <Label text="Longitude" GridPane.rowIndex="2" />
-            <Text fx:id="longitude" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Text fx:id="latitude" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text id="data" fx:id="longitude" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Text id="data" fx:id="latitude" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="virusLabel" text="Virus (ppm)" visible="false" GridPane.rowIndex="5" />
             <Label fx:id="contaminationLabel" text="Contamination (ppm)" visible="false" GridPane.rowIndex="6" />
-            <Text fx:id="virus" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Text fx:id="contamination" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Text id="data" fx:id="virus" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Text id="data" fx:id="contamination" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Button id="button-delete" fx:id="delete" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="166.0" text="Delete" GridPane.columnSpan="2" GridPane.rowIndex="9" />
             <Button id="button-primary" fx:id="report" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="369.0" text="Submit a Report" GridPane.columnSpan="2" GridPane.rowIndex="10" />
             <Button id="button-secondary" fx:id="update" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="170.0" text="Update" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />

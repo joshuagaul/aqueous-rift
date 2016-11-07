@@ -128,7 +128,7 @@ public class MainScreenController implements IController {
                     if (isSourceReport.get()) {
                         reportDAO.deleteSourceReport(currentReport.getId());
                     } else {
-                        reportDAO.deleteSourceReport(currentReport.getId());
+                        reportDAO.deletePurityReport(currentReport.getId());
                     }
                     mainApplication.showMap();
                     mainApplication.showMainScreen();
