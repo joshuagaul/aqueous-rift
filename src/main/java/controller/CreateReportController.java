@@ -220,6 +220,21 @@ public class CreateReportController implements IController {
             }
 
         } else if (event.getSource() == submit) {
+            latitude.setStyle(
+                "-fx-border-width: 0px ;");
+            longitude.setStyle(
+                "-fx-border-width: 0px ;");
+            waterType.setStyle(
+                "-fx-border-width: 0px ;");
+            waterCondition.setStyle(
+                "-fx-border-width: 0px ;");
+            virus.setStyle(
+                "-fx-border-width: 0px ;");
+            contamination.setStyle(
+                "-fx-border-width: 0px ;");
+            overallCondition.setStyle(
+                "-fx-border-width: 0px ;");
+            
             ReportDataObject reportDAO = ReportDataObject.getInstance();
             String reporterId = mainApplication.getCurrentUsername();
             Location loc = new Location("0", "0");
@@ -230,6 +245,12 @@ public class CreateReportController implements IController {
                 emptyAlert.setHeaderText("Please fill out all "
                         + "the required fields.");
                 emptyAlert.showAndWait();
+            } else if (!correctDataType()) {
+                Alert wrongTypeAlert = new Alert(Alert.AlertType.WARNING);
+                wrongTypeAlert.setTitle("Invalid data");
+                wrongTypeAlert.setHeaderText("Please enter valid data "
+                        + " in the required fields.");
+                wrongTypeAlert.showAndWait();
             } else {
                 waterCondition.setStyle("-fx-border-width: 0px ;");
                 waterType.setStyle("-fx-border-width: 0px ;");
@@ -282,52 +303,104 @@ public class CreateReportController implements IController {
      * @return A boolean value showing if there are null values.
      */
     private Boolean emptyFieldsExist() {
-        int emptyFields = 0;
+        int count = 0;
+        
+        if (longitude.getText().length() == 0) {
+            longitude.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
+        }
+        if (latitude.getText().length() == 0) {
+            latitude.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
+        }
         if (showConfirm.not().get()) {
             if (waterCondition.getValue() == null) {
                 waterCondition.setStyle(
-                        "-fx-border-color: red ; -fx-border-width: 2px ;");
-                emptyFields++;
-            } else {
-                waterCondition.setStyle("-fx-border-width: 0px ;");
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
             }
-
             if (waterType.getValue() == null) {
                 waterType.setStyle(
-                        "-fx-border-color: red ; -fx-border-width: 2px ;");
-                emptyFields++;
-            } else {
-                waterType.setStyle("-fx-border-width: 0px ;");
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
             }
         } else {
-            if (isAuthorized.getValue()) {
-                if (virus.getText().length() == 0) {
-                    virus.setStyle(
-                            "-fx-border-color: red ; -fx-border-width: 2px ;");
-                    emptyFields++;
-                } else {
-                    virus.setStyle("-fx-border-width: 0px ;");
-                }
-                if (contamination.getText().length() == 0) {
-                    contamination.setStyle(
-                            "-fx-border-color: red ; -fx-border-width: 2px ;");
-                    emptyFields++;
-                } else {
-                    contamination.setStyle("-fx-border-width: 0px ;");
-                }
-                if (overallCondition.getValue() == null) {
-                    overallCondition.setStyle(
-                            "-fx-border-color: red ; -fx-border-width: 2px ;");
-                    emptyFields++;
-                } else {
-                    overallCondition.setStyle("-fx-border-width: 0px ;");
-                }
+            if (overallCondition.getValue() == null) {
+                overallCondition.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
+            }
+            if (virus.getText() == null) {
+                virus.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
+            }
+            if (contamination.getText() == null) {
+                contamination.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
             }
         }
 
-        return (emptyFields != 0);
+        return (count != 0);
     }
 
+
+    /**
+     * Checks if all the fields are of the correct data type.
+     *
+     * @return whether it is true
+     */
+    private boolean correctDataType() {
+        int count = 0;
+
+
+        if (!isNumeric(longitude.getText())) {
+            longitude.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
+        }
+
+        if (!isNumeric(latitude.getText())) {
+            latitude.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
+        }
+
+        if (!isNumeric(virus.getText())) {
+            virus.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
+        }
+
+        if (!isNumeric(contamination.getText())) {
+            contamination.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
+        }
+
+        return (count == 0);
+    }
+
+
+
+    /**
+     * helper method to see if a certain field
+     * is populated with a numeric string
+     *
+     * @param str string to be examined
+     * @return whther it is of numeric
+     */
+    public static boolean isNumeric(String str) {
+        try {
+            double d = Double.parseDouble(str);  
+        } catch (NumberFormatException nfe) {  
+            return false;  
+        }
+        return true;  
+    }
 
     /**
      * Gives the controller access to mainApplication.

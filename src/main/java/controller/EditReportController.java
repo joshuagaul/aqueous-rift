@@ -115,15 +115,35 @@ public class EditReportController implements IController {
             }
 
         } else if (event.getSource() == submit) {
-            String alertMessage = validateEditReport();
-            if (alertMessage.length() != 0) {
+            latitude.setStyle(
+                "-fx-border-width: 0px ;");
+            longitude.setStyle(
+                "-fx-border-width: 0px ;");
+            waterType.setStyle(
+                "-fx-border-width: 0px ;");
+            waterCondition.setStyle(
+                "-fx-border-width: 0px ;");
+            virus.setStyle(
+                "-fx-border-width: 0px ;");
+            contamination.setStyle(
+                "-fx-border-width: 0px ;");
+            overallCondition.setStyle(
+                "-fx-border-width: 0px ;");
+
+            if (emptyFieldsExist()) {
                 Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
                 emptyAlert.setTitle("Empty fields");
-                emptyAlert.setContentText(alertMessage);
                 emptyAlert.setHeaderText("Please fill out all "
                         + "the required fields.");
                 emptyAlert.showAndWait();
+            } else if (!correctDataType()) {
+                Alert wrongTypeAlert = new Alert(Alert.AlertType.WARNING);
+                wrongTypeAlert.setTitle("Invalid data");
+                wrongTypeAlert.setHeaderText("Please enter valid data "
+                        + " in the required fields.");
+                wrongTypeAlert.showAndWait();
             } else {
+
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm Report Update");
                 alert.setHeaderText("Are you sure you want to"
@@ -170,40 +190,124 @@ public class EditReportController implements IController {
     }
 
     /**
-     * Validates the user edited Report inputs. (Checking null fields for now.)
+     * Checks to see if there are any empty fields.
+     *
      * @return An alert message describing the input errors.
      */
-    private String validateEditReport() {
-        StringBuilder alertMessage = new StringBuilder();
+    private boolean emptyFieldsExist() {
+        int count = 0;
+
         if (longitude.getText().length() == 0) {
-            alertMessage.append("Longitude\n");
+            longitude.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
         }
         if (latitude.getText().length() == 0) {
-            alertMessage.append("Latitude\n");
+            latitude.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
         }
         if (showConfirm.not().get()) {
             if (waterCondition.getValue() == null) {
-                alertMessage.append("Water Condition\n");
+                waterCondition.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
             }
             if (waterType.getValue() == null) {
-                alertMessage.append("Water Type\n");
+                waterType.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
             }
         } else {
             if (overallCondition.getValue() == null) {
-                alertMessage.append("Overall Condition\n");
+                overallCondition.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
             }
             if (virus.getText() == null) {
-                alertMessage.append("Virus\n");
+                virus.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
             }
             if (contamination.getText() == null) {
-                alertMessage.append("Contamination\n");
+                contamination.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
             }
         }
-        return alertMessage.toString();
+
+        return (count != 0);
+    }
+
+    /**
+     * Checks if all the fields are of the correct data type.
+     *
+     * @return whether it is true
+     */
+    private boolean correctDataType() {
+        
+        latitude.setStyle(
+                    "-fx-border-width: 0px ;");
+        longitude.setStyle(
+                    "-fx-border-width: 0px ;");
+        waterType.setStyle(
+                    "-fx-border-width: 0px ;");
+        waterCondition.setStyle(
+                    "-fx-border-width: 0px ;");
+        virus.setStyle(
+                    "-fx-border-width: 0px ;");
+        contamination.setStyle(
+                    "-fx-border-width: 0px ;");
+        overallCondition.setStyle(
+                    "-fx-border-width: 0px ;");
+
+        int count = 0;
+
+
+        if (!isNumeric(longitude.getText())) {
+            longitude.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
+        }
+
+        if (!isNumeric(latitude.getText())) {
+            latitude.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
+        }
+
+        if (!isNumeric(virus.getText())) {
+            virus.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
+        }
+
+        if (!isNumeric(contamination.getText())) {
+            contamination.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            count++;
+        }
+
+        return (count == 0);
     }
 
 
 
+    /**
+     * helper method to see if a certain field
+     * is populated with a numeric string
+     *
+     * @param str string to be examined
+     * @return whther it is of numeric
+     */
+    public static boolean isNumeric(String str) {
+        try {
+            double d = Double.parseDouble(str);  
+        } catch (NumberFormatException nfe) {  
+            return false;  
+        }
+        return true;  
+    }
 
     /**
      * populates the report data from the pin
