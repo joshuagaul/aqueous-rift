@@ -99,6 +99,7 @@ public class HistoricalReport {
             SimpleDateFormat month = new SimpleDateFormat("MM");
 
             if (yearF.format(wpr.getDate()).equals(year)) {
+                System.out.println(wpr.getDate());
                 Location l = wpr.getLocation();
                 Circle c = new Circle(Double.parseDouble(l.getLatitude()),
                     Double.parseDouble(l.getLongitude()), .01);
@@ -142,7 +143,7 @@ public class HistoricalReport {
 
             retList.add(Integer.parseInt(month) - 1, dataToAdd);
         }
-
+        System.out.println(retList);
         return retList;
     }
 
