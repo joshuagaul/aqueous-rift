@@ -1,6 +1,5 @@
 package classes;
 import java.util.ArrayList;
-import javafx.scene.shape.Circle;
 import model.ReportDataObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,9 +72,6 @@ public class HistoricalReport {
     private ArrayList<Double> findReports(Location radiusCenter,
         Double radiusSize, String type, String year) {
 
-        Circle main = new Circle(Double.parseDouble(radiusCenter.getLatitude()),
-            Double.parseDouble(radiusCenter.getLongitude()), radiusSize / 69);
-
         ArrayList<Double> retList = new ArrayList<>(12);
         //NOTE: adding to ArrayList at index < 0 || index > size()
         // will throw and indexoutofbounds exception.
@@ -102,10 +98,8 @@ public class HistoricalReport {
             if (yearF.format(wpr.getDate()).equals(year)) {
                 System.out.println(wpr.getDate());
                 Location l = wpr.getLocation();
-                Circle c = new Circle(Double.parseDouble(l.getLatitude()),
-                    Double.parseDouble(l.getLongitude()), .01);
 
-                if (intersects(main, c)) {
+                if (withinRadius(radiusCenter, l)) {
                     double data = 0;
 
                     if (type.equalsIgnoreCase("virusppm")) {
@@ -149,18 +143,27 @@ public class HistoricalReport {
     }
 
     /**
-     * Determines if the two circles intersesct. Used to determine if report
-     * is in the area given by the initial point and radius size
-     * @param  a First circle
-     * @param  b Second Circle
-     * @return   True if the two circles intersect each other
+     * Determines if distance between two locations is within the given radius
+     * @param  l1 First Location
+     * @param  l2 Second Location
+     * @return   True if distance between two locations is less than radiusSize
      */
-    private boolean intersects(Circle a, Circle b) {
-        double distance = Math.sqrt(Math.pow((b.getCenterX()
-            - a.getCenterX()), 2) - Math.pow(b.getCenterY()
-            - a.getCenterY(), 2));
+    private boolean withinRadius(Location l1, Location l2) {
+        double lat1 = Double.parseDouble(l1.getLatitude());
+        double lat2 = Double.parseDouble(l2.getLatitude());
+        double lon1 = Double.parseDouble(l1.getLongitude());
+        double lon2 = Double.parseDouble(l2.getLongitude());
 
-        return distance <= (a.getRadius() + b.getRadius());
+        final int earthRadius = 6371;
+        Double latDistance = Math.toRadians(lat1 - lat2);
+
+        Double lonDistance = Math.toRadians(lon1 - lon2);
+        Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+            + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = earthRadius * c * .621371; //converts km to miles
+        return distance <= radiusSize;
     }
 
 }
