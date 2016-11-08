@@ -82,6 +82,7 @@ public class HistoricalReport {
         //I added this to temporarily initialize the list,
         // but feel free to fix it if there's a better way.
 
+
         for (int i = 0; i < 12; i++) {
             retList.add(i, 0.0);
         }
