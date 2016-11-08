@@ -2,12 +2,12 @@ package classes;
 import java.util.ArrayList;
 import javafx.scene.shape.Circle;
 import model.ReportDataObject;
+import java.util.HashMap;
 import java.util.Map;
 import java.text.SimpleDateFormat;
 
 public class HistoricalReport {
-    private static int number = 0;
-    private ArrayList<Number[]> xyPairs;
+    private ArrayList<Double> dataByMonth;
     private Location radiusCenter;
     private Double radiusSize;
 
@@ -24,8 +24,15 @@ public class HistoricalReport {
             throw new IllegalArgumentException("Radius can't be less " 
                 + "than zero");
         }
-        number++;
-        xyPairs = findReports(radiusCenter,
+
+        if (year == null || year.length() != 4) {
+            throw new IllegalArgumentException("Year is either null or not of "
+                + "the right length");
+        }
+        this.radiusCenter = radiusCenter;
+        this.radiusSize = radiusSize;
+
+        dataByMonth = findReports(radiusCenter,
             radiusSize, type, year);
     }
 
@@ -33,8 +40,8 @@ public class HistoricalReport {
      * Returns the xy pairings for the data
      * @return  xy coordinate pairs
      */
-    public ArrayList<Number[]> getXYpairs() {
-        return xyPairs;
+    public ArrayList<Double> getDataByMonth() {
+        return dataByMonth;
     }
 
     /**
@@ -63,12 +70,14 @@ public class HistoricalReport {
      * @param  year       year to filter the reports on
      * @return  ArrayList arrayList of xy pairings
      */
-    private ArrayList<Number[]> findReports(Location radiusCenter,
+    private ArrayList<Double> findReports(Location radiusCenter,
         Double radiusSize, String type, String year) {
 
         Circle main = new Circle(Double.parseDouble(radiusCenter.getLatitude()),
             Double.parseDouble(radiusCenter.getLongitude()), radiusSize / 69);
-        ArrayList<Number[]> retList = new ArrayList<>();
+
+        ArrayList<Double> retList = new ArrayList<>(12);
+        Map<String, Double[]> monthDataMap = new HashMap<>();
 
         ReportDataObject rdo = ReportDataObject.getInstance();
 
@@ -76,28 +85,55 @@ public class HistoricalReport {
             .getAllPurityReports();
 
         for (WaterPurityReport wpr : purityReports.values()) {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy");
 
-            if (df.format(wpr.getDate()).equals(year)) {
+            SimpleDateFormat yearF = new SimpleDateFormat("yyyy");
+            SimpleDateFormat month = new SimpleDateFormat("MM");
+
+            if (yearF.format(wpr.getDate()).equals(year)) {
                 Location l = wpr.getLocation();
                 Circle c = new Circle(Double.parseDouble(l.getLatitude()),
                     Double.parseDouble(l.getLongitude()), .01);
 
                 if (intersects(main, c)) {
-                    Number[] retArray = new Number[2];
-                    retArray[0] = wpr.getDate().getTime();
+                    double data = 0;
+
                     if (type.equalsIgnoreCase("virusppm")) {
-                        retArray[1] = wpr.getVirusPPM();
+                        data = wpr.getVirusPPM();
                     } else if (type.equalsIgnoreCase("contaminantppm")) {
-                        retArray[1] = wpr.getContaminantPPM();
+                        data = wpr.getContaminantPPM();
                     } else {
                         throw new IllegalArgumentException("Can't organize the"
                             + " data by " + type);
                     }
-                    retList.add(retArray);
+
+                    Double[] monthData = monthDataMap.get(month.format(wpr
+                        .getDate()));
+
+                    if (monthData == null) {
+                        monthData = new Double[]{data, new Double(1)};
+                        monthDataMap.put(month.format(wpr.getDate()),
+                            monthData);
+
+                    } else {
+                        data = (Double) ((monthData[0] * monthData[1]) + data)
+                            / (monthData[1] + 1);
+                        monthData[0] = data;
+                        monthData[1] = monthData[1] + 1;
+                        monthDataMap.put(month.format(wpr.getDate()),
+                            monthData);
+
+                    }
                 }
             }
         }
+
+        for (String month : monthDataMap.keySet()) {
+            double dataToAdd = monthDataMap.get(month) != null 
+                ? monthDataMap.get(month)[0] : -1;
+
+            retList.add(Integer.parseInt(month) - 1, dataToAdd);
+        }
+
         return retList;
     }
 
