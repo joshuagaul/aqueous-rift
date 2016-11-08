@@ -5,6 +5,7 @@ import classes.Location;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -33,7 +34,7 @@ public class ViewHistoricalGraphController implements IController {
     @FXML private TextField longitude;
     @FXML private TextField radius;
     @FXML private LineChart graph;
-    @FXML private NumberAxis xAxis;
+    @FXML private CategoryAxis xAxis;
     @FXML private NumberAxis yAxis;
     private Location radiusCenter;
     private Double radiusSize;
@@ -98,14 +99,19 @@ public class ViewHistoricalGraphController implements IController {
         HistoricalReport report = new HistoricalReport(
                 radiusCenter, radiusSize, type, year);
         ArrayList<Double> list = report.getDataByMonth();
-        List<XYChart.Data<Double, Double>> seriesData = new ArrayList<>();
-        for (int i = 1; i < list.size() + 1; i++) {
-            seriesData.add(new XYChart.Data(i, list.get(i - 1)));
+        String[] months = {"Jan", "Feb", "Mar", "Apr", "May",
+            "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
+        List<XYChart.Data<String, Double>> seriesData = new ArrayList<>();
+        for (int i = 0; i < list.size() - 1; i++) {
+            System.out.println("months: "
+                    + months[i] + " list " + list.get(i));
+            seriesData.add(new XYChart.Data(months[i], list.get(i)));
         }
-        XYChart.Series<Double, Double> series
-                = new XYChart.Series<Double, Double>();
-        series.getData().addAll(seriesData);
 
+        XYChart.Series<String, Double> series
+                = new XYChart.Series<String, Double>();
+        series.getData().addAll(seriesData);
+        xAxis.setAnimated(false);
         graph.setData(FXCollections.observableArrayList(series));
         graph.setLegendVisible(false);
         if (type.equals("virusppm")) {
