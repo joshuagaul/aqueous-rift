@@ -343,7 +343,7 @@ public class CreateReportController implements IController {
                 count++;
             }
         }
-
+        System.out.println(count);
         return (count != 0);
     }
 
@@ -356,7 +356,6 @@ public class CreateReportController implements IController {
     private boolean correctDataType() {
         int count = 0;
 
-
         if (!isNumeric(longitude.getText())) {
             longitude.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -368,17 +367,18 @@ public class CreateReportController implements IController {
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
             count++;
         }
+        if (showConfirm.get()) {
+            if (!isNumeric(virus.getText())) {
+                virus.setStyle(
+                        "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
+            }
 
-        if (!isNumeric(virus.getText())) {
-            virus.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-            count++;
-        }
-
-        if (!isNumeric(contamination.getText())) {
-            contamination.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-            count++;
+            if (!isNumeric(contamination.getText())) {
+                contamination.setStyle(
+                        "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
+            }
         }
 
         return (count == 0);

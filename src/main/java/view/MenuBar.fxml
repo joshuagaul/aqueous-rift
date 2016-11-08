@@ -23,7 +23,7 @@
             <Menu fx:id="reports" mnemonicParsing="false">
               <items>
                 <MenuItem fx:id="viewAll" mnemonicParsing="false" onAction="#handleViewAllMenu" text="View All Reports" />
-                  <MenuItem mnemonicParsing="false" text="Check My Reports" />
+                  <MenuItem fx:id="viewMyReports" mnemonicParsing="false" onAction="#handleViewMyReportsMenu" text="View My Reports" />
                   <MenuItem fx:id="historicalGraph" mnemonicParsing="false" onAction="#handleViewGraph" text="View Historical Graph" />
               </items>
             </Menu>

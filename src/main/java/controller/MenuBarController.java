@@ -47,6 +47,9 @@ public class MenuBarController implements IController {
     private Menu reports;
 
     @FXML
+    private MenuItem viewMyReports;
+
+    @FXML
     private MenuItem historicalGraph;
 
     @FXML
@@ -84,6 +87,7 @@ public class MenuBarController implements IController {
         historicalGraph.visibleProperty().bind(isAuthorized);
         reports.setText("Reports");
         login.visibleProperty().bind(userLoggedIn.not());
+        viewMyReports.visibleProperty().bind(userLoggedIn);
         hello.textProperty().bind(username);
         userOptions.textProperty().bind(userType);
         Label loginLabel = new Label("Login");
@@ -151,6 +155,8 @@ public class MenuBarController implements IController {
             ViewAllReportsController.setLoggedIn(false);
             ViewAllReportsController.setAuthority(false);
             MenuBarController.setAuthority(false);
+            ViewMyReportsController.setAuthority(false);
+            ViewMyReportsController.setLoggedIn(false);
         }
     }
 
@@ -235,11 +241,19 @@ public class MenuBarController implements IController {
 
 
     /**
-     * Lets the user edit profile
+     * Lets the user  view all reports
      */
     @FXML
     private void handleViewAllMenu() {
         mainApplication.showViewAllReportsScreen();
+    }
+
+    /**
+     * Lets the user view reports user has submitted
+     */
+    @FXML
+    private void handleViewMyReportsMenu() {
+        mainApplication.showViewMyReportsScreen();
     }
 
 

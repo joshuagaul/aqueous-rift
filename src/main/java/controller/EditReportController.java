@@ -276,16 +276,19 @@ public class EditReportController implements IController {
             count++;
         }
 
-        if (!isNumeric(virus.getText())) {
-            virus.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-            count++;
-        }
+        if (showConfirm.get()) {
 
-        if (!isNumeric(contamination.getText())) {
-            contamination.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
-            count++;
+            if (!isNumeric(virus.getText())) {
+                virus.setStyle(
+                        "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
+            }
+
+            if (!isNumeric(contamination.getText())) {
+                contamination.setStyle(
+                        "-fx-border-color: red ; -fx-border-width: 2px ;");
+                count++;
+            }
         }
 
         return (count == 0);

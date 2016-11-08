@@ -6,6 +6,7 @@ import controller.EditReportController;
 import controller.EditProfileController;
 import controller.MainScreenController;
 import controller.MenuBarController;
+import controller.ViewMyReportsController;
 import javafx.scene.layout.AnchorPane;
 import model.ReportDataObject;
 import model.DataManager;
@@ -117,7 +118,6 @@ public class MainFXApplication extends Application {
                 mainScreenController = (MainScreenController) (controller);
             } else if (controller instanceof EditReportController) {
                 editReportControl = (EditReportController) (controller);
-                //TODO populate the edit info based on the report type
                 editReportControl.populateReportInformation(currentReport);
             }
         } catch (IOException e) {
@@ -194,6 +194,17 @@ public class MainFXApplication extends Application {
     }
 
     /**
+     * sets the screen to view all recents reports.
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
+    public void showViewMyReportsScreen() {
+        showScreen("view/ViewMyReports.fxml",
+                "ViewMyReports", "LEFT");
+    }
+
+
+    /**
      * sets the screen to editing an existing report
      *
      * @throws IOException throws an exception if fxml is not found.
@@ -244,14 +255,17 @@ public class MainFXApplication extends Application {
             CreateReportController.setAuthority(true);
             ViewAllReportsController.setAuthority(true);
             MenuBarController.setAuthority(true);
-
+            ViewMyReportsController.setAuthority(true);
         } else {
             MainScreenController.setAuthority(false);
             CreateReportController.setAuthority(false);
             ViewAllReportsController.setAuthority(false);
             MenuBarController.setAuthority(false);
+            ViewMyReportsController.setAuthority(false);
         }
         ViewAllReportsController.setLoggedIn(true);
+        ViewMyReportsController.setUsername(currentUsername);
+        ViewMyReportsController.setLoggedIn(true);
     }
 
     /**
