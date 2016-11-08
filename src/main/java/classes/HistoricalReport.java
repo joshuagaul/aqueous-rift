@@ -73,15 +73,6 @@ public class HistoricalReport {
         Double radiusSize, String type, String year) {
 
         ArrayList<Double> retList = new ArrayList<>(12);
-        //NOTE: adding to ArrayList at index < 0 || index > size()
-        // will throw and indexoutofbounds exception.
-        //I added this to temporarily initialize the list,
-        // but feel free to fix it if there's a better way.
-
-
-        for (int i = 0; i < 12; i++) {
-            retList.add(i, 0.0);
-        }
 
         Map<String, Double[]> monthDataMap = new HashMap<>();
 
@@ -131,16 +122,25 @@ public class HistoricalReport {
                 }
             }
         }
+        //Note: This will cause index out of bounds exception.
+        //        for (String month : monthDataMap.keySet()) {
+        //            double dataToAdd = monthDataMap.get(month) != null
+        //                    ? monthDataMap.get(month)[0] : 0;
+        //            retList.add(Integer.parseInt(month) - 1, dataToAdd);
+        //        }
 
-        for (String month : monthDataMap.keySet()) {
-            double dataToAdd = monthDataMap.get(month) != null 
-                ? monthDataMap.get(month)[0] : -1;
-
-            retList.add(Integer.parseInt(month) - 1, dataToAdd);
+        String[] monthStr = {"01", "02", "03", "04", "05", "06",
+            "07", "08", "09", "10", "11", "12"};
+        for (int i = 0; i < 12; i++) {
+            if (monthDataMap.get(monthStr[i]) != null) {
+                retList.add(i, monthDataMap.get(monthStr[i])[0]);
+            } else {
+                retList.add(i, 0.0);
+            }
         }
-        System.out.println(retList);
         return retList;
     }
+
 
     /**
      * Determines if distance between two locations is within the given radius

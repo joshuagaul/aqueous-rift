@@ -91,7 +91,6 @@ public class ViewHistoricalGraphController implements IController {
      * @param  radiusSize   Size of the radius to search for reports in
      * @param  type         virusPPM or contaminantPPM
      * @param  year         year to filter the reports on
-
      */
     @FXML
     private void updateChart(Location radiusCenter,
@@ -99,13 +98,10 @@ public class ViewHistoricalGraphController implements IController {
         HistoricalReport report = new HistoricalReport(
                 radiusCenter, radiusSize, type, year);
         ArrayList<Double> list = report.getDataByMonth();
-        list.remove(list.size() - 1);
-        list.remove(8);
         String[] months = {"Jan", "Feb", "Mar", "Apr", "May",
             "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
-
         List<XYChart.Data<String, Double>> seriesData = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < 12; i++) {
             seriesData.add(new XYChart.Data(months[i], list.get(i)));
             System.out.println(months[i] + " " + list.get(i));
         }
