@@ -256,6 +256,9 @@ public class MainFXApplication extends Application {
             ViewAllReportsController.setAuthority(true);
             MenuBarController.setAuthority(true);
             ViewMyReportsController.setAuthority(true);
+            if (currentUser.getUserType().equals("Manager")) {
+                MenuBarController.setManager(true);
+            }
         } else {
             MainScreenController.setAuthority(false);
             CreateReportController.setAuthority(false);

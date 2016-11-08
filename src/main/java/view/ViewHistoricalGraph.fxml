@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
@@ -18,22 +17,25 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <StackPane fx:id="pane" prefHeight="736.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewHistoricalGraphController">
    <children>
       <AnchorPane prefHeight="676.0" prefWidth="731.0">
          <children>
-            <LineChart layoutX="-8.0" layoutY="-4.0" minWidth="-Infinity" prefHeight="736.0" prefWidth="663.0">
+            <LineChart fx:id="graph" createSymbols="false" minWidth="-Infinity" prefHeight="736.0" prefWidth="632.0">
               <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                <NumberAxis prefHeight="0.0" prefWidth="530.0" side="BOTTOM" fx:id="xAxis" />
               </xAxis>
               <yAxis>
-                <NumberAxis />
+                <NumberAxis fx:id="yAxis" side="LEFT" />
               </yAxis>
+               <padding>
+                  <Insets bottom="80.0" left="20.0" right="40.0" top="40.0" />
+               </padding>
             </LineChart>
+            <Label layoutX="299.0" layoutY="690.0" text="Month" />
          </children>
       </AnchorPane>
-      <StackPane id="pane" fx:id="pane" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="400.0" stylesheets="@StyleSheet.css" StackPane.alignment="CENTER_RIGHT">
+      <StackPane id="pane" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="400.0" stylesheets="@StyleSheet.css" StackPane.alignment="CENTER_RIGHT">
          <children>
             <GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="738.0" prefWidth="400.0" vgap="10.0">
               <columnConstraints>
@@ -62,19 +64,21 @@
                      </font>
                   </Text>
                   <Label prefHeight="21.0" prefWidth="116.0" text="Location" GridPane.rowIndex="2" />
+                  <Label text="Year" GridPane.rowIndex="5" />
+                  <Label text="View by" GridPane.rowIndex="6" />
+                  <Label text="Radius" GridPane.rowIndex="4" />
                   <TextField fx:id="latitude" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="128.0" promptText="Latitude" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="longitude" prefHeight="31.0" prefWidth="269.0" promptText="Longitude" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Button id="button-primary" fx:id="ok" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="385.0" text="OK" GridPane.columnSpan="3" GridPane.rowIndex="10" />
-                  <Button id="button-secondary" fx:id="back" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="386.0" text="Back to Main" GridPane.columnSpan="3" GridPane.rowIndex="11" />
-                  <Label text="Year" GridPane.rowIndex="4" />
-                  <ComboBox fx:id="year" prefWidth="150.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <RadioButton fx:id="virusButton" mnemonicParsing="false" text="Virus" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                  <TextField fx:id="radius" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="yearList" prefWidth="150.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <RadioButton fx:id="virusButton" mnemonicParsing="false" text="Virus" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
                      <toggleGroup>
                         <ToggleGroup fx:id="viewBy" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="contaminantButton" mnemonicParsing="false" text="Contaminant" toggleGroup="$viewBy" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                  <Label text="View by" GridPane.rowIndex="5" />
+                  <RadioButton fx:id="contaminantButton" mnemonicParsing="false" text="Contaminant" toggleGroup="$viewBy" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                  <Button id="button-primary" fx:id="ok" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="385.0" text="OK" GridPane.columnSpan="3" GridPane.rowIndex="10" />
+                  <Button id="button-secondary" fx:id="back" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="48.0" prefWidth="386.0" text="Back to Main" GridPane.columnSpan="3" GridPane.rowIndex="11" />
                </children>
                <padding>
                   <Insets bottom="50.0" left="25.0" right="25.0" top="25.0" />

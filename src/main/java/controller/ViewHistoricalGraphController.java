@@ -1,13 +1,22 @@
 package controller;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import classes.HistoricalReport;
+import classes.Location;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import main.MainFXApplication;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 /**
@@ -15,16 +24,21 @@ import main.MainFXApplication;
  */
 public class ViewHistoricalGraphController implements IController {
     private MainFXApplication mainApplication;
-    private BooleanProperty viewByVirus
-            = new SimpleBooleanProperty(false);
-    private BooleanProperty viewByContaminant
-            = new SimpleBooleanProperty(false);
-    @FXML private ComboBox year = new ComboBox<>();
+    @FXML private ComboBox yearList = new ComboBox<>();
     @FXML private RadioButton virusButton;
     @FXML private RadioButton contaminantButton;
     @FXML private Button ok;
     @FXML private Button back;
-
+    @FXML private TextField latitude;
+    @FXML private TextField longitude;
+    @FXML private TextField radius;
+    @FXML private LineChart graph;
+    @FXML private NumberAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    private Location radiusCenter;
+    private Double radiusSize;
+    private String year;
+    private String type;
 
     /**
      * Initializes variable bindings and login handler
@@ -32,21 +46,7 @@ public class ViewHistoricalGraphController implements IController {
 
     @FXML
     private void initialize() {
-        viewByVirus.setValue(virusButton.isSelected());
-        viewByContaminant.setValue(contaminantButton.isSelected());
-        //initialize year combobox
-    }
-
-    /**
-     * switches the view of the graph.
-     */
-    @FXML
-    private void setView() {
-        if (virusButton.isSelected()) {
-            System.out.println("view graph by virus");
-        } else {
-            System.out.println("view graph by contaminant");
-        }
+        yearList.getItems().setAll("2016");
     }
 
     /**
@@ -67,11 +67,52 @@ public class ViewHistoricalGraphController implements IController {
     @FXML
     private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == ok) {
-            System.out.println("update the graph.");
-            //TODO update the graph
+            radiusCenter = new Location(
+                    latitude.getText(), longitude.getText());
+            radiusSize = Double.parseDouble(radius.getText());
+            if (contaminantButton.isSelected()) {
+                type = "contaminantppm";
+            } else {
+                type = "virusppm";
+            }
+            year = yearList.getValue().toString();
+            updateChart(radiusCenter, radiusSize, type, year);
         } else if (event.getSource() == back) {
             mainApplication.showMap();
             mainApplication.showMainScreen();
         }
+    }
+
+    /**
+     * This updates the chart based on information provided by user.
+     *
+     * @param  radiusCenter Center of the search for reports
+     * @param  radiusSize   Size of the radius to search for reports in
+     * @param  type         virusPPM or contaminantPPM
+     * @param  year         year to filter the reports on
+
+     */
+    @FXML
+    private void updateChart(Location radiusCenter,
+                             Double radiusSize, String type, String year) {
+        HistoricalReport report = new HistoricalReport(
+                radiusCenter, radiusSize, type, year);
+        ArrayList<Double> list = report.getDataByMonth();
+        List<XYChart.Data<Double, Double>> seriesData = new ArrayList<>();
+        for (int i = 1; i < list.size() + 1; i++) {
+            seriesData.add(new XYChart.Data(i, list.get(i - 1)));
+        }
+        XYChart.Series<Double, Double> series
+                = new XYChart.Series<Double, Double>();
+        series.getData().addAll(seriesData);
+
+        graph.setData(FXCollections.observableArrayList(series));
+        graph.setLegendVisible(false);
+        if (type.equals("virusppm")) {
+            yAxis.setLabel("Virus PPM");
+        } else {
+            yAxis.setLabel("Contaminant PPM");
+        }
+
     }
 }

@@ -77,6 +77,15 @@ public class HistoricalReport {
             Double.parseDouble(radiusCenter.getLongitude()), radiusSize / 69);
 
         ArrayList<Double> retList = new ArrayList<>(12);
+        //NOTE: adding to ArrayList at index < 0 || index > size()
+        // will throw and indexoutofbounds exception.
+        //I added this to temporarily initialize the list,
+        // but feel free to fix it if there's a better way.
+
+        for (int i = 0; i < 12; i++) {
+            retList.add(i, 0.0);
+        }
+
         Map<String, Double[]> monthDataMap = new HashMap<>();
 
         ReportDataObject rdo = ReportDataObject.getInstance();

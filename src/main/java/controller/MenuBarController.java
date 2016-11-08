@@ -27,6 +27,7 @@ import classes.User;
 public class MenuBarController implements IController {
 
     private BooleanProperty userLoggedIn = new SimpleBooleanProperty(false);
+    private static BooleanProperty isManager = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
     private StringProperty username = new SimpleStringProperty("Hello, Guest");
     private StringProperty userType
@@ -84,7 +85,7 @@ public class MenuBarController implements IController {
     private void initialize() {
         //Help is a static Menu
         userOptions.visibleProperty().bind(userLoggedIn);
-        historicalGraph.visibleProperty().bind(isAuthorized);
+        historicalGraph.visibleProperty().bind(isAuthorized.and(isManager));
         reports.setText("Reports");
         login.visibleProperty().bind(userLoggedIn.not());
         viewMyReports.visibleProperty().bind(userLoggedIn);
@@ -125,6 +126,15 @@ public class MenuBarController implements IController {
         isAuthorized.set(set);
     }
 
+    /**
+     * checks if the current user is a manager.
+     * This will allow only manager to view historical graph.
+     * @param set true if the user is a manager).
+     *            false if the user is guest, general user, worker, or admin.
+     */
+    public static void setManager(boolean set) {
+        isManager.set(set);
+    }
 
     /**
      * allow for calling back to the main application code if necessary
@@ -150,11 +160,12 @@ public class MenuBarController implements IController {
             mainApplication.setCurrentUsername("");
             username.set("Hello, Guest");
             userLoggedIn.set(false);
+            setAuthority(false);
+            setManager(false);
             MainScreenController.setAuthority(false);
             CreateReportController.setAuthority(false);
             ViewAllReportsController.setLoggedIn(false);
             ViewAllReportsController.setAuthority(false);
-            MenuBarController.setAuthority(false);
             ViewMyReportsController.setAuthority(false);
             ViewMyReportsController.setLoggedIn(false);
         }
