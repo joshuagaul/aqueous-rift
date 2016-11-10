@@ -1,7 +1,7 @@
 package controller;
 
-/**
- * Created by ahjin on 10/7/2016.
+/*
+  Created by ahjin on 10/7/2016.
  */
 
 import java.util.Date;
@@ -25,7 +25,7 @@ import classes.WaterPurityReport;
 import classes.OverallCondition;
 
 import main.MainFXApplication;
-import java.io.IOException;
+
 import java.util.Optional;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -136,11 +136,6 @@ public class CreateReportController implements IController {
         isAuthorized.set(set);
     }
 
-    /**
-      *Helper method to convert the current User type to a boolean property
-      *for binding. Checks if the User is a GeneralUser.
-      *@return BooleanProperty to bind to
-     */
     /*
 
     private BooleanProperty checkUser() {
@@ -150,12 +145,6 @@ public class CreateReportController implements IController {
     }
     */
 
-    /**
-     * Helper method to convert the current User type to a boolean property
-     * for binding. Checks if the user is an Admin.
-     *
-     * @return BooleanProperty to bind to
-     **/
     /*
     private BooleanProperty checkAdmin() {
         BooleanProperty res = new SimpleBooleanProperty();
@@ -163,12 +152,6 @@ public class CreateReportController implements IController {
         return res;
     }
     */
-    /**
-     * Helper method to convert the current User type to a boolean property
-     * for binding. Checks if the user is a Worker.
-     *
-     * @return BooleanProperty to bind to
-     */
     /*
     private BooleanProperty checkWorker() {
         BooleanProperty res = new SimpleBooleanProperty();
@@ -176,12 +159,6 @@ public class CreateReportController implements IController {
         return res;
     }
     */
-    /**
-     * Helper method to convert the current User type to a boolean property
-     * for binding. Checks if the user is a Manager.
-     *
-     * @return BooleanProperty to bind to
-     */
     /*
     private BooleanProperty checkManager() {
         BooleanProperty res = new SimpleBooleanProperty();
@@ -196,11 +173,10 @@ public class CreateReportController implements IController {
      * then update the information.
      * Clicking Cancel button will close the alert.
      *
-     * @throws IOException throws an exception if fxml file is not found.
      * @param event the button user clicks.
      */
     @FXML
-    private void handleButtonClicked(ActionEvent event) throws IOException {
+    private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
         } else if (event.getSource() == confirmButton) {
@@ -288,7 +264,7 @@ public class CreateReportController implements IController {
                     alert.setTitle("Report Submitted");
                     alert.setHeaderText("Your report has been submitted.");
                     Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.OK) {
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
                         mainApplication.showMap();
                         mainApplication.showMainScreen();
                     }
@@ -393,7 +369,7 @@ public class CreateReportController implements IController {
      * @param str string to be examined
      * @return whther it is of numeric
      */
-    public static boolean isNumeric(String str) {
+    private static boolean isNumeric(String str) {
         try {
             double d = Double.parseDouble(str);  
         } catch (NumberFormatException nfe) {  

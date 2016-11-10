@@ -48,15 +48,13 @@ public class RegisterController implements IController {
 
     @FXML
     private ComboBox<String> prefix;
-    //TODO I think this should be a dropdown menu
-
     @FXML
     private TextField email;
 
     @FXML
     private TextField pnumber;
     @FXML
-    private ComboBox<UserType> usertype = new ComboBox<UserType>();
+    private ComboBox<UserType> usertype = new ComboBox<>();
 
     /**
      * Initializes item (combobox)
@@ -127,7 +125,7 @@ public class RegisterController implements IController {
                         + " information is correct?\n"
                         + "Click \"OK\" to confirm.");
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) {
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     //TODO check & display error if userid or email
                     // is already in use.
                     String pre = prefix.getValue();

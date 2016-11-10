@@ -91,7 +91,7 @@ public class HistoricalReport {
                 Location l = wpr.getLocation();
 
                 if (withinRadius(radiusCenter, l)) {
-                    double data = 0;
+                    double data;
 
                     if (type.equalsIgnoreCase("virusppm")) {
                         data = wpr.getVirusPPM();
@@ -111,7 +111,7 @@ public class HistoricalReport {
                             monthData);
 
                     } else {
-                        data = (Double) ((monthData[0] * monthData[1]) + data)
+                        data = ((monthData[0] * monthData[1]) + data)
                             / (monthData[1] + 1);
                         monthData[0] = data;
                         monthData[1] = monthData[1] + 1;

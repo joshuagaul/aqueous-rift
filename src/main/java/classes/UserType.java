@@ -1,10 +1,6 @@
 package classes;
 
 /**
- * Created by Ahjin Noh on 9/15/2016.
- */
-
-/**
  * enum class of user types
  **/
 

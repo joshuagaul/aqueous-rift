@@ -8,7 +8,6 @@ import main.MainFXApplication;
  * Controller class for splash screen page.
  */
 public class SplashScreenController implements IController {
-    private MainFXApplication mainApplication;
     @FXML private StackPane pane;
 
 
@@ -18,7 +17,6 @@ public class SplashScreenController implements IController {
      * @param mainFXApplication mainFXApplication
      */
     public void setMainApp(MainFXApplication mainFXApplication) {
-        mainApplication = mainFXApplication;
     }
 
 }

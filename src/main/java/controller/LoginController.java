@@ -43,11 +43,10 @@ public class LoginController implements IController {
      * Clicking "Login" should check validity of info and count login attempts.
      * Cllicking "Cancel" will redirect to main screen.
      *
-     * @throws IOException throws an exception when fxml is not found.
      * @param event the button user clicks.
      */
     @FXML
-     private void handleButtonClicked(ActionEvent event) throws IOException {
+     private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
         } else if (event.getSource() == login) {
@@ -88,14 +87,14 @@ public class LoginController implements IController {
      * TODO keep track of 3 attempts log in
      */
     @FXML
-    protected boolean checkValid() {
+    private boolean checkValid() {
         String user = username.getText();
 
         if (userDAO.userExists(user)) {
             username.setStyle("-fx-border-width: 0px ;");
             User queriedUser = userDAO.getUser(user);
             System.out.println(queriedUser.getPassword());
-            String alertMessage = "";
+            String alertMessage;
 
             Alert wrongPasswordAlert = new Alert(Alert.AlertType.WARNING);
             wrongPasswordAlert.setTitle("Wrong Password");

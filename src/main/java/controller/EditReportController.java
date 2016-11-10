@@ -20,7 +20,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import main.MainFXApplication;
-import java.io.IOException;
+
 import java.util.Optional;
 import model.ReportDataObject;
 
@@ -94,11 +94,10 @@ public class EditReportController implements IController {
      * then update the information.
      * Clicking Cancel button will close the alert.
      *
-     * @throws IOException throws an exception if fxml file is not found.
      * @param event the button user clicks.
      */
     @FXML
-    private void handleButtonClicked(ActionEvent event) throws IOException {
+    private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
         } else if (event.getSource() == confirmButton) {
@@ -150,7 +149,7 @@ public class EditReportController implements IController {
                         + " update above information?\n"
                         + "Click \"OK\" to confirm.");
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) {
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     ReportDataObject reportDAO = ReportDataObject.getInstance();
                     WaterReport prevReportInfo =
                             mainApplication.getCurrentReport();
@@ -303,7 +302,7 @@ public class EditReportController implements IController {
      * @param str string to be examined
      * @return whther it is of numeric
      */
-    public static boolean isNumeric(String str) {
+    private static boolean isNumeric(String str) {
         try {
             double d = Double.parseDouble(str);  
         } catch (NumberFormatException nfe) {  

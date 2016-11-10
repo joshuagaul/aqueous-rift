@@ -6,8 +6,6 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.ButtonType;
-import javafx.scene.input.MouseEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -92,18 +90,13 @@ public class MenuBarController implements IController {
         hello.textProperty().bind(username);
         userOptions.textProperty().bind(userType);
         Label loginLabel = new Label("Login");
-        loginLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                mainApplication.showLoginScreen();
-            }
-        });
+        loginLabel.setOnMouseClicked(event ->
+                mainApplication.showLoginScreen());
         login.setGraphic(loginLabel);
         Label homeLabel = new Label("Home");
-        homeLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                mainApplication.showMap();
-                mainApplication.showMainScreen();
-            }
+        homeLabel.setOnMouseClicked(event -> {
+            mainApplication.showMap();
+            mainApplication.showMainScreen();
         });
         home.setGraphic(homeLabel);
 
@@ -153,7 +146,7 @@ public class MenuBarController implements IController {
         alert.setTitle("Confirm Logout");
         alert.setHeaderText("Are you sure you want to logout?");
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             mainApplication.showMap();
             mainApplication.showMainScreen();
             mainApplication.setCurrentUser(null);

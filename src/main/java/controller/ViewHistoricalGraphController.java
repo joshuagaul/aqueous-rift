@@ -18,11 +18,6 @@ import main.MainFXApplication;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-/**
- * Created by ahjin on 11/6/2016.
- */
 public class ViewHistoricalGraphController implements IController {
     private MainFXApplication mainApplication;
     @FXML private ComboBox yearList = new ComboBox<>();
@@ -36,10 +31,6 @@ public class ViewHistoricalGraphController implements IController {
     @FXML private LineChart graph;
     @FXML private CategoryAxis xAxis;
     @FXML private NumberAxis yAxis;
-    private Location radiusCenter;
-    private Double radiusSize;
-    private String year;
-    private String type;
 
     /**
      * Initializes variable bindings and login handler
@@ -68,15 +59,16 @@ public class ViewHistoricalGraphController implements IController {
     @FXML
     private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == ok) {
-            radiusCenter = new Location(
+            Location radiusCenter = new Location(
                     latitude.getText(), longitude.getText());
-            radiusSize = Double.parseDouble(radius.getText());
+            Double radiusSize = Double.parseDouble(radius.getText());
+            String type;
             if (contaminantButton.isSelected()) {
                 type = "contaminantppm";
             } else {
                 type = "virusppm";
             }
-            year = yearList.getValue().toString();
+            String year = yearList.getValue().toString();
             updateChart(radiusCenter, radiusSize, type, year);
         } else if (event.getSource() == back) {
             mainApplication.showMap();
@@ -107,7 +99,7 @@ public class ViewHistoricalGraphController implements IController {
         }
 
         XYChart.Series<String, Double> series
-                = new XYChart.Series<String, Double>();
+                = new XYChart.Series<>();
         series.getData().addAll(seriesData);
         xAxis.setAnimated(false);
         graph.setData(FXCollections.observableArrayList(series));

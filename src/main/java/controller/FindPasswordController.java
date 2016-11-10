@@ -1,17 +1,11 @@
 package controller;
 
-/**
- * Created by AhJin Noh on 9/19/2016.
- * THIS IS AN EXTRA PAGE.
- **/
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import main.MainFXApplication;
-import java.io.IOException;
 
 /**
  * Controller class for finding password page.
@@ -41,12 +35,11 @@ public class FindPasswordController implements IController {
      * //TODO password will be displayed or emailed?
      * Clicking Cancel button will redirect to the welcome page.
      *
-     * @throws IOException throws an exception if fxml file is not found.
      * @param event the button user clicks.
      */
 
     @FXML
-    private void handleButtonClicked(ActionEvent event) throws IOException {
+    private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == cancel) {
             mainApplication.showLoginScreen();
         } else if (event.getSource() == ok) {

@@ -23,7 +23,7 @@ public abstract class WaterReport {
      * @param  reporterId The username of the report creator.
      * @param  location The location that the water report comes from.
      */
-    public WaterReport(Date date, String reporterId, Location location) {
+    WaterReport(Date date, String reporterId, Location location) {
         this.date = date;
         this.reporterId.set(reporterId);
         this.location.set(location);
@@ -32,7 +32,7 @@ public abstract class WaterReport {
     /**
      * No args constructor for firebase
      */
-    public WaterReport() {
+    WaterReport() {
 
     }
 

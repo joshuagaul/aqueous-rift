@@ -34,8 +34,6 @@ public class MainScreenController implements IController {
             = new SimpleBooleanProperty(true);
     private static BooleanProperty isAuthorized
             = new SimpleBooleanProperty(false);
-    private static BooleanProperty isLoggedIn
-            = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
     @FXML private Text longitude;
     @FXML private Text latitude;
@@ -59,10 +57,6 @@ public class MainScreenController implements IController {
      */
     @FXML
     private void initialize() {
-        // WaterReport curReport = mainApplication.getCurrentReport();
-        // if (curReport != null && isLoggedIn.get()) {
-        //     isSourceReport.set(curReport instanceof WaterSourceReport);
-        // }
         delete.visibleProperty().bind(isAuthorized);
         update.visibleProperty().bind(isAuthorized);
         virus.visibleProperty().bind(isAuthorized.and(isSourceReport.not()));
@@ -121,7 +115,7 @@ public class MainScreenController implements IController {
                 alert.setHeaderText(
                         "Are you sure you want to delete this report?");
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) {
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     ReportDataObject reportDAO = ReportDataObject.getInstance();
                     WaterReport currentReport =
                             mainApplication.getCurrentReport();

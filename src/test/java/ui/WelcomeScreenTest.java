@@ -36,15 +36,13 @@ import main.MainFXApplication;
 //
 //
 
-public class WelcomeScreenTest {
-
-    private static GuiTest controller;
+class WelcomeScreenTest {
 
     @BeforeClass
     public static void setUpClass() throws InterruptedException {
         FXTestUtils.launchApp(MainFXApplication.class);
 
-        controller = new GuiTest() {
+        GuiTest controller = new GuiTest() {
             @Override
             protected Parent getRootNode() {
                 MainFXApplication appUnderTest = new MainFXApplication();

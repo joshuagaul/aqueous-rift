@@ -1,7 +1,5 @@
 package controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,11 +11,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 import main.MainFXApplication;
 import model.UserDataObject;
-import classes.UserType;
 import classes.User;
 import classes.Name;
 import java.util.Optional;
-import java.io.IOException;
 
 /**
  * Controller class for editing profile screen.
@@ -56,21 +52,13 @@ public class EditProfileController implements IController {
     @FXML
     private TextField pnumber;
 
-    @FXML
-    private ComboBox<UserType> usertype = new ComboBox<UserType>();
-
-    private final ObservableList<UserType> userType
-            = FXCollections.observableArrayList(
-            UserType.GeneralUser,
-            UserType.Manager,
-            UserType.Admin,
-            UserType.Worker);
 
     /**
      * Initializes choices in comboboxes
      */
     @FXML
     private void initialize() {
+        //noinspection unchecked
         prefix.getItems().setAll("Mr", "Ms", "Mrs");
     }
 
@@ -80,11 +68,10 @@ public class EditProfileController implements IController {
      * then update the information.
      * Clicking Cancel button will close the alert.
      *
-     * @throws IOException throws an exception if fxml file is not found.
      * @param event the button user clicks.
      */
     @FXML
-    private void handleButtonClicked(ActionEvent event) throws IOException {
+    private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == cancel) {
             mainApplication.showMainScreen();
         } else if (event.getSource() == ok) {
@@ -118,7 +105,7 @@ public class EditProfileController implements IController {
                         + " update above information?\n"
                         + "Click \"OK\" to confirm.");
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) {
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     UserDataObject userDAO = UserDataObject.getInstance();
                     User prevUserInfo = mainApplication.getCurrentUser();
                     String uId = prevUserInfo.getUserId();
@@ -203,6 +190,7 @@ public class EditProfileController implements IController {
     public void populateUserInformation(User user, String username) {
         this.username.setText(username);
 
+        //noinspection unchecked
         prefix.setValue(user.getName().getPrefix());
         fname.setText(user.getName().getFirstName());
         lname.setText(user.getName().getLastName());

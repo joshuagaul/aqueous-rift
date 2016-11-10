@@ -19,7 +19,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -29,9 +28,6 @@ import main.MainFXApplication;
 import model.ReportDataObject;
 import classes.WaterReport;
 
-/**
- * Created by ahjin on 10/17/2016.
- */
 public class ViewMyReportsController implements IController {
     private static StringProperty currentUsername
             = new SimpleStringProperty(null);
@@ -68,7 +64,6 @@ public class ViewMyReportsController implements IController {
     private ReportDataObject reportDAO;
     private ObservableList<WaterReport> obsList
             = FXCollections.observableArrayList();
-    private FilteredList<WaterReport> filteredList;
 
     /**
      * Loads report data
@@ -79,22 +74,22 @@ public class ViewMyReportsController implements IController {
         delete.visibleProperty().bind(isAuthorized);
         setReportView(false);
         user.setCellValueFactory(
-                new PropertyValueFactory<WaterReport, String>("reporterId"));
+                new PropertyValueFactory<>("reporterId"));
         location.setCellValueFactory(
-                new PropertyValueFactory<WaterReport, String>("location"));
+                new PropertyValueFactory<>("location"));
         date.setCellValueFactory(
-                new PropertyValueFactory<WaterReport, String>("date"));
+                new PropertyValueFactory<>("date"));
         type.setCellValueFactory(
-                new PropertyValueFactory<WaterReport, String>("type"));
+                new PropertyValueFactory<>("type"));
         condition.setCellValueFactory(
-                new PropertyValueFactory<WaterReport, String>("condition"));
+                new PropertyValueFactory<>("condition"));
         virus.setCellValueFactory(
-                new PropertyValueFactory<WaterReport, String>("virusPPM"));
+                new PropertyValueFactory<>("virusPPM"));
         contamination.setCellValueFactory(
-                new PropertyValueFactory<WaterReport, String>(
+                new PropertyValueFactory<>(
                         "contaminantPPM"));
         overallcondition.setCellValueFactory(
-                new PropertyValueFactory<WaterReport, String>(
+                new PropertyValueFactory<>(
                         "overallCondition"));
         switchViews();
     }
@@ -102,11 +97,10 @@ public class ViewMyReportsController implements IController {
     /**
      * Button handler for view reports page
      *
-     * @throws IOException throws an exception when fxml is not found.
      * @param event the button user clicks.
      */
     @FXML
-    private void handleButtonClicked(ActionEvent event) throws IOException {
+    private void handleButtonClicked(ActionEvent event)  {
         if (event.getSource() == back) {
             MapController.setAllPins("All");
             mainApplication.showMap();
@@ -136,7 +130,7 @@ public class ViewMyReportsController implements IController {
             alert.setHeaderText(
                     "Are you sure you want to delete this report?");
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
+            if (result.isPresent() && result.get() == ButtonType.OK) {
                 ReportDataObject reportDAO = ReportDataObject.getInstance();
                 WaterReport report =
                         reportView.getSelectionModel().getSelectedItem();
@@ -168,13 +162,10 @@ public class ViewMyReportsController implements IController {
                     condition);
         }
         obsList.addAll(parseReportList(reportDAO));
-        filteredList = new FilteredList<WaterReport>(obsList, p -> true);
-        filteredList.setPredicate(username -> {
-            if (username.getReporterId().contains(currentUsername.get())) {
-                return true;
-            }
-            return false;
-        });
+        FilteredList<WaterReport> filteredList
+                = new FilteredList<>(obsList, p -> true);
+        filteredList.setPredicate(username ->
+                username.getReporterId().contains(currentUsername.get()));
         reportView.setItems(filteredList);
         reportView.setColumnResizePolicy(
                 TableView.CONSTRAINED_RESIZE_POLICY);
@@ -187,10 +178,10 @@ public class ViewMyReportsController implements IController {
      */
     private List<WaterReport> parseReportList(ReportDataObject reportDAO) {
         if (showPurityReports.get()) {
-            return new ArrayList<WaterReport>(
+            return new ArrayList<>(
                     reportDAO.getAllPurityReports().values());
         } else {
-            return new ArrayList<WaterReport>(
+            return new ArrayList<>(
                     reportDAO.getAllSourceReports().values());
         }
     }
@@ -224,7 +215,7 @@ public class ViewMyReportsController implements IController {
      * switches the view by clicking the button.
      * @param set true if purity reports are shown.
      */
-    public static void setReportView(boolean set) {
+    private static void setReportView(boolean set) {
         showPurityReports.setValue(set);
     }
 
