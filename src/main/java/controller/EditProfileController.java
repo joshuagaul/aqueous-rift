@@ -110,8 +110,8 @@ public class EditProfileController implements IController {
                     User prevUserInfo = mainApplication.getCurrentUser();
                     String uId = prevUserInfo.getUserId();
                     String userType = prevUserInfo.getUserType();
-                    Name name = new Name(firstName.getText(), lname.getText(),
-                            prefix.getValue().toString());
+                    Name name = new Name(firstName.getText(),
+                        lastName.getText(), prefix.getValue().toString());
                     User editedUser = new User(newPassword.getText(),
                             email.getText(), pNumber.getText(),
                             uId, name, userType);
