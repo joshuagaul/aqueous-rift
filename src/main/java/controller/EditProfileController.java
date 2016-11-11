@@ -38,10 +38,10 @@ public class EditProfileController implements IController {
     private PasswordField confirmPassword;
 
     @FXML
-    private TextField fname;
+    private TextField firstName;
 
     @FXML
-    private TextField lname;
+    private TextField lastName;
 
     @FXML
     private ComboBox prefix;
@@ -50,11 +50,11 @@ public class EditProfileController implements IController {
     private TextField email;
 
     @FXML
-    private TextField pnumber;
+    private TextField pNumber;
 
 
     /**
-     * Initializes choices in comboboxes
+     * Initializes choices in comboBoxes
      */
     @FXML
     private void initialize() {
@@ -89,8 +89,8 @@ public class EditProfileController implements IController {
                 passAlert.setHeaderText("Your confirmed password "
                         + "doesn't match the new password field!!");
 
-                fname.setStyle("-fx-border-width: 0px ;");
-                lname.setStyle("-fx-border-width: 0px ;");
+                firstName.setStyle("-fx-border-width: 0px ;");
+                lastName.setStyle("-fx-border-width: 0px ;");
                 email.setStyle("-fx-border-width: 0px ;");
                 newPassword.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -110,10 +110,10 @@ public class EditProfileController implements IController {
                     User prevUserInfo = mainApplication.getCurrentUser();
                     String uId = prevUserInfo.getUserId();
                     String userType = prevUserInfo.getUserType();
-                    Name name = new Name(fname.getText(), lname.getText(),
+                    Name name = new Name(firstName.getText(), lname.getText(),
                             prefix.getValue().toString());
                     User editedUser = new User(newPassword.getText(),
-                            email.getText(), pnumber.getText(),
+                            email.getText(), pNumber.getText(),
                             uId, name, userType);
                     userDAO.editSingleUser(editedUser, username.getText());
                     mainApplication.showMainScreen();
@@ -145,20 +145,20 @@ public class EditProfileController implements IController {
             confirmPassword.setStyle("-fx-border-width: 0px ;");
         }
 
-        if (fname.getText().length() == 0) {
-            fname.setStyle(
+        if (firstName.getText().length() == 0) {
+            firstName.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
             emptyFields++;
         } else {
-            fname.setStyle("-fx-border-width: 0px ;");
+            firstName.setStyle("-fx-border-width: 0px ;");
         }
 
-        if (lname.getText().length() == 0) {
-            lname.setStyle(
+        if (lastName.getText().length() == 0) {
+            lastName.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
             emptyFields++;
         } else {
-            lname.setStyle("-fx-border-width: 0px ;");
+            lastName.setStyle("-fx-border-width: 0px ;");
         }
 
 
@@ -170,12 +170,12 @@ public class EditProfileController implements IController {
             email.setStyle("-fx-border-width: 0px ;");
         }
 
-        if (pnumber.getText().length() == 0) {
-            pnumber.setStyle(
+        if (pNumber.getText().length() == 0) {
+            pNumber.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
             emptyFields++;
         } else {
-            pnumber.setStyle("-fx-border-width: 0px ;");
+            pNumber.setStyle("-fx-border-width: 0px ;");
         }
 
         return (emptyFields != 0);
@@ -192,10 +192,10 @@ public class EditProfileController implements IController {
 
         //noinspection unchecked
         prefix.setValue(user.getName().getPrefix());
-        fname.setText(user.getName().getFirstName());
-        lname.setText(user.getName().getLastName());
+        firstName.setText(user.getName().getFirstName());
+        lastName.setText(user.getName().getLastName());
         email.setText(user.getEmail());
-        pnumber.setText(user.getPhoneNum());
+        pNumber.setText(user.getPhoneNum());
         newPassword.setText(user.getPassword());
         confirmPassword.setText(user.getPassword());
     }

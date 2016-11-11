@@ -20,7 +20,7 @@ public class FindPasswordController implements IController {
     private TextField username;
 
     @FXML
-    private TextField lname;
+    private TextField lastName;
 
     @FXML
     private TextField email;

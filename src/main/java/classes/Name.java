@@ -28,7 +28,7 @@ public class Name {
     }
 
     /**
-     * No Args constructor for firebase
+     * No Args constructor for fire-base
      */
     public Name() {
 

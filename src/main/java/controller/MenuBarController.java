@@ -111,7 +111,7 @@ public class MenuBarController implements IController {
     }
 
     /**
-     * shows menuitems based on the usertypes
+     * shows menu items based on the user types
      * @param set true if the user is authorized (worker, admin, manager).
      *            false if the user is not logged in or a general user.
      */

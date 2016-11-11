@@ -59,13 +59,13 @@
                        GridPane.rowIndex="4"/>
         <ComboBox fx:id="prefix" prefHeight="31.0" prefWidth="111.0" GridPane.columnIndex="1" GridPane.columnSpan="2"
                   GridPane.rowIndex="5"/>
-        <TextField fx:id="fname" prefHeight="31.0" prefWidth="154.0" text="//auto generated" GridPane.columnIndex="1"
+        <TextField fx:id="firstName" prefHeight="31.0" prefWidth="154.0" text="//auto generated" GridPane.columnIndex="1"
                    GridPane.columnSpan="2" GridPane.rowIndex="6"/>
-        <TextField fx:id="lname" text="//auto generated" GridPane.columnIndex="1" GridPane.columnSpan="2"
+        <TextField fx:id="lastName" text="//auto generated" GridPane.columnIndex="1" GridPane.columnSpan="2"
                    GridPane.rowIndex="7"/>
         <TextField fx:id="email" prefHeight="31.0" prefWidth="266.0" text="//auto generated" GridPane.columnIndex="1"
                    GridPane.columnSpan="2" GridPane.rowIndex="8"/>
-        <TextField fx:id="pnumber" text="//auto generated" GridPane.columnIndex="1" GridPane.columnSpan="2"
+        <TextField fx:id="pNumber" text="//auto generated" GridPane.columnIndex="1" GridPane.columnSpan="2"
                    GridPane.rowIndex="9"/>
         <Button id="button-primary" fx:id="ok" mnemonicParsing="false" onAction="#handleButtonClicked"
                 prefHeight="48.0" prefWidth="414.0" text="OK" GridPane.columnSpan="3" GridPane.rowIndex="10"/>

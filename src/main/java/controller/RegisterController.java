@@ -41,10 +41,10 @@ public class RegisterController implements IController {
     private PasswordField confirmPassword;
 
     @FXML
-    private TextField fname;
+    private TextField firstName;
 
     @FXML
-    private TextField lname;
+    private TextField lastName;
 
     @FXML
     private ComboBox<String> prefix;
@@ -52,17 +52,17 @@ public class RegisterController implements IController {
     private TextField email;
 
     @FXML
-    private TextField pnumber;
+    private TextField pNumber;
     @FXML
-    private ComboBox<UserType> usertype = new ComboBox<>();
+    private ComboBox<UserType> userType = new ComboBox<>();
 
     /**
-     * Initializes item (combobox)
+     * Initializes item (comboBox)
      */
     @FXML
     private void initialize() {
-        usertype.getItems().setAll(UserType.values());
-        usertype.setValue((UserType.GeneralUser));
+        userType.getItems().setAll(UserType.values());
+        userType.setValue((UserType.GeneralUser));
         prefix.getItems().setAll("Mr", "Ms", "Mrs");
     }
 
@@ -88,20 +88,21 @@ public class RegisterController implements IController {
                 emptyAlert.showAndWait();
             } else if (!password.getText().equals(
                     confirmPassword.getText())) {
-                Alert passAlert = new Alert(Alert.AlertType.WARNING);
-                passAlert.setTitle("Password");
-                passAlert.setHeaderText("Your confirmed password "
-                        + "doesn't match the new password field!!");
+                Alert passwordAlert = new Alert(Alert.AlertType.WARNING);
 
-                fname.setStyle("-fx-border-width: 0px ;");
-                lname.setStyle("-fx-border-width: 0px ;");
+                passwordAlert.setTitle("Password");
+                passwordAlert.setHeaderText("Your confirmed password "
+                        + "doesn't match the new password field.");
+
+                firstName.setStyle("-fx-border-width: 0px ;");
+                lastName.setStyle("-fx-border-width: 0px ;");
                 email.setStyle("-fx-border-width: 0px ;");
                 password.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
                 confirmPassword.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
 
-                passAlert.showAndWait();
+                passwordAlert.showAndWait();
             } else if (userDAO.userExists(username.getText())) {
                 Alert takenAlert = new Alert(Alert.AlertType.WARNING);
                 takenAlert.setTitle("Password");
@@ -111,8 +112,8 @@ public class RegisterController implements IController {
                 
                 password.setStyle("-fx-border-width: 0px ;");
                 confirmPassword.setStyle("-fx-border-width: 0px ;");
-                fname.setStyle("-fx-border-width: 0px ;");
-                lname.setStyle("-fx-border-width: 0px ;");
+                firstName.setStyle("-fx-border-width: 0px ;");
+                lastName.setStyle("-fx-border-width: 0px ;");
                 email.setStyle("-fx-border-width: 0px ;");
                 username.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -126,18 +127,18 @@ public class RegisterController implements IController {
                         + "Click \"OK\" to confirm.");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    //TODO check & display error if userid or email
+                    //TODO check & display error if userID or email
                     // is already in use.
                     String pre = prefix.getValue();
                     if (pre == null) {
                         pre = "";
                     }
-                    Name name = new Name(fname.getText(), lname.getText(),
-                            pre);
+                    Name name = new Name(firstName.getText(),
+                            lastName.getText(), pre);
                     User testUser = new User(password.getText(),
                             email.getText(),
-                            pnumber.getText(), "4", name,
-                            usertype.getValue().toString());
+                            pNumber.getText(), "4", name,
+                            userType.getValue().toString());
                     UserDataObject userDAO = UserDataObject.getInstance();
                     userDAO.addSingleUser(testUser, username.getText());
                     mainApplication.showLoginScreen();
@@ -167,30 +168,30 @@ public class RegisterController implements IController {
         }
 
         if (password.getText().length() == 0) {
+            confirmPassword.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
             password.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
             emptyFields++;
-            confirmPassword.setStyle(
-                    "-fx-border-color: red ; -fx-border-width: 2px ;");
         } else {
             password.setStyle("-fx-border-width: 0px ;");
             confirmPassword.setStyle("-fx-border-width: 0px ;");
         }
 
-        if (fname.getText().length() == 0) {
-            fname.setStyle(
+        if (firstName.getText().length() == 0) {
+            firstName.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
             emptyFields++;
         } else {
-            fname.setStyle("-fx-border-width: 0px ;");
+            firstName.setStyle("-fx-border-width: 0px ;");
         }
 
-        if (lname.getText().length() == 0) {
-            lname.setStyle(
+        if (lastName.getText().length() == 0) {
+            lastName.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
             emptyFields++;
         } else {
-            lname.setStyle("-fx-border-width: 0px ;");
+            lastName.setStyle("-fx-border-width: 0px ;");
         }
 
 
@@ -202,12 +203,12 @@ public class RegisterController implements IController {
             email.setStyle("-fx-border-width: 0px ;");
         }
 
-        if (pnumber.getText().length() == 0) {
-            pnumber.setStyle(
+        if (pNumber.getText().length() == 0) {
+            pNumber.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
             emptyFields++;
         } else {
-            pnumber.setStyle("-fx-border-width: 0px ;");
+            pNumber.setStyle("-fx-border-width: 0px ;");
         }
 
         return (emptyFields != 0);

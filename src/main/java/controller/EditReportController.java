@@ -56,7 +56,7 @@ public class EditReportController implements IController {
     @FXML private Button cancel;
 
     /**
-     * Initializes items (combobox's)
+     * Initializes items (comboBox's)
      */
     @FXML
     private void initialize() {
@@ -300,7 +300,7 @@ public class EditReportController implements IController {
      * is populated with a numeric string
      *
      * @param str string to be examined
-     * @return whther it is of numeric
+     * @return true if it's numeric
      */
     private static boolean isNumeric(String str) {
         try {

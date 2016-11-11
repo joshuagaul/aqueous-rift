@@ -151,7 +151,7 @@ public class ReportDataObject {
     }
 
     /**
-     * Adds a source report to the firebase database
+     * Adds a source report to the fire-base database
      * @param  reportToAdd - report instance to add
      */
     public void addSourceReport(WaterSourceReport reportToAdd) {
@@ -162,7 +162,7 @@ public class ReportDataObject {
     }
 
     /**
-     * Adds a purity report to the firebase database
+     * Adds a purity report to the fire-base database
      * @param  reportToAdd - report instance to add
      */
     public void addPurityReport(WaterPurityReport reportToAdd) {
@@ -186,7 +186,7 @@ public class ReportDataObject {
     }
 
     /**
-     * Deletes a source report from the firebase database
+     * Deletes a source report from the fire-base database
      * @param  reportId ID of the report to delete.
      */
     public void deleteSourceReport(String reportId) {
@@ -197,7 +197,7 @@ public class ReportDataObject {
     }
 
     /**
-     * Deletes a purity report from the firebase database
+     * Deletes a purity report from the fire-base database
      * @param  reportId ID of the report to delete.
      */
     public void deletePurityReport(String reportId) {
@@ -261,7 +261,7 @@ public class ReportDataObject {
     /**
      * Returns all saved WaterPurityReport objects.
      *
-     * @return     A map mapping String reportId and WaterpurityReport
+     * @return     A map mapping String reportId and WaterPurityReport
      */
     public Map<String, WaterPurityReport> getAllPurityReports() {
         return purityReportMap;

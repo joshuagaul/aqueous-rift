@@ -41,7 +41,7 @@ public class LoginController implements IController {
     /**
      * Button handler for login page.
      * Clicking "Login" should check validity of info and count login attempts.
-     * Cllicking "Cancel" will redirect to main screen.
+     * Clicking "Cancel" will redirect to main screen.
      *
      * @param event the button user clicks.
      */
@@ -131,12 +131,12 @@ public class LoginController implements IController {
             username.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
 
-            Alert doesntExistAlert = new Alert(Alert.AlertType.WARNING);
-            doesntExistAlert.setTitle("Wrong Username");
-            doesntExistAlert.setHeaderText("This user doesn't exist.\n"
+            Alert doesNotExistAlert = new Alert(Alert.AlertType.WARNING);
+            doesNotExistAlert.setTitle("Wrong Username");
+            doesNotExistAlert.setHeaderText("This user doesn't exist.\n"
                 + "Please enter a valid username.");
 
-            doesntExistAlert.showAndWait();
+            doesNotExistAlert.showAndWait();
 
 
             return false;

@@ -1,7 +1,7 @@
 package controller;
 
 /*
-  Created by ahjin on 10/7/2016.
+  Created by AhJin on 10/7/2016.
  */
 
 import java.util.Date;
@@ -100,11 +100,11 @@ public class CreateReportController implements IController {
     private Label overallConditionLabel;
 
     /**
-     * Initializes items (combobox's)
+     * Initializes items (comboBox's)
      */
     @FXML
     private void initialize() {
-        //Populate static combobox data
+        //Populate static comboBox data
         waterType.getItems().setAll(WaterType.values());
         waterType.visibleProperty().bind(showConfirm.not());
         typeLabel.visibleProperty().bind(showConfirm.not());
@@ -128,7 +128,7 @@ public class CreateReportController implements IController {
     }
 
     /**
-     * set the visibility of the textfields based on the user type.
+     * set the visibility of the text fields based on the user type.
      * @param set true if the user is authorized (worker, admin, manager).
      *            false if the user is not logged in or a general user.
      */
@@ -367,7 +367,7 @@ public class CreateReportController implements IController {
      * is populated with a numeric string
      *
      * @param str string to be examined
-     * @return whther it is of numeric
+     * @return true if it is numeric
      */
     private static boolean isNumeric(String str) {
         try {
