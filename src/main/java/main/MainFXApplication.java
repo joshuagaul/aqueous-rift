@@ -6,6 +6,7 @@ import controller.EditReportController;
 import controller.EditProfileController;
 import controller.MainScreenController;
 import controller.MenuBarController;
+import controller.MapController;
 import controller.ViewMyReportsController;
 import javafx.scene.layout.AnchorPane;
 import model.ReportDataObject;
@@ -25,18 +26,23 @@ import classes.WaterReport;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.lynden.gmapsfx.javascript.object.LatLong;
 
 /**
- * Runs the main application and and switches the pages.
+ * Runs the main application and routes the views.
  **/
 public class MainFXApplication extends Application {
     private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private static User currentUser;
     private static String currentUsername;
     private static WaterReport currentReport;
-    private static MenuBarController menuBarController;
-    private static MainScreenController mainScreenController;
+    private static LatLong mapCenter;
+    private static MenuBarController menuBarControl;
+    private static MainScreenController mainScreenControl;
     private static EditReportController editReportControl;
+    private static CreateReportController createReportControl;
+    private static MapController mapControl;
+
 
     //the main container for the application window
     private Stage mainScreen;
@@ -73,8 +79,8 @@ public class MainFXApplication extends Application {
             loader.setLocation(MainFXApplication.class.
                     getClassLoader().getResource("view/MenuBar.fxml"));
             rootLayout = loader.load();
-            menuBarController = loader.getController();
-            menuBarController.setMainApp(this);
+            menuBarControl = loader.getController();
+            menuBarControl.setMainApp(this);
             mainScreen.setTitle("Aqueous Rift");
             Scene scene = new Scene(rootLayout);
             mainScreen.setScene(scene);
@@ -115,10 +121,19 @@ public class MainFXApplication extends Application {
                 EditProfileController c = (EditProfileController) (controller);
                 c.populateUserInformation(currentUser, currentUsername);
             } else if (controller instanceof MainScreenController) {
-                mainScreenController = (MainScreenController) (controller);
+                mainScreenControl = (MainScreenController) (controller);
             } else if (controller instanceof EditReportController) {
                 editReportControl = (EditReportController) (controller);
                 editReportControl.populateReportInformation(currentReport);
+            } else if (controller instanceof CreateReportController) {
+                createReportControl = (CreateReportController) (controller);
+                createReportControl.populateLocation(getMapCenter());
+            } else if (controller instanceof MapController) {
+                mapControl = (MapController) (controller);
+                mapCenter = mapControl.getCenter();
+                if (createReportControl != null) {
+                    createReportControl.populateLocation(mapCenter);
+                }
             }
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to find "
@@ -216,7 +231,7 @@ public class MainFXApplication extends Application {
 
 
     /**
-     * sets the screen to view all recents reports.
+     * sets the screen to view the map.
      *
      * @throws IOException throws an exception if fxml is not found.
      */
@@ -241,7 +256,7 @@ public class MainFXApplication extends Application {
      * which would be even worse.
      */
     public void updateMenuBar() {
-        menuBarController.userLogsIn(currentUser);
+        menuBarControl.userLogsIn(currentUser);
     }
 
     /**
@@ -304,6 +319,52 @@ public class MainFXApplication extends Application {
     }
 
     /**
+     * Gets the current center of map in the application.
+     * @return Current center of map
+     */
+    public LatLong getMapCenter() {
+        return mapCenter;
+    }
+
+    /**
+     * Sets the current center of map in the application.
+     * @param center Current center of map current
+     */
+    public void setMapCenter(LatLong center) {
+        mapCenter = center;
+        if (createReportControl != null) {
+            createReportControl.populateLocation(center);
+        }
+        if (editReportControl != null) {
+            editReportControl.populateLocation(center);
+        }
+    }
+
+    /**
+     * Updates the LatLong of the application by only changing latitude.
+     * @param newLat New Latitude of the map.
+     */
+    public void changeCenterLatitude(Double newLat) {
+        if (newLat != null && mapCenter != null) {
+            mapCenter = new LatLong(newLat, mapCenter.getLongitude());
+            createReportControl.populateLocation(mapCenter);
+            mapControl.changeCenterView(mapCenter);
+        }
+    }
+
+    /**
+     * Updates the LatLong of the application by only changing longitude.
+     * @param newLong New Longitude of the map.
+     */
+    public void changeCenterLongitude(Double newLong) {
+        if (newLong != null && mapCenter != null) {
+            mapCenter = new LatLong(mapCenter.getLatitude(), newLong);
+            createReportControl.populateLocation(mapCenter);
+            mapControl.changeCenterView(mapCenter);
+        }
+    }
+
+    /**
      * Gets the report that is currently being viewed in the application.
      * @return currentReport
      */
@@ -317,7 +378,7 @@ public class MainFXApplication extends Application {
      */
     public void setCurrentReport(WaterReport report) {
         currentReport = report;
-        mainScreenController.setCurrentReport(report);
+        mainScreenControl.setCurrentReport(report);
         if (editReportControl != null) {
             editReportControl.populateReportInformation(currentReport);
         }

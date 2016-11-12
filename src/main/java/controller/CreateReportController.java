@@ -5,7 +5,6 @@ package controller;
  */
 
 import java.util.Date;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
@@ -15,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-
 import classes.WaterCondition;
 import classes.WaterType;
 import classes.UserType;
@@ -23,19 +21,18 @@ import classes.Location;
 import classes.WaterSourceReport;
 import classes.WaterPurityReport;
 import classes.OverallCondition;
-
 import main.MainFXApplication;
-
 import java.util.Optional;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import model.ReportDataObject;
+import com.lynden.gmapsfx.javascript.object.LatLong;
 
 /**
  * Controller class for reporting a water source
- *
  */
 public class CreateReportController implements IController {
 
@@ -48,59 +45,27 @@ public class CreateReportController implements IController {
     private ObjectProperty<UserType> userType = new SimpleObjectProperty<>();
     private MainFXApplication mainApplication;
 
-    @FXML
-    private ComboBox<WaterType> waterType = new ComboBox<>();
-
-    @FXML
-    private ComboBox<WaterCondition> waterCondition = new ComboBox<>();
-
-    @FXML
-    private ComboBox<OverallCondition> overallCondition = new ComboBox<>();
-
-    @FXML
-    private TextField longitude;
-
-    @FXML
-    private TextField latitude;
-
-    @FXML
-    private Label typeLabel;
-
-    @FXML
-    private Label conditionLabel;
-
-    @FXML
-    private TextField virus;
-
-    @FXML
-    private TextField contamination;
-
-    @FXML
-    private Text ppm1;
-
-    @FXML
-    private Text ppm2;
-
-    @FXML
-    private Label virusLabel;
-
-    @FXML
-    private Label contaminationLabel;
-
-    @FXML
-    private Button confirmButton;
-
-    @FXML
-    private Button submit;
-
-    @FXML
-    private Button cancel;
-
-    @FXML
-    private Label overallConditionLabel;
+    @FXML private ComboBox<WaterType> waterType = new ComboBox<>();
+    @FXML private ComboBox<WaterCondition> waterCondition = new ComboBox<>();
+    @FXML private ComboBox<OverallCondition> overallCondition =
+        new ComboBox<>();
+    @FXML private TextField longitude;
+    @FXML private TextField latitude;
+    @FXML private Label typeLabel;
+    @FXML private Label conditionLabel;
+    @FXML private TextField virus;
+    @FXML private TextField contamination;
+    @FXML private Text ppm1;
+    @FXML private Text ppm2;
+    @FXML private Label virusLabel;
+    @FXML private Label contaminationLabel;
+    @FXML private Button confirmButton;
+    @FXML private Button submit;
+    @FXML private Button cancel;
+    @FXML private Label overallConditionLabel;
 
     /**
-     * Initializes items (comboBox's)
+     * Initializes items (comboBox's) and bindings.
      */
     @FXML
     private void initialize() {
@@ -125,6 +90,14 @@ public class CreateReportController implements IController {
         overallConditionLabel.visibleProperty().bind(
                 isAuthorized.and(showConfirm));
         confirmButton.visibleProperty().bind(isAuthorized);
+        longitude.focusedProperty()
+            .addListener((observable, oldVal, newVal) -> {
+                handleLongitudeChange(observable);
+            });
+        latitude.focusedProperty()
+            .addListener((observable, oldVal, newVal) -> {
+                handleLatitudeChange(observable);
+            });
     }
 
     /**
@@ -136,36 +109,42 @@ public class CreateReportController implements IController {
         isAuthorized.set(set);
     }
 
-    /*
+    /**
+     * Endpoint for mainApplication to update the report's center location text.
+     * @param center latitude and longitude of the center.
+     */
+    public void populateLocation(LatLong center) {
+        if (center != null) {
+            latitude.setText(String.valueOf(center.getLatitude()));
+            longitude.setText(String.valueOf(center.getLongitude()));
+        }
+    }
 
-    private BooleanProperty checkUser() {
-        BooleanProperty res = new SimpleBooleanProperty();
-        res.setValue(userType.get().equals(UserType.GeneralUser));
-        return res;
+    /**
+     * Event listener for latitude text box change.
+     * @param focused if the text field is focsed or not.
+     */
+    @FXML
+    private void handleLatitudeChange(ObservableValue focused) {
+        Boolean isFocused = (Boolean) (focused.getValue());
+        if (!isFocused.booleanValue() && latitude.getText().length() > 0) {
+            Double newLat = Double.parseDouble(latitude.getText());
+            mainApplication.changeCenterLatitude(newLat);
+        }
     }
-    */
 
-    /*
-    private BooleanProperty checkAdmin() {
-        BooleanProperty res = new SimpleBooleanProperty();
-        res.setValue(userType.get().equals("Admin"));
-        return res;
+    /**
+     * Event listener for longitude text box change.
+     * @param focused if the text field is focsed or not.
+     */
+    @FXML
+    private void handleLongitudeChange(ObservableValue focused) {
+        Boolean isFocused = (Boolean) (focused.getValue());
+        if (!isFocused.booleanValue() && longitude.getText().length() > 0) {
+            Double newLong = Double.parseDouble(longitude.getText());
+            mainApplication.changeCenterLongitude(newLong);
+        }
     }
-    */
-    /*
-    private BooleanProperty checkWorker() {
-        BooleanProperty res = new SimpleBooleanProperty();
-        res.setValue(userType.get().equals("Worker"));
-        return res;
-    }
-    */
-    /*
-    private BooleanProperty checkManager() {
-        BooleanProperty res = new SimpleBooleanProperty();
-        res.setValue(userType.get().equals("Manager"));
-        return res;
-    }
-    */
 
     /**
      * Button handler for editing profile page.
@@ -210,7 +189,7 @@ public class CreateReportController implements IController {
                 "-fx-border-width: 0px ;");
             overallCondition.setStyle(
                 "-fx-border-width: 0px ;");
-            
+
             ReportDataObject reportDAO = ReportDataObject.getInstance();
             String reporterId = mainApplication.getCurrentUsername();
             Location loc = new Location("0", "0");
@@ -280,7 +259,7 @@ public class CreateReportController implements IController {
      */
     private Boolean emptyFieldsExist() {
         int count = 0;
-        
+
         if (longitude.getText().length() == 0) {
             longitude.setStyle(
                     "-fx-border-color: red ; -fx-border-width: 2px ;");
@@ -323,7 +302,6 @@ public class CreateReportController implements IController {
         return (count != 0);
     }
 
-
     /**
      * Checks if all the fields are of the correct data type.
      *
@@ -360,8 +338,6 @@ public class CreateReportController implements IController {
         return (count == 0);
     }
 
-
-
     /**
      * helper method to see if a certain field
      * is populated with a numeric string
@@ -371,11 +347,11 @@ public class CreateReportController implements IController {
      */
     private static boolean isNumeric(String str) {
         try {
-            double d = Double.parseDouble(str);  
-        } catch (NumberFormatException nfe) {  
-            return false;  
+            double d = Double.parseDouble(str);
+        } catch (NumberFormatException nfe) {
+            return false;
         }
-        return true;  
+        return true;
     }
 
     /**
@@ -386,7 +362,6 @@ public class CreateReportController implements IController {
     public void setMainApp(MainFXApplication mainFXApplication) {
         mainApplication = mainFXApplication;
     }
-
 
     /**
      * Validates latitude and longitude values

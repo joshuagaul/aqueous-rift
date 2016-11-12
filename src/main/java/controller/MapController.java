@@ -4,6 +4,7 @@ import classes.WaterPurityReport;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
+import com.lynden.gmapsfx.javascript.event.MapStateEventType;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
@@ -22,17 +23,14 @@ import netscape.javascript.JSObject;
 public class MapController implements IController,
         MapComponentInitializedListener {
 
-
     private static StringProperty filterType = new SimpleStringProperty();
     private static StringProperty filterCondition = new SimpleStringProperty();
     private static StringProperty filterAll = new SimpleStringProperty();
+    private LatLong center;
     private InfoWindow opened = null;
-
-    @FXML
-    private GoogleMapView mapView;
-
     private GoogleMap map;
     private MainFXApplication mainApplication;
+    @FXML private GoogleMapView mapView;
 
     /**
      * Initializes the controller
@@ -45,9 +43,10 @@ public class MapController implements IController,
     @Override
     public void mapInitialized() {
 
-        //Set the initial properties of the map.
         MapOptions mapOptions = new MapOptions();
-        mapOptions.center(new LatLong(35, 120))
+        center = new LatLong(35, 120);
+        mainApplication.setMapCenter(center);
+        mapOptions.center(center)
                 //.mapType(MapTypeIdEnum.TERRAIN)
                 .overviewMapControl(false)
                 .panControl(false)
@@ -64,6 +63,10 @@ public class MapController implements IController,
             }
             opened = null;
         });
+        map.addStateEventHandler(MapStateEventType.drag, () -> {
+            center = map.getCenter();
+            mainApplication.setMapCenter(center);
+        });
 
         try {
             Thread.sleep(1000);
@@ -79,20 +82,22 @@ public class MapController implements IController,
                 putSourcePins(report);
             } else if (condition.equals(filterCondition.get())) {
                 putSourcePins(report);
-            } else if (filterAll.get() == null && filterCondition.get() == null
-                    && filterType.get() == null) {
+            } else if ((filterCondition.get() == null
+                    && filterType.get() == null)
+                    || filterAll.get().equals("All")) {
                 putSourcePins(report);
             }
         }
         for (WaterPurityReport report
                 : reportDAO.getAllPurityReports().values()) {
             String condition = report.getOverallCondition().toString();
+            //TODO New filter logic for purity reports as they do not have
+            //the same attributes
             if (condition.equals(filterCondition.get())) {
                 putPurePins(report);
-            } else if ("All".equals(filterAll.get())) {
-                putPurePins(report);
-            } else if (filterAll.get() == null && filterCondition.get() == null
-                    && filterType.get() == null) {
+            } else if ((filterCondition.get() == null
+                    && filterType.get() == null)
+                    || filterAll.get().equals("All")) {
                 putPurePins(report);
             }
         }
@@ -164,6 +169,23 @@ public class MapController implements IController,
                 opened = window;
             }
         );
+    }
+
+    /**
+     * Returns the center coordinates of the map.
+     * @return LatLong center object.
+     */
+    public LatLong getCenter() {
+        return center;
+    }
+
+    /**
+     * Updates the map with new center locations
+     * @param latlng New center coordinates from main Application.
+     */
+    public void changeCenterView(LatLong latlng) {
+        map.setCenter(latlng);
+        center = latlng;
     }
 
     /**

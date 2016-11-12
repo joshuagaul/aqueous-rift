@@ -10,6 +10,7 @@ import classes.WaterReport;
 import classes.OverallCondition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
@@ -20,13 +21,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import main.MainFXApplication;
-
 import java.util.Optional;
 import model.ReportDataObject;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+
 
 /**
  * Controller class for reporting a water source
- *
  */
 public class EditReportController implements IController {
 
@@ -86,6 +87,51 @@ public class EditReportController implements IController {
         conditionLabel.visibleProperty().bind(
                 isSourceReport.and(showConfirm.not()));
         confirmButton.visibleProperty().bind(isSourceReport);
+        longitude.focusedProperty()
+            .addListener((observable, oldVal, newVal) -> {
+                handleLongitudeChange(observable);
+            });
+        latitude.focusedProperty()
+            .addListener((observable, oldVal, newVal) -> {
+                handleLatitudeChange(observable);
+            });
+    }
+
+    /**
+     * Endpoint for mainApplication to update the report's center location text.
+     * @param center latitude and longitude of the center.
+     */
+    public void populateLocation(LatLong center) {
+        if (center != null) {
+            latitude.setText(String.valueOf(center.getLatitude()));
+            longitude.setText(String.valueOf(center.getLongitude()));
+        }
+    }
+
+    /**
+     * Event listener for latitude text box change.
+     * @param focused if the text field is focsed or not.
+     */
+    @FXML
+    private void handleLatitudeChange(ObservableValue focused) {
+        Boolean isFocused = (Boolean) (focused.getValue());
+        if (!isFocused.booleanValue() && latitude.getText().length() > 0) {
+            Double newLat = Double.parseDouble(latitude.getText());
+            mainApplication.changeCenterLatitude(newLat);
+        }
+    }
+
+    /**
+     * Event listener for longitude text box change.
+     * @param focused if the text field is focsed or not.
+     */
+    @FXML
+    private void handleLongitudeChange(ObservableValue focused) {
+        Boolean isFocused = (Boolean) (focused.getValue());
+        if (!isFocused.booleanValue() && longitude.getText().length() > 0) {
+            Double newLong = Double.parseDouble(longitude.getText());
+            mainApplication.changeCenterLongitude(newLong);
+        }
     }
 
     /**
@@ -244,7 +290,7 @@ public class EditReportController implements IController {
      * @return whether it is true
      */
     private boolean correctDataType() {
-        
+
         latitude.setStyle(
                     "-fx-border-width: 0px ;");
         longitude.setStyle(
@@ -304,11 +350,11 @@ public class EditReportController implements IController {
      */
     private static boolean isNumeric(String str) {
         try {
-            double d = Double.parseDouble(str);  
-        } catch (NumberFormatException nfe) {  
-            return false;  
+            double d = Double.parseDouble(str);
+        } catch (NumberFormatException nfe) {
+            return false;
         }
-        return true;  
+        return true;
     }
 
     /**
