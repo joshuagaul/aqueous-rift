@@ -8,6 +8,9 @@ import controller.MainScreenController;
 import controller.MenuBarController;
 import controller.MapController;
 import controller.ViewMyReportsController;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.event.EventHandler;
 import javafx.scene.layout.AnchorPane;
 import model.ReportDataObject;
 import model.DataManager;
@@ -23,6 +26,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import classes.User;
 import classes.WaterReport;
+
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +47,7 @@ public class MainFXApplication extends Application {
     private static EditReportController editReportControl;
     private static CreateReportController createReportControl;
     private static MapController mapControl;
+    private boolean splashFinished = false;
 
 
     //the main container for the application window
@@ -53,9 +59,7 @@ public class MainFXApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
-        initRootLayout(mainScreen);
-        showMap();
-        showMainScreen();
+        showSplashPage();
     }
 
     /**
@@ -138,6 +142,47 @@ public class MainFXApplication extends Application {
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to find "
                 + "the fxml file for " + screenType);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * animated initial page
+     *
+     * @throws IOException throws an exception if fxml is not found.
+     */
+    public void showSplashPage() {
+        try {
+
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainFXApplication.class.
+                    getClassLoader().getResource("view/SplashScreen.fxml"));
+            Pane showPage = loader.load();
+            IController controller = loader.getController();
+            controller.setMainApp(this);
+            Scene scene = new Scene(showPage);
+            mainScreen.setScene(scene);
+            mainScreen.show();
+            mainScreen.setResizable(false);
+            mainScreen.sizeToScene();
+
+            FadeTransition transition = new FadeTransition(Duration.seconds(2.7), showPage);
+            transition.setFromValue(100);
+            transition.setToValue(0);
+            transition.setCycleCount(1);
+            transition.setOnFinished(new EventHandler<javafx.event.ActionEvent>() {
+                @Override
+                public void handle(javafx.event.ActionEvent event) {
+                    initRootLayout(mainScreen);
+                    showMap();
+                    showMainScreen();
+                }
+            });
+            transition.play();
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to find "
+                    + "the fxml file for Splash Screen");
             e.printStackTrace();
         }
     }

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Text?>
 
-<StackPane fx:id="pane" prefHeight="736.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/8.0.60"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SplashScreenController">
-    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This is a temporary splash screen"/>
+<StackPane fx:id="pane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SplashScreenController">
+   <ImageView fitHeight="500.0" fitWidth="602.0" pickOnBounds="true">
+      <image>
+         <Image url="@../img/splash.gif" />
+      </image></ImageView>
 </StackPane>
