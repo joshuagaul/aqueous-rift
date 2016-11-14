@@ -48,6 +48,7 @@ public class LoginController implements IController {
     @FXML
      private void handleButtonClicked(ActionEvent event) {
         if (event.getSource() == cancel) {
+            mainApplication.showMap();
             mainApplication.showMainScreen();
         } else if (event.getSource() == login) {
             if (checkValid()) {

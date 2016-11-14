@@ -6,7 +6,6 @@
 
 <StackPane fx:id="pane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SplashScreenController">
    <ImageView fitHeight="500.0" fitWidth="602.0" pickOnBounds="true">
-      <image>
-         <Image url="@../img/splash.gif" />
-      </image></ImageView>
+      <Image url="@../img/splash.gif"/>
+   </ImageView>
 </StackPane>

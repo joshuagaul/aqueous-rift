@@ -144,23 +144,19 @@ public class MainScreenController implements IController {
     public void setCurrentReport(WaterReport report) {
         if (report instanceof WaterSourceReport) {
             WaterSourceReport sourceReport = (WaterSourceReport) report;
-            if (report != null) {
-                type.setText(sourceReport.getType().toString());
-                condition.setText(sourceReport.getCondition().toString());
-                virus.setText(null);
-                contamination.setText(null);
-            }
+            type.setText(sourceReport.getType().toString());
+            condition.setText(sourceReport.getCondition().toString());
+            virus.setText(null);
+            contamination.setText(null);
             isSourceReport.set(true);
         } else if (report instanceof WaterPurityReport) {
             WaterPurityReport purityReport = (WaterPurityReport) report;
-            if (report != null) {
-                overallCondition.setText(purityReport.getOverallCondition()
-                    .toString());
-                contamination.setText(Double.toString(purityReport
-                    .getContaminantPPM()));
-                virus.setText(Double.toString(purityReport.getVirusPPM()));
-                type.setText(null);
-            }
+            overallCondition.setText(purityReport.getOverallCondition()
+                .toString());
+            contamination.setText(Double.toString(purityReport
+                .getContaminantPPM()) + " ppm");
+            virus.setText(Double.toString(purityReport.getVirusPPM()) + " ppm");
+            type.setText(null);
             isSourceReport.set(false);
         }
         date.setText(report.getDateAsString());

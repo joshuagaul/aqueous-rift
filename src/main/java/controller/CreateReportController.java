@@ -91,13 +91,9 @@ public class CreateReportController implements IController {
                 isAuthorized.and(showConfirm));
         confirmButton.visibleProperty().bind(isAuthorized);
         longitude.focusedProperty()
-            .addListener((observable, oldVal, newVal) -> {
-                handleLongitudeChange(observable);
-            });
+            .addListener((observable, oldVal, newVal) -> handleLongitudeChange(observable));
         latitude.focusedProperty()
-            .addListener((observable, oldVal, newVal) -> {
-                handleLatitudeChange(observable);
-            });
+            .addListener((observable, oldVal, newVal) -> handleLatitudeChange(observable));
     }
 
     /**
@@ -127,7 +123,7 @@ public class CreateReportController implements IController {
     @FXML
     private void handleLatitudeChange(ObservableValue focused) {
         Boolean isFocused = (Boolean) (focused.getValue());
-        if (!isFocused.booleanValue() && latitude.getText().length() > 0) {
+        if (!isFocused && latitude.getText().length() > 0) {
             Double newLat = Double.parseDouble(latitude.getText());
             mainApplication.changeCenterLatitude(newLat);
         }
@@ -140,7 +136,7 @@ public class CreateReportController implements IController {
     @FXML
     private void handleLongitudeChange(ObservableValue focused) {
         Boolean isFocused = (Boolean) (focused.getValue());
-        if (!isFocused.booleanValue() && longitude.getText().length() > 0) {
+        if (!isFocused && longitude.getText().length() > 0) {
             Double newLong = Double.parseDouble(longitude.getText());
             mainApplication.changeCenterLongitude(newLong);
         }

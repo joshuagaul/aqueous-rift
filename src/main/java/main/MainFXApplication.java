@@ -9,7 +9,6 @@ import controller.MenuBarController;
 import controller.MapController;
 import controller.ViewMyReportsController;
 import javafx.animation.FadeTransition;
-import javafx.event.EventHandler;
 import javafx.scene.layout.AnchorPane;
 import model.ReportDataObject;
 import model.DataManager;
@@ -110,12 +109,16 @@ public class MainFXApplication extends Application {
                     getClassLoader().getResource(fxmlFilePath));
             Pane showPage = loader.load();
             animate(showPage);
-            if (location.equals("LEFT")) {
-                rootLayout.setLeft(showPage);
-            } else if (location.equals("CENTER")) {
-                rootLayout.setCenter(showPage);
-            } else if (location.equals("RIGHT")) {
-                rootLayout.setRight(showPage);
+            switch (location) {
+                case "LEFT":
+                    rootLayout.setLeft(showPage);
+                    break;
+                case "CENTER":
+                    rootLayout.setCenter(showPage);
+                    break;
+                case "RIGHT":
+                    rootLayout.setRight(showPage);
+                    break;
             }
             IController controller = loader.getController();
             controller.setMainApp(this);
@@ -166,18 +169,14 @@ public class MainFXApplication extends Application {
             mainScreen.sizeToScene();
 
             FadeTransition transition = new FadeTransition(
-                    Duration.seconds(2.7), showPage);
+                    Duration.seconds(2.9), showPage);
             transition.setFromValue(100);
             transition.setToValue(0);
             transition.setCycleCount(1);
-            transition.setOnFinished(new EventHandler
-                    <javafx.event.ActionEvent>() {
-                @Override
-                public void handle(javafx.event.ActionEvent event) {
-                    initRootLayout(mainScreen);
-                    showMap();
-                    showMainScreen();
-                }
+            transition.setOnFinished(event -> {
+                initRootLayout(mainScreen);
+                showMap();
+                showMainScreen();
             });
             transition.play();
         } catch (IOException e) {
