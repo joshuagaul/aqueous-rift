@@ -8,7 +8,6 @@ import controller.MainScreenController;
 import controller.MenuBarController;
 import controller.MapController;
 import controller.ViewMyReportsController;
-import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.scene.layout.AnchorPane;
@@ -27,7 +26,6 @@ import javafx.util.Duration;
 import classes.User;
 import classes.WaterReport;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -167,11 +165,13 @@ public class MainFXApplication extends Application {
             mainScreen.setResizable(false);
             mainScreen.sizeToScene();
 
-            FadeTransition transition = new FadeTransition(Duration.seconds(2.7), showPage);
+            FadeTransition transition = new FadeTransition(
+                    Duration.seconds(2.7), showPage);
             transition.setFromValue(100);
             transition.setToValue(0);
             transition.setCycleCount(1);
-            transition.setOnFinished(new EventHandler<javafx.event.ActionEvent>() {
+            transition.setOnFinished(new EventHandler
+                    <javafx.event.ActionEvent>() {
                 @Override
                 public void handle(javafx.event.ActionEvent event) {
                     initRootLayout(mainScreen);
