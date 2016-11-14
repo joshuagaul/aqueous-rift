@@ -61,10 +61,8 @@
         <Text fx:id="ppm2" strokeType="OUTSIDE" strokeWidth="0.0" text="  ppm" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
         <Label fx:id="overallConditionLabel" text="Overall Condition" visible="false" GridPane.rowIndex="6" />
         <Button id="button-confirm" fx:id="confirmButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonClicked" prefHeight="46.0" prefWidth="391.0" text="Confirm This Report" textAlignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="9" GridPane.valignment="TOP" />
-        <ImageView fx:id="img" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"
-                   visible="false" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5"
-                   GridPane.valignment="CENTER">
-            <Image url="@../img/confirmed.gif"/>
+        <ImageView fx:id="img" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+            <Image url="@../img/confirmed.gif" />
         </ImageView>
     </GridPane>
 </StackPane>

@@ -254,20 +254,17 @@ public class CreateReportController implements IController {
                         reportDAO.addPurityReport(report);
                     }
 
-
+                    animationStopped.setValue(false);
                     FadeTransition transition = new FadeTransition(
                             Duration.seconds(2), img);
                     transition.setFromValue(0);
                     transition.setToValue(100);
-                    animationStopped.setValue(false);
                     transition.setOnFinished(event1 -> {
-                        animationStopped.setValue(true);
                         mainApplication.showMap();
                         mainApplication.showMainScreen();
+                        animationStopped.setValue(true);
                     });
-
                     transition.play();
-
                 }
             }
         }
