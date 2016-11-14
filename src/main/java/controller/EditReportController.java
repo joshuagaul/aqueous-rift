@@ -88,9 +88,11 @@ public class EditReportController implements IController {
                 isSourceReport.and(showConfirm.not()));
         confirmButton.visibleProperty().bind(isSourceReport);
         longitude.focusedProperty()
-            .addListener((observable, oldVal, newVal) -> handleLongitudeChange(observable));
+            .addListener((observable, oldVal, newVal) ->
+                    handleLongitudeChange(observable));
         latitude.focusedProperty()
-            .addListener((observable, oldVal, newVal) -> handleLatitudeChange(observable));
+            .addListener((observable, oldVal, newVal) ->
+                    handleLatitudeChange(observable));
     }
 
     /**
@@ -153,8 +155,8 @@ public class EditReportController implements IController {
                 confirmButton.setId("button-delete");
                 showConfirm.setValue(true);
                 confirmButton.setText("Back to Source Report");
-            }
 
+            }
         } else if (event.getSource() == submit) {
             latitude.setStyle(
                 "-fx-border-width: 0px ;");
@@ -206,20 +208,32 @@ public class EditReportController implements IController {
                     Date date = new Date();
                     WaterType type = waterType.getValue();
                     WaterCondition condition = waterCondition.getValue();
-                    if (isSourceReport.get()) {
-                        //update source report
+                    OverallCondition ovrCond = overallCondition.getValue();
+                    if (!showConfirm.get() && isSourceReport.get()) {
+                        //update source report to source report
+                        System.out.println("source to source");
                         WaterSourceReport report = new WaterSourceReport(
                                 reporterId, loc, type,
                                 condition, date);
                         reportDAO.editSourceReport(report,
                                 prevReportInfo.getId());
-                    } else {
-                        //update as a purity report
+                    } else if (showConfirm.get() && isSourceReport.get()) {
+                        //update source report to purity report
+                        System.out.println("source to purity");
                         WaterPurityReport report = new WaterPurityReport(
-                                reporterId, date, loc, OverallCondition.Safe,
+                                reporterId, date, loc, ovrCond,
                                 Double.parseDouble(virus.getText()),
                                 Double.parseDouble(contamination.getText()));
                         reportDAO.confirmPurityReport(report,
+                                prevReportInfo.getId());
+                    } else if (!isSourceReport.get()) {
+                        //update purity report to purity report
+                        System.out.println("purity to purity");
+                        WaterPurityReport report = new WaterPurityReport(
+                                reporterId, date, loc, ovrCond,
+                                Double.parseDouble(virus.getText()),
+                                Double.parseDouble(contamination.getText()));
+                        reportDAO.editPurityReport(report,
                                 prevReportInfo.getId());
                     }
 

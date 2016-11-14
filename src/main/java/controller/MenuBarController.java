@@ -103,14 +103,6 @@ public class MenuBarController implements IController {
     }
 
     /**
-     * Helper method to check if a user is logged into the application.
-     * @return True if a user is logged in, False otherwise.
-     */
-    private boolean checkUserLoggedIn() {
-        return mainApplication.getCurrentUser() != null;
-    }
-
-    /**
      * shows menu items based on the user types
      * @param set true if the user is authorized (worker, admin, manager).
      *            false if the user is not logged in or a general user.

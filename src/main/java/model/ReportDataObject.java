@@ -285,6 +285,7 @@ public class ReportDataObject {
      */
     public void editPurityReport(WaterPurityReport reportToAdd,
             String reportId) {
+        deletePurityReport(reportId);
         addPurityReport(reportToAdd);
     }
 

@@ -1,17 +1,15 @@
 package controller;
 
-/*
-  Created by AhJin on 10/7/2016.
- */
-
 import java.util.Date;
+
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import classes.WaterCondition;
@@ -21,8 +19,8 @@ import classes.Location;
 import classes.WaterSourceReport;
 import classes.WaterPurityReport;
 import classes.OverallCondition;
+import javafx.util.Duration;
 import main.MainFXApplication;
-import java.util.Optional;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.BooleanProperty;
@@ -35,7 +33,8 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
  * Controller class for reporting a water source
  */
 public class CreateReportController implements IController {
-
+    private BooleanProperty animationStopped
+            = new SimpleBooleanProperty(true);
     private BooleanProperty purityReport
             = new SimpleBooleanProperty(false);
     private static BooleanProperty isAuthorized
@@ -49,6 +48,7 @@ public class CreateReportController implements IController {
     @FXML private ComboBox<WaterCondition> waterCondition = new ComboBox<>();
     @FXML private ComboBox<OverallCondition> overallCondition =
         new ComboBox<>();
+    @FXML private Label locationLabel;
     @FXML private TextField longitude;
     @FXML private TextField latitude;
     @FXML private Label typeLabel;
@@ -63,6 +63,7 @@ public class CreateReportController implements IController {
     @FXML private Button submit;
     @FXML private Button cancel;
     @FXML private Label overallConditionLabel;
+    @FXML private ImageView img;
 
     /**
      * Initializes items (comboBox's) and bindings.
@@ -70,30 +71,48 @@ public class CreateReportController implements IController {
     @FXML
     private void initialize() {
         //Populate static comboBox data
+        animationStopped.setValue(true);
+        img.visibleProperty().bind(animationStopped.not());
+        locationLabel.visibleProperty().bind(animationStopped);
+        latitude.visibleProperty().bind(animationStopped);
+        longitude.visibleProperty().bind(animationStopped);
         waterType.getItems().setAll(WaterType.values());
-        waterType.visibleProperty().bind(showConfirm.not());
-        typeLabel.visibleProperty().bind(showConfirm.not());
+        waterType.visibleProperty().bind(
+                showConfirm.not().and(animationStopped));
+        typeLabel.visibleProperty().bind(
+                showConfirm.not().and(animationStopped));
         waterCondition.getItems().setAll(WaterCondition.values());
-        waterCondition.visibleProperty().bind(showConfirm.not());
-        conditionLabel.visibleProperty().bind(showConfirm.not());
+        waterCondition.visibleProperty().bind(
+                showConfirm.not().and(animationStopped));
+        conditionLabel.visibleProperty().bind(
+                showConfirm.not().and(animationStopped));
         //Bind event handler and set binding variables
         userType.set(UserType.GeneralUser);
-        ppm1.visibleProperty().bind(isAuthorized.and(showConfirm));
-        ppm2.visibleProperty().bind(isAuthorized.and(showConfirm));
-        virusLabel.visibleProperty().bind(isAuthorized.and(showConfirm));
+        ppm1.visibleProperty().bind(isAuthorized.and(
+                showConfirm).and(animationStopped));
+        ppm2.visibleProperty().bind(isAuthorized.and(
+                showConfirm).and(animationStopped));
+        virusLabel.visibleProperty().bind(isAuthorized.and(
+                showConfirm).and(animationStopped));
         contaminationLabel.visibleProperty().bind(
-                isAuthorized.and(showConfirm));
-        virus.visibleProperty().bind(isAuthorized.and(showConfirm));
-        contamination.visibleProperty().bind(isAuthorized.and(showConfirm));
+                isAuthorized.and(showConfirm).and(
+                        animationStopped));
+        virus.visibleProperty().bind(isAuthorized.and(
+                showConfirm).and(animationStopped));
+        contamination.visibleProperty().bind(isAuthorized.and(
+                showConfirm).and(animationStopped));
         overallCondition.getItems().setAll(OverallCondition.values());
-        overallCondition.visibleProperty().bind(isAuthorized.and(showConfirm));
+        overallCondition.visibleProperty().bind(isAuthorized.and(
+                showConfirm).and(animationStopped));
         overallConditionLabel.visibleProperty().bind(
-                isAuthorized.and(showConfirm));
+                isAuthorized.and(showConfirm).and(animationStopped));
         confirmButton.visibleProperty().bind(isAuthorized);
         longitude.focusedProperty()
-            .addListener((observable, oldVal, newVal) -> handleLongitudeChange(observable));
+            .addListener((observable, oldVal, newVal) ->
+                    handleLongitudeChange(observable));
         latitude.focusedProperty()
-            .addListener((observable, oldVal, newVal) -> handleLatitudeChange(observable));
+            .addListener((observable, oldVal, newVal) ->
+                    handleLatitudeChange(observable));
     }
 
     /**
@@ -235,14 +254,20 @@ public class CreateReportController implements IController {
                         reportDAO.addPurityReport(report);
                     }
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Report Submitted");
-                    alert.setHeaderText("Your report has been submitted.");
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.isPresent() && result.get() == ButtonType.OK) {
+
+                    FadeTransition transition = new FadeTransition(
+                            Duration.seconds(2), img);
+                    transition.setFromValue(0);
+                    transition.setToValue(100);
+                    animationStopped.setValue(false);
+                    transition.setOnFinished(event1 -> {
+                        animationStopped.setValue(true);
                         mainApplication.showMap();
                         mainApplication.showMainScreen();
-                    }
+                    });
+
+                    transition.play();
+
                 }
             }
         }
@@ -368,8 +393,8 @@ public class CreateReportController implements IController {
      * @return boolean value representing if valid data was given.
      */
     private Boolean validateLatAndLon(String lat, String lon) {
-        int latVal = Integer.parseInt(lat);
-        int lonVal = Integer.parseInt(lon);
+        double latVal = Double.parseDouble(lat);
+        double lonVal = Double.parseDouble(lon);
 
         if ((latVal >= -90) && (latVal <= 90)
             && (lonVal >= -180) && (lonVal <= 180)) {

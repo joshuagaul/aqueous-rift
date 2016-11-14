@@ -44,7 +44,6 @@ public class MainFXApplication extends Application {
     private static EditReportController editReportControl;
     private static CreateReportController createReportControl;
     private static MapController mapControl;
-    private boolean splashFinished = false;
 
 
     //the main container for the application window
@@ -57,15 +56,6 @@ public class MainFXApplication extends Application {
     public void start(Stage primaryStage) {
         mainScreen = primaryStage;
         showSplashPage();
-    }
-
-    /**
-     * return a reference to the main window stage
-     *
-     * @return reference to main stage
-     */
-    public Stage getMainScreen() {
-        return mainScreen;
     }
 
     /**
@@ -110,15 +100,19 @@ public class MainFXApplication extends Application {
             Pane showPage = loader.load();
             animate(showPage);
             switch (location) {
-                case "LEFT":
-                    rootLayout.setLeft(showPage);
-                    break;
-                case "CENTER":
-                    rootLayout.setCenter(showPage);
-                    break;
-                case "RIGHT":
-                    rootLayout.setRight(showPage);
-                    break;
+            case "LEFT":
+                rootLayout.setLeft(showPage);
+                break;
+            case "CENTER":
+                rootLayout.setCenter(showPage);
+                break;
+            case "RIGHT":
+                rootLayout.setRight(showPage);
+                break;
+            default:
+                rootLayout.setRight(showPage);
+                break;
+
             }
             IController controller = loader.getController();
             controller.setMainApp(this);
@@ -152,7 +146,7 @@ public class MainFXApplication extends Application {
      *
      * @throws IOException throws an exception if fxml is not found.
      */
-    public void showSplashPage() {
+    private void showSplashPage() {
         try {
 
 
@@ -293,6 +287,7 @@ public class MainFXApplication extends Application {
         showScreen("view/ViewHistoricalGraph.fxml",
                 "ViewHistoricalGraph", "LEFT");
     }
+
     /**
      * Passes login information from LoginController to MenuBarController.
      * Main Application calls a controller, not ideal but only solution I

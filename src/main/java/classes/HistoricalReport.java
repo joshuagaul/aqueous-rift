@@ -32,7 +32,7 @@ public class HistoricalReport {
         this.radiusSize = radiusSize;
 
         dataByMonth = findReports(radiusCenter,
-            radiusSize, type, year);
+                type, year);
     }
 
     /**
@@ -64,13 +64,12 @@ public class HistoricalReport {
      * an ArrayList of xy pairings. The x coordinate is time in long
      * and the y coordinate is the ppm as a double
      * @param radiusCenter Center of the radius to search for
-     * @param  radiusSize Size of search radius
      * @param  type       virusPPM or contaminantPPM
      * @param  year       year to filter the reports on
      * @return  ArrayList arrayList of xy pairings
      */
     private ArrayList<Double> findReports(Location radiusCenter,
-        Double radiusSize, String type, String year) {
+                                          String type, String year) {
 
         ArrayList<Double> retList = new ArrayList<>(12);
 
