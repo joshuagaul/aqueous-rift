@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ViewHistoricalGraphController implements IController {
     private MainFXApplication mainApplication;
-    @FXML private ComboBox yearList = new ComboBox<>();
+    @FXML private final ComboBox yearList = new ComboBox<>();
     @FXML private RadioButton virusButton;
     @FXML private RadioButton contaminantButton;
     @FXML private Button ok;

@@ -23,11 +23,11 @@ import model.ReportDataObject;
 import classes.WaterReport;
 
 public class ViewAllReportsController implements IController {
-    private static BooleanProperty isAuthorized
+    private static final BooleanProperty isAuthorized
             = new SimpleBooleanProperty(false);
-    private static BooleanProperty isLoggedIn
+    private static final BooleanProperty isLoggedIn
             = new SimpleBooleanProperty(false);
-    private static BooleanProperty showPurityReports
+    private static final BooleanProperty showPurityReports
             = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
     @FXML private static StackPane pane;
@@ -43,21 +43,21 @@ public class ViewAllReportsController implements IController {
     @FXML
     private Button switchTable;
 
-    private TableColumn<WaterReport, String> user
+    private final TableColumn<WaterReport, String> user
             = new TableColumn<>("Username");
-    private TableColumn<WaterReport, String> location
+    private final TableColumn<WaterReport, String> location
             = new TableColumn<>("Location");
-    private TableColumn<WaterReport, String> date
+    private final TableColumn<WaterReport, String> date
             = new TableColumn<>("Date");
-    private TableColumn<WaterReport, String> type
+    private final TableColumn<WaterReport, String> type
             = new TableColumn<>("Type");
-    private TableColumn<WaterReport, String> condition
+    private final TableColumn<WaterReport, String> condition
             = new TableColumn<>("Condition");
-    private TableColumn<WaterReport, String> contamination
+    private final TableColumn<WaterReport, String> contamination
             = new TableColumn<>("Contamination (ppm)");
-    private TableColumn<WaterReport, String> virus
+    private final TableColumn<WaterReport, String> virus
             = new TableColumn<>("Virus (ppm)");
-    private TableColumn<WaterReport, String> overallcondition
+    private final TableColumn<WaterReport, String> overallcondition
             = new TableColumn<>("Overall Condition");
     private ReportDataObject reportDAO;
 
