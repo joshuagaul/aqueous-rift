@@ -137,7 +137,7 @@ public class CreateReportController implements IController {
 
     /**
      * Event listener for latitude text box change.
-     * @param focused if the text field is focsed or not.
+     * @param focused if the text field is focused or not.
      */
     @FXML
     private void handleLatitudeChange(ObservableValue focused) {
@@ -150,7 +150,7 @@ public class CreateReportController implements IController {
 
     /**
      * Event listener for longitude text box change.
-     * @param focused if the text field is focsed or not.
+     * @param focused if the text field is focused or not.
      */
     @FXML
     private void handleLongitudeChange(ObservableValue focused) {

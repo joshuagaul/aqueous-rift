@@ -11,7 +11,7 @@ public class WaterPurityReport extends WaterReport {
     private DoubleProperty virusPPM = new SimpleDoubleProperty();
     private DoubleProperty contaminantPPM = new SimpleDoubleProperty();
     private ObjectProperty<OverallCondition> overallCondition =
-        new SimpleObjectProperty();
+        new SimpleObjectProperty<>();
 
     /**
      * Creates a WaterPurityReportObject
@@ -20,7 +20,7 @@ public class WaterPurityReport extends WaterReport {
      * @param  location   Location of the water
      * @param overallCondition Safe/Treatable/Unsafe
      * @param virusPPM The parts per million of viruses in the water.
-     * @param  contaminantPPM The parats per million
+     * @param  contaminantPPM The parts per million
      *                        of contaminants in the water.
      */
     public WaterPurityReport(String reporterId, Date date, Location location,

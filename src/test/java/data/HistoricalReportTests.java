@@ -30,7 +30,7 @@ public class HistoricalReportTests {
      * @param  contaminantPPM contaminant count in ppm of report
      * @return                Mock water purity report
      * @throws ParseException throws a parse exception if date wasn't
-     * of the right formatt.
+     * of the right format.
      */
     private WaterPurityReport makeMockReport(String date, Location location,
         double virusPPM, double contaminantPPM) throws ParseException {

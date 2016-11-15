@@ -62,7 +62,6 @@ public class MainFXApplication extends Application {
      * initialize the main screen which will also have other pages.
      *
      * @param mainScreen screen to be displayed.
-     * @throws IOException throws an exception if fxml is not found.
      */
     private void initRootLayout(Stage mainScreen) {
         try {
@@ -144,7 +143,6 @@ public class MainFXApplication extends Application {
     /**
      * animated initial page
      *
-     * @throws IOException throws an exception if fxml is not found.
      */
     private void showSplashPage() {
         try {
@@ -181,45 +179,35 @@ public class MainFXApplication extends Application {
     }
 
     /**
-     * sets the screen to login page.
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to login page
      */
     public void showLoginScreen() {
         showScreen("view/Login.fxml", "LoginScreen", "RIGHT");
     }
 
     /**
-     * sets the screen to registration page.
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to registration page
      */
     public void showRegisterScreen() {
         showScreen("view/Register.fxml", "RegisterScreen", "RIGHT");
     }
 
     /**
-     * sets the screen to find password page.
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to find password page
      */
     public void showFindPasswordScreen() {
         showScreen("view/FindPassword.fxml", "PasswordScreen", "RIGHT");
     }
 
     /**
-     * sets the screen to welcome screen.
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to welcome screen
      */
     public void showMainScreen() {
         showScreen("view/MainScreen.fxml", "MainScreen", "RIGHT");
     }
 
     /**
-     * sets the screen to editing profile page.
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to editing profile page
      */
     public void showEditProfileScreen() {
         showScreen("view/EditProfile.fxml", "EditProfileScreen", "RIGHT");
@@ -227,9 +215,7 @@ public class MainFXApplication extends Application {
 
 
     /**
-     * sets the screen to reporting water source page.
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to reporting water source page
      */
     public void showReportScreen() {
         showScreen("view/CreateReport.fxml",
@@ -237,9 +223,7 @@ public class MainFXApplication extends Application {
     }
 
     /**
-     * sets the screen to view all recents reports.
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to view all recent reports
      */
     public void showViewAllReportsScreen() {
         showScreen("view/ViewAllReports.fxml",
@@ -247,9 +231,7 @@ public class MainFXApplication extends Application {
     }
 
     /**
-     * sets the screen to view all recents reports.
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to view all recent reports
      */
     public void showViewMyReportsScreen() {
         showScreen("view/ViewMyReports.fxml",
@@ -258,9 +240,7 @@ public class MainFXApplication extends Application {
 
 
     /**
-     * sets the screen to editing an existing report
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to editing an existing reports
      */
     public void showEditReportScreen() {
         showScreen("view/EditReport.fxml",
@@ -269,9 +249,7 @@ public class MainFXApplication extends Application {
 
 
     /**
-     * sets the screen to view the map.
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to view the map
      */
     public void showMap() {
         showScreen("view/ViewMap.fxml",
@@ -279,9 +257,7 @@ public class MainFXApplication extends Application {
     }
 
     /**
-     * sets the screen to view all recents reports.
-     *
-     * @throws IOException throws an exception if fxml is not found.
+     * sets the screen to view all recents reports
      */
     public void showGraph() {
         showScreen("view/ViewHistoricalGraph.fxml",

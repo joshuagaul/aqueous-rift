@@ -31,7 +31,6 @@ public class ReportDataObject {
             throw new IllegalStateException("Already instantiated the"
                 + "UserDataObject.  Please getInstance().");
         }
-        DatabaseReference reports = getReports();
         DatabaseReference sourceReports = getSourceReports();
         DatabaseReference purityReports = getPurityReports();
         sourceReports.addChildEventListener(new ChildEventListener() {

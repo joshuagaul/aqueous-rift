@@ -27,7 +27,6 @@ public class UserDataObject {
             throw new IllegalStateException("Already instantiated the"
                 + "UserDataObject.  Please getInstance().");
         }
-        DatabaseReference users = getUsers();
         DatabaseReference userList = getUserList();
         userList.addChildEventListener(new ChildEventListener() {
             @Override
@@ -52,7 +51,6 @@ public class UserDataObject {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                User removedUser = dataSnapshot.getValue(User.class);
                 System.out.println("The user "
                     + dataSnapshot.getKey() + " has been deleted");
                 updateUsersOnDelete(dataSnapshot.getKey());
