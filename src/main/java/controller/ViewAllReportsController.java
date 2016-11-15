@@ -23,11 +23,11 @@ import model.ReportDataObject;
 import classes.WaterReport;
 
 public class ViewAllReportsController implements IController {
-    private static final BooleanProperty isAuthorized
+    private static final BooleanProperty IS_AUTHORIZED
             = new SimpleBooleanProperty(false);
-    private static final BooleanProperty isLoggedIn
+    private static final BooleanProperty IS_LOGGED_IN
             = new SimpleBooleanProperty(false);
-    private static final BooleanProperty showPurityReports
+    private static final BooleanProperty SHOW_PURITY_REPORTS
             = new SimpleBooleanProperty(false);
     private MainFXApplication mainApplication;
     @FXML private static StackPane pane;
@@ -67,7 +67,7 @@ public class ViewAllReportsController implements IController {
     @FXML
     private void initialize() {
         reportDAO = ReportDataObject.getInstance();
-        delete.visibleProperty().bind(isAuthorized);
+        delete.visibleProperty().bind(IS_AUTHORIZED);
         setReportView(false);
         user.setCellValueFactory(
                 new PropertyValueFactory<>("reporterId"));
@@ -102,7 +102,7 @@ public class ViewAllReportsController implements IController {
             mainApplication.showMap();
             mainApplication.showMainScreen();
         } else if (event.getSource() == submit) {
-            if (isLoggedIn.get()) {
+            if (IS_LOGGED_IN.get()) {
                 mainApplication.showMap();
                 mainApplication.showReportScreen();
             } else {
@@ -110,7 +110,7 @@ public class ViewAllReportsController implements IController {
                 mainApplication.showLoginScreen();
             }
         } else if (event.getSource() == switchTable) {
-            if (showPurityReports.get()) {
+            if (SHOW_PURITY_REPORTS.get()) {
                 setReportView(false);
                 header.setText("SOURCE REPORTS");
                 switchTable.setText("View Confirmed Reports");
@@ -149,10 +149,10 @@ public class ViewAllReportsController implements IController {
      */
     private void switchViews() {
         reportView.getColumns().clear();
-        if (isAuthorized.get() && showPurityReports.get()) {
+        if (SHOW_PURITY_REPORTS.get() && SHOW_PURITY_REPORTS.get()) {
             reportView.getColumns().addAll(user, location, date,
                     overallcondition, contamination, virus);
-        } else if (showPurityReports.get()) {
+        } else if (SHOW_PURITY_REPORTS.get()) {
             reportView.getColumns().addAll(user, location, date,
                     overallcondition);
         } else {
@@ -170,7 +170,7 @@ public class ViewAllReportsController implements IController {
      * @return           ArrayList of water reports
      */
     private List<WaterReport> parseReportList(ReportDataObject reportDAO) {
-        if (showPurityReports.get()) {
+        if (SHOW_PURITY_REPORTS.get()) {
             return new ArrayList<>(
                     reportDAO.getAllPurityReports().values());
         } else {
@@ -185,7 +185,7 @@ public class ViewAllReportsController implements IController {
      *            false if the user is not logged in or a general user.
      */
     public static void setAuthority(boolean set) {
-        isAuthorized.set(set);
+        IS_AUTHORIZED.set(set);
     }
 
     /**
@@ -193,7 +193,7 @@ public class ViewAllReportsController implements IController {
      * @param set true if the user is logged in.
      */
     public static void setLoggedIn(boolean set) {
-        isLoggedIn.set(set);
+        IS_LOGGED_IN.set(set);
     }
 
     /**
@@ -201,7 +201,7 @@ public class ViewAllReportsController implements IController {
      * @param set true if purity reports are shown.
      */
     private static void setReportView(boolean set) {
-        showPurityReports.setValue(set);
+        SHOW_PURITY_REPORTS.setValue(set);
     }
 
 
