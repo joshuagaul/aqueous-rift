@@ -9,6 +9,7 @@ public class HistoricalReport {
     private ArrayList<Double> dataByMonth;
     private Location radiusCenter;
     private Double radiusSize;
+    private Map<String, WaterPurityReport> purityReports;
 
     /**
      * Constructor for Historical report
@@ -19,6 +20,22 @@ public class HistoricalReport {
      */
     public HistoricalReport(Location radiusCenter, Double radiusSize,
         String type, String year) {
+        this(radiusCenter, radiusSize, type, year,
+            ReportDataObject.getInstance().getAllPurityReports());
+    }
+
+    /**
+     * Construct for Historical report (primarily for testing)
+     * @param  radiusCenter  Center of the search for reports
+     * @param  radiusSize    Size of the radius to search for reports in
+     * @param  type          virusPPM or contaminantPPM
+     * @param  year          year to filter the reports on
+     * @param  purityReports Maps report ids to purity reports
+     */
+    public HistoricalReport(Location radiusCenter, Double radiusSize,
+        String type, String year,
+        Map<String, WaterPurityReport> purityReports) {
+
         if (radiusSize < 0) {
             throw new IllegalArgumentException("Radius can't be less " 
                 + "than zero");
@@ -30,9 +47,13 @@ public class HistoricalReport {
         }
         this.radiusCenter = radiusCenter;
         this.radiusSize = radiusSize;
+        this.purityReports = purityReports;
 
         dataByMonth = findReports(radiusCenter,
                 type, year);
+
+
+
     }
 
     /**
@@ -75,16 +96,10 @@ public class HistoricalReport {
 
         Map<String, Double[]> monthDataMap = new HashMap<>();
 
-        ReportDataObject rdo = ReportDataObject.getInstance();
-
-        Map<String, WaterPurityReport> purityReports = rdo
-            .getAllPurityReports();
-
         for (WaterPurityReport wpr : purityReports.values()) {
 
             SimpleDateFormat yearF = new SimpleDateFormat("yyyy");
             SimpleDateFormat month = new SimpleDateFormat("MM");
-
             if (yearF.format(wpr.getDate()).equals(year)) {
                 System.out.println(wpr.getDate());
                 Location l = wpr.getLocation();
