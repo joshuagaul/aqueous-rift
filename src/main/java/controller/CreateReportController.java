@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import classes.User;
 import classes.WaterCondition;
 import classes.WaterType;
 import classes.UserType;
@@ -27,6 +28,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import model.ReportDataObject;
+import model.UserDataObject;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
 /**
@@ -207,9 +209,18 @@ public class CreateReportController implements IController {
 
             ReportDataObject reportDAO = ReportDataObject.getInstance();
             String reporterId = mainApplication.getCurrentUsername();
+            UserDataObject userDAO = UserDataObject.getInstance();
+            User user = userDAO.getUser(reporterId);
             Location loc = new Location("0", "0");
 
-            if (emptyFieldsExist()) {
+            if (user.getBlocked().equals("true")) {
+                Alert blockedAlert = new Alert(Alert.AlertType.WARNING);
+                blockedAlert.setTitle("Blocked User Report Attempt");
+                blockedAlert.setHeaderText("You have been blocked "
+                    + "as a penalty for submitting a faulty report."
+                    + "\nYou may request an admin to unblock you.");
+                blockedAlert.showAndWait();
+            } else if (emptyFieldsExist()) {
                 Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
                 emptyAlert.setTitle("Empty fields");
                 emptyAlert.setHeaderText("Please fill out all "

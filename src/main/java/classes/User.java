@@ -11,6 +11,8 @@ public class User {
     private StringProperty phoneNum = new SimpleStringProperty();
     private StringProperty userId = new SimpleStringProperty();
     private StringProperty userType  = new SimpleStringProperty();
+    private StringProperty isBanned = new SimpleStringProperty();
+    private StringProperty blocked = new SimpleStringProperty();
 
     /**
      * User object constructor
@@ -29,6 +31,8 @@ public class User {
         this.phoneNum.set(phoneNum);
         this.userId.set(userId);
         this.userType.set(userType);
+        this.isBanned.set("false");
+        this.blocked.set("false");
     }
 
     /**
@@ -74,6 +78,38 @@ public class User {
      */
     public void setPassword(String password) {
         this.password.set(password);
+    }
+
+    /**
+     * getter
+     * @return isBanned
+     */
+    public String getIsBanned() {
+        return isBanned.get();
+    }
+
+    /**
+     * Public setter for isBanned.
+     * @param isBanned "true" if user is banned "false" if not
+     */
+    public void setIsBanned(String isBanned) {
+        this.isBanned.set(isBanned);
+    }
+
+    /**
+     * getter
+     * @return blocked
+     */
+    public String getBlocked() {
+        return blocked.get();
+    }
+
+    /**
+     * Public setter for blocked.
+     * @param blocked "true" if user is banned "false" if not
+     */
+    public void setBlocked(String blocked) {
+        this.blocked.set(blocked);
     }
 
     /**

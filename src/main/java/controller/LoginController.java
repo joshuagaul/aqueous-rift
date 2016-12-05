@@ -100,7 +100,15 @@ public class LoginController implements IController {
             Alert wrongPasswordAlert = new Alert(Alert.AlertType.WARNING);
             wrongPasswordAlert.setTitle("Wrong Password");
 
-            if (queriedUser.getPassword().equals(password.getText())) {
+            if (queriedUser.getIsBanned().equals("true")) {
+                Alert bannedAlert = new Alert(Alert.AlertType.WARNING);
+                bannedAlert.setTitle("Banned User Login Attempt");
+                bannedAlert.setHeaderText("You have been banned "
+                    + "due to three consecutive failed login attempts. "
+                    + "You will receive an e-mail to change your password.");
+                bannedAlert.showAndWait();
+                return false;
+            } else if (queriedUser.getPassword().equals(password.getText())) {
                 mainApplication.setCurrentUsername(user);
                 mainApplication.setCurrentUser(queriedUser);
                 return true;
@@ -122,6 +130,7 @@ public class LoginController implements IController {
                     threeTriesAlert.setHeaderText(
                         "You made 3 failed login attempts."
                         + "\nContact an admin to have your account unblocked.");
+                    queriedUser.setIsBanned("true");
                     threeTriesAlert.showAndWait();
                 }
                 tries--;
