@@ -11,6 +11,8 @@ import java.io.IOException;
 import main.MainFXApplication;
 import model.UserDataObject;
 import classes.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controller class for login page.
@@ -18,6 +20,7 @@ import classes.User;
 public class LoginController implements IController {
     private MainFXApplication mainApplication;
     private UserDataObject userDAO = UserDataObject.getInstance();
+    private static Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @FXML
     private Hyperlink createAccount;
@@ -94,7 +97,6 @@ public class LoginController implements IController {
         if (userDAO.userExists(user)) {
             username.setStyle("-fx-border-width: 0px ;");
             User queriedUser = userDAO.getUser(user);
-            System.out.println(queriedUser.getPassword());
             String alertMessage;
 
             Alert wrongPasswordAlert = new Alert(Alert.AlertType.WARNING);
@@ -107,10 +109,14 @@ public class LoginController implements IController {
                     + "due to three consecutive failed login attempts. "
                     + "You will receive an e-mail to change your password.");
                 bannedAlert.showAndWait();
+                log.error(queriedUser.getName().toString()
+                    + " has been banned.");
                 return false;
             } else if (queriedUser.getPassword().equals(password.getText())) {
                 mainApplication.setCurrentUsername(user);
                 mainApplication.setCurrentUser(queriedUser);
+                log.info(queriedUser.getName().toString()
+                    + " logged in successfully");
                 return true;
             } else {
                 if (tries > 0) {
@@ -134,6 +140,8 @@ public class LoginController implements IController {
                     threeTriesAlert.showAndWait();
                 }
                 tries--;
+                log.error(user + " has attempted" + (3 - tries)
+                    + "unsucessful logins");
                 return false;
             }
         } else {
@@ -147,8 +155,7 @@ public class LoginController implements IController {
                 + "Please enter a valid username.");
 
             doesNotExistAlert.showAndWait();
-
-
+            log.error(user + " is an invalid username.");
             return false;
         }
     }

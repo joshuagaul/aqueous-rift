@@ -22,6 +22,8 @@ import netscape.javascript.JSObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MapController implements IController,
         MapComponentInitializedListener {
@@ -35,6 +37,7 @@ public class MapController implements IController,
     private MainFXApplication mainApplication;
     @FXML private GoogleMapView mapView;
     private static final List<Marker> MARKERS = new ArrayList<>();
+    private static Logger log = LoggerFactory.getLogger(LoginController.class);
 
     /**
      * Initializes the controller
@@ -75,7 +78,7 @@ public class MapController implements IController,
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
         ReportDataObject reportDAO = ReportDataObject.getInstance();
         putAllPins(reportDAO);
@@ -121,7 +124,6 @@ public class MapController implements IController,
      * @param report water purity report
      */
     private void putPurePins(WaterPurityReport report) {
-        System.out.println(report.getLocation());
         double lat = Double.parseDouble(report.getLocation().getLatitude());
         double lng = Double.parseDouble(report.getLocation()
                 .getLongitude());
@@ -156,7 +158,6 @@ public class MapController implements IController,
      * @param report water source report
      */
     private void putSourcePins(WaterSourceReport report) {
-        System.out.println(report.getLocation());
         double lat = Double.parseDouble(report.getLocation().getLatitude());
         double lng = Double.parseDouble(report.getLocation()
                 .getLongitude());
@@ -196,6 +197,7 @@ public class MapController implements IController,
         }
         ReportDataObject reportDAO = ReportDataObject.getInstance();
         putAllPins(reportDAO);
+        log.info("Report markers refreshed!");
     }
 
     /**

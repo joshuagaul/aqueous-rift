@@ -57,4 +57,12 @@ public class Name {
     public String getPrefix() {
         return prefix;
     }
+
+    /**
+     * String format for Name
+     * @return A person's name with all fields.
+     */
+    public String toString() {
+        return prefix + lastName + ", " + firstName;
+    }
 }
