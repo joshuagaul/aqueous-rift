@@ -220,6 +220,8 @@ public class CreateReportController implements IController {
                     + "as a penalty for submitting a faulty report."
                     + "\nYou may request an admin to unblock you.");
                 blockedAlert.showAndWait();
+                mainApplication.showMap();
+                mainApplication.showMainScreen();
             } else if (emptyFieldsExist()) {
                 Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
                 emptyAlert.setTitle("Empty fields");
