@@ -19,6 +19,9 @@ import main.MainFXApplication;
 import model.ReportDataObject;
 import classes.WaterSourceReport;
 import netscape.javascript.JSObject;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Iterator;
 
 public class MapController implements IController,
         MapComponentInitializedListener {
@@ -31,6 +34,7 @@ public class MapController implements IController,
     private GoogleMap map;
     private MainFXApplication mainApplication;
     @FXML private GoogleMapView mapView;
+    private static final List<Marker> MARKERS = new ArrayList<>();
 
     /**
      * Initializes the controller
@@ -74,6 +78,14 @@ public class MapController implements IController,
             System.out.println(e.getMessage());
         }
         ReportDataObject reportDAO = ReportDataObject.getInstance();
+        putAllPins(reportDAO);
+    }
+
+    /**
+     * Helper method for delegating pin creating task based on reports
+     * @param reportDAO Data object to retrieve data for placing pins
+     */
+    private void putAllPins(ReportDataObject reportDAO) {
         for (WaterSourceReport report
                 : reportDAO.getAllSourceReports().values()) {
             String type = report.getType().toString();
@@ -118,6 +130,7 @@ public class MapController implements IController,
         markerOptions.position(location)
             .icon("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
         Marker marker = new Marker(markerOptions);
+        MARKERS.add(marker);
         map.addMarker(marker);
         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
         infoWindowOptions.content("Overall Condition: "
@@ -151,6 +164,7 @@ public class MapController implements IController,
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(location);
         Marker marker = new Marker(markerOptions);
+        MARKERS.add(marker);
         map.addMarker(marker);
         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
         infoWindowOptions.content("Condition: "
@@ -169,6 +183,19 @@ public class MapController implements IController,
                 opened = window;
             }
         );
+    }
+
+    /**
+     * Refreshes the pin placements on the map.
+     */
+    public void refreshMap() {
+        for (Iterator<Marker> iter = MARKERS.iterator(); iter.hasNext(); ) {
+            Marker m = iter.next();
+            map.removeMarker(m);
+            iter.remove();
+        }
+        ReportDataObject reportDAO = ReportDataObject.getInstance();
+        putAllPins(reportDAO);
     }
 
     /**

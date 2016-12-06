@@ -23,12 +23,12 @@ public class MainFXApplicationTests {
     private double oldLong = 140.0;
     private double newLat = 45.0;
     private double newLong = 120.0;
-    private WebView webview = new WebView();
+    //private WebView webview = new WebView();
 
     @Before
     public void init() {
-        JavaFxWebEngine webengine = new JavaFxWebEngine(webview.getEngine());
-        JavascriptRuntime.setDefaultWebEngine(webengine);
+        // JavaFxWebEngine webengine = new JavaFxWebEngine(webview.getEngine());
+        // JavascriptRuntime.setDefaultWebEngine(webengine);
         sut = new MainFXApplication();
         Name name = new Name("first", "last", "prefix");
         testUser = new User("password", "email", "phoneNum", "userId", name);

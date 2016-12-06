@@ -10,6 +10,8 @@ import controller.MapController;
 import controller.ViewMyReportsController;
 import javafx.animation.FadeTransition;
 import javafx.scene.layout.AnchorPane;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import model.ReportDataObject;
 import model.DataManager;
 import model.UserDataObject;
@@ -21,6 +23,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.util.Duration;
 import classes.User;
 import classes.WaterReport;
@@ -35,6 +39,7 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
  **/
 public class MainFXApplication extends Application {
     private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
+    private static Timeline timeLine;
     private static User currentUser;
     private static String currentUsername;
     private static WaterReport currentReport;
@@ -254,6 +259,22 @@ public class MainFXApplication extends Application {
     public void showMap() {
         showScreen("view/ViewMap.fxml",
                 "Map", "LEFT");
+        if (timeLine != null) {
+            timeLine.stop();
+        }
+        timeLine = new Timeline(new KeyFrame(Duration.seconds(10),
+                new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent e) {
+                //update map
+                if (mapControl != null) {
+                    mapControl.refreshMap();
+                }
+            }
+        }));
+        timeLine.setCycleCount(Timeline.INDEFINITE);
+        timeLine.play();
     }
 
     /**

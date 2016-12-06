@@ -53,6 +53,9 @@ public class ReportDataObject {
                     + numPurityReports.get();
                 System.out.println("Edited " + dataSnapshot.getKey()
                     + ", count is " + size);
+                updateReports(dataSnapshot.getKey(), false);
+                updateSourceReports(dataSnapshot.getKey(),
+                    dataSnapshot.getValue(WaterSourceReport.class));
             }
 
             @Override
@@ -94,6 +97,9 @@ public class ReportDataObject {
                     + numPurityReports.get();
                 System.out.println("Edited " + dataSnapshot.getKey()
                     + ", count is " + size);
+                updateReports(dataSnapshot.getKey(), true);
+                updatePurityReports(dataSnapshot.getKey(),
+                    dataSnapshot.getValue(WaterPurityReport.class));
             }
 
             @Override
