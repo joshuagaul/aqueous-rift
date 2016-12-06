@@ -24,6 +24,7 @@ public class PasswordRecoveryManager {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         this.phoneNumber = "+1" + phoneNumber;
         this.password = password;
+        System.out.println("created");
     }
 
     /**

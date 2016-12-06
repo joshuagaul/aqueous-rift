@@ -1,6 +1,7 @@
 package controller;
 
 import classes.User;
+import classes.PasswordRecoveryManager;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -33,7 +34,7 @@ public class FindPasswordController implements IController {
     @FXML private TextField username;
     @FXML private TextField lastName;
     @FXML private Button viaSecurityQuestion;
-    @FXML private Button viaEmail;
+    @FXML private Button viaText;
     @FXML private GridPane viaQuestionGrid;
     @FXML private Button securityOK;
     @FXML private Button securityCancel;
@@ -50,7 +51,7 @@ public class FindPasswordController implements IController {
         username.visibleProperty().bind(showSecurityQuestion.not());
         lastName.visibleProperty().bind(showSecurityQuestion.not());
         cancel.visibleProperty().bind(showSecurityQuestion.not());
-        viaEmail.visibleProperty().bind(showSecurityQuestion.not());
+        viaText.visibleProperty().bind(showSecurityQuestion.not());
         viaSecurityQuestion.visibleProperty().bind(showSecurityQuestion.not());
     }
 
@@ -90,15 +91,16 @@ public class FindPasswordController implements IController {
                         + " for the user entered.");
                     lastNameAlert.showAndWait();
                 }
-            } else if (event.getSource() == viaEmail) {
+            } else if (event.getSource() == viaText) {
                 if (user.getName().getLastName().equals(lastName.getText())) {
-                    //TODO send email to the user and notify the user
-                    //TODO display partial email for users who may not remember the email
-                    //change the alerttext
+                    PasswordRecoveryManager toSend = new PasswordRecoveryManager(user.getPhoneNum(),
+                        user.getPassword());
+                    toSend.sendPassword();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Email sent");
-                    alert.setHeaderText(
-                        "New password has been sent via your email : a***0@mail.com");
+                    alert.setTitle("Text sent");
+                    String temp = "New password has been texted to "
+                        + user.getPhoneNum();
+                    alert.setHeaderText(temp);
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         mainApplication.showLoginScreen();
@@ -157,13 +159,14 @@ public class FindPasswordController implements IController {
                 wrongAnswerAlert.setHeaderText(alertMessage);
                 wrongAnswerAlert.showAndWait();
             } else {
-                //TODO send email to the user and notify the user
-                //TODO display partial email for users who may not remember the email
-                //change the alerttext
+                PasswordRecoveryManager toSend = new PasswordRecoveryManager(user.getPhoneNum(),
+                    user.getPassword());
+                toSend.sendPassword();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Email sent");
-                alert.setHeaderText(
-                    "New password has been sent via your email : a***0@mail.com");
+                alert.setTitle("Text sent");
+                String temp = "New password has been texted to "
+                    + user.getPhoneNum();
+                alert.setHeaderText(temp);
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     mainApplication.showLoginScreen();
