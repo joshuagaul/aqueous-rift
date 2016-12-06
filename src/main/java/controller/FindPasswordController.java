@@ -24,9 +24,9 @@ import java.util.Optional;
 public class FindPasswordController implements IController {
     private MainFXApplication mainApplication;
     private UserDataObject userDAO = UserDataObject.getInstance();
-    User user;
+    private User user;
 
-    private BooleanProperty showSecurityQuestion= new SimpleBooleanProperty();
+    private BooleanProperty showSecurityQuestion = new SimpleBooleanProperty();
 
     @FXML private Button cancel;
     @FXML private Label usernameLabel;
@@ -43,6 +43,10 @@ public class FindPasswordController implements IController {
 
     private int attempts = 4;
 
+
+    /**
+     * initialize
+     **/
     @FXML
     private void initialize() {
         viaQuestionGrid.visibleProperty().bind(showSecurityQuestion);
@@ -93,7 +97,8 @@ public class FindPasswordController implements IController {
                 }
             } else if (event.getSource() == viaText) {
                 if (user.getName().getLastName().equals(lastName.getText())) {
-                    PasswordRecoveryManager toSend = new PasswordRecoveryManager(user.getPhoneNum(),
+                    PasswordRecoveryManager toSend =
+                        new PasswordRecoveryManager(user.getPhoneNum(),
                         user.getPassword());
                     toSend.sendPassword();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -126,6 +131,10 @@ public class FindPasswordController implements IController {
         }
     }
 
+    /**
+     * switches to security question screen
+     * @param event clicking button
+     **/
     @FXML
     private void handleSecurityButton(ActionEvent event) {
         if (event.getSource() == cancel) {
@@ -141,7 +150,7 @@ public class FindPasswordController implements IController {
                 Alert changePassword = new Alert(Alert.AlertType.INFORMATION);
                 changePassword.setTitle("THIS IS YOUR PASSWORD");
                 String passwordInfo = "Your password is:\n\n"
-                + user.getPassword() + "\n\njust as it is shown.";
+                        + user.getPassword() + "\n\njust as it is shown.";
                 changePassword.setHeaderText(passwordInfo);
                 Optional<ButtonType> result = changePassword.showAndWait();
                 
@@ -159,7 +168,8 @@ public class FindPasswordController implements IController {
                 wrongAnswerAlert.setHeaderText(alertMessage);
                 wrongAnswerAlert.showAndWait();
             } else {
-                PasswordRecoveryManager toSend = new PasswordRecoveryManager(user.getPhoneNum(),
+                PasswordRecoveryManager toSend =
+                    new PasswordRecoveryManager(user.getPhoneNum(),
                     user.getPassword());
                 toSend.sendPassword();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

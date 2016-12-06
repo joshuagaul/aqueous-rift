@@ -189,7 +189,7 @@ public class MapController implements IController,
      * Refreshes the pin placements on the map.
      */
     public void refreshMap() {
-        for (Iterator<Marker> iter = MARKERS.iterator(); iter.hasNext(); ) {
+        for (Iterator<Marker> iter = MARKERS.iterator(); iter.hasNext();) {
             Marker m = iter.next();
             map.removeMarker(m);
             iter.remove();

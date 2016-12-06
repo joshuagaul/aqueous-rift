@@ -263,16 +263,15 @@ public class MainFXApplication extends Application {
             timeLine.stop();
         }
         timeLine = new Timeline(new KeyFrame(Duration.seconds(10),
-                new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent e) {
-                //update map
-                if (mapControl != null) {
-                    mapControl.refreshMap();
+            new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    //update map
+                    if (mapControl != null) {
+                        mapControl.refreshMap();
+                    }
                 }
-            }
-        }));
+            }));
         timeLine.setCycleCount(Timeline.INDEFINITE);
         timeLine.play();
     }
