@@ -15,6 +15,7 @@ dependencies {
     compile 'com.google.firebase:firebase-server-sdk:3.0.1'
     compile 'com.sparkjava:spark-core:2.2'
     compile 'com.twilio.sdk:twilio:7.3.0'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
     testCompile fileTree(dir: 'libs', include: '*.jar')
     testCompile 'junit:junit:4.12'
     testCompile group: "org.loadui", name: "testFx", version: "3.1.2"

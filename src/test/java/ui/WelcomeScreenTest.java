@@ -20,18 +20,18 @@ import main.MainFXApplication;
 
 public class WelcomeScreenTest extends GuiTest {
 
-    @Override
-    protected Parent getRootNode() {
-        MainFXApplication appUnderTest = new MainFXApplication();
-        appUnderTest.showLoginScreen();
-        return appUnderTest.getRootLayout();
-    }
-
-  @Test
-  public void login_button_navigates_correctly() {
-      this.click("#login");
-      verifyThat("#login", hasText("was clicked"));
-  }
+  //   @Override
+  //   protected Parent getRootNode() {
+  //       MainFXApplication appUnderTest = new MainFXApplication();
+  //       appUnderTest.showLoginScreen();
+  //       return appUnderTest.getRootLayout();
+  //   }
+  //
+  // @Test
+  // public void login_button_navigates_correctly() {
+  //     this.click("#login");
+  //     verifyThat("#login", hasText("was clicked"));
+  // }
 }
 
 

@@ -187,6 +187,7 @@ public class MainFXApplication extends Application {
      * sets the screen to login page
      */
     public void showLoginScreen() {
+        LOGGER.entering("MainFXApplication", "showLoginScreen");
         showScreen("view/Login.fxml", "LoginScreen", "RIGHT");
     }
 
@@ -194,6 +195,7 @@ public class MainFXApplication extends Application {
      * sets the screen to registration page
      */
     public void showRegisterScreen() {
+        LOGGER.entering("MainFXApplication", "showRegisterScreen");
         showScreen("view/Register.fxml", "RegisterScreen", "RIGHT");
     }
 
