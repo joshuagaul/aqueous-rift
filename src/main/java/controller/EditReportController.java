@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.Date;
+import classes.User;
 import classes.WaterCondition;
 import classes.WaterType;
 import classes.Location;
@@ -23,6 +24,7 @@ import javafx.scene.control.Label;
 import main.MainFXApplication;
 import java.util.Optional;
 import model.ReportDataObject;
+import model.UserDataObject;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
 
@@ -173,7 +175,19 @@ public class EditReportController implements IController {
             overallCondition.setStyle(
                 "-fx-border-width: 0px ;");
 
-            if (emptyFieldsExist()) {
+            UserDataObject userDAO = UserDataObject.getInstance();
+            User user = userDAO.getUser(mainApplication.getCurrentUsername());
+            
+            if (user.getBlocked().equals("true")) {
+                Alert blockedAlert = new Alert(Alert.AlertType.WARNING);
+                blockedAlert.setTitle("Blocked User Report Attempt");
+                blockedAlert.setHeaderText("You have been blocked "
+                    + "as a penalty for submitting a faulty report."
+                    + "\nYou may request an admin to unblock you.");
+                blockedAlert.showAndWait();
+                mainApplication.showMap();
+                mainApplication.showMainScreen();
+            } else if (emptyFieldsExist()) {
                 Alert emptyAlert = new Alert(Alert.AlertType.WARNING);
                 emptyAlert.setTitle("Empty fields");
                 emptyAlert.setHeaderText("Please fill out all "
@@ -186,7 +200,6 @@ public class EditReportController implements IController {
                         + " in the required fields.");
                 wrongTypeAlert.showAndWait();
             } else {
-
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm Report Update");
                 alert.setHeaderText("Are you sure you want to"
