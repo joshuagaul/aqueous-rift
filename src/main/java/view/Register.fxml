@@ -46,7 +46,7 @@
         <Label text="Phone" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
         <Label text="Email" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
         <Label text="Role" translateY="20.0" GridPane.columnSpan="2" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
-        <Text id="heading" strokeType="OUTSIDE" strokeWidth="0.0" text="Register" wrappingWidth="351.978515625">
+        <Text id="heading" strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTER" wrappingWidth="351.978515625">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
