@@ -1,13 +1,19 @@
 package controller;
 
+import classes.User;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import main.MainFXApplication;
+import model.UserDataObject;
 
 import java.util.Optional;
 
@@ -16,6 +22,9 @@ import java.util.Optional;
  */
 public class FindPasswordController implements IController {
     private MainFXApplication mainApplication;
+    private UserDataObject userDAO = UserDataObject.getInstance();
+    User user;
+
     private BooleanProperty showSecurityQuestion= new SimpleBooleanProperty();
 
     @FXML private Button cancel;
@@ -30,6 +39,8 @@ public class FindPasswordController implements IController {
     @FXML private Button securityCancel;
     @FXML private Text question;
     @FXML private TextField answer;
+
+    private int attempts = 4;
 
     @FXML
     private void initialize() {
@@ -55,23 +66,61 @@ public class FindPasswordController implements IController {
 
     @FXML
     private void handleButtonClicked(ActionEvent event) {
+        username.setStyle(
+                "-fx-border-width: 0px ;");
+        lastName.setStyle(
+                "-fx-border-width: 0px ;");
         if (event.getSource() == cancel) {
             mainApplication.showLoginScreen();
-        } else if (event.getSource() == viaSecurityQuestion) {
-            showSecurityQuestion.setValue(true);
-            question.setText("question to be displayed");
-            //TODO then set the text for question
-        } else if (event.getSource() == viaEmail) {
-            //TODO send email to the user and notify the user
-            //TODO display partial email for users who may not remember the email
-            //change the alerttext
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Email sent");
-            alert.setHeaderText("New password has been sent via your email : a***0@mail.com");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                mainApplication.showLoginScreen();
+        } else if (userDAO.userExists(username.getText())) {
+            username.setStyle(
+                "-fx-border-width: 0px ;");
+            user = userDAO.getUser(username.getText());
+            if (event.getSource() == viaSecurityQuestion) {
+                if (user.getName().getLastName().equals(lastName.getText())) {
+                    showSecurityQuestion.setValue(true);
+                    question.setText(user.getSecurityQuestion());
+                } else {
+                    lastName.setStyle(
+                        "-fx-border-color: red ; -fx-border-width: 2px ;");
+                    Alert lastNameAlert = new Alert(Alert.AlertType.WARNING);
+                    lastNameAlert.setTitle("Wrong Lat Name");
+                    lastNameAlert.setHeaderText("The last name entered"
+                        + " is incorrect and doesn't\nmatch the lastname given"
+                        + " for the user entered.");
+                    lastNameAlert.showAndWait();
+                }
+            } else if (event.getSource() == viaEmail) {
+                if (user.getName().getLastName().equals(lastName.getText())) {
+                    //TODO send email to the user and notify the user
+                    //TODO display partial email for users who may not remember the email
+                    //change the alerttext
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Email sent");
+                    alert.setHeaderText(
+                        "New password has been sent via your email : a***0@mail.com");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        mainApplication.showLoginScreen();
+                    }
+                } else {
+                    lastName.setStyle(
+                        "-fx-border-color: red ; -fx-border-width: 2px ;");
+                    Alert lastNameAlert = new Alert(Alert.AlertType.WARNING);
+                    lastNameAlert.setTitle("Wrong Lat Name");
+                    lastNameAlert.setHeaderText("The last name entered"
+                        + " is incorrect and doesn't\nmatch the lastname given"
+                        + " for the user entered.");
+                    lastNameAlert.showAndWait();
+                }
             }
+        } else {
+            username.setStyle(
+                "-fx-border-color: red ; -fx-border-width: 2px ;");
+            Alert userNameAlert = new Alert(Alert.AlertType.WARNING);
+            userNameAlert.setTitle("Invalid User Name");
+            userNameAlert.setHeaderText("The username entered does not exist");
+            userNameAlert.showAndWait();
         }
     }
 
@@ -82,9 +131,44 @@ public class FindPasswordController implements IController {
         } else if (event.getSource() == securityCancel) {
             showSecurityQuestion.setValue(false);
         } else if (event.getSource() == securityOK) {
-            //TODO implement this
-            //if user gets the answer wrong too many times,
-            //block the user
+            Alert wrongAnswerAlert = new Alert(Alert.AlertType.WARNING);
+            wrongAnswerAlert.setTitle("Wrong Answer");
+            String alertMessage = "";
+            
+            if (user.getSecurityAnswer().equals(answer.getText())) {
+                Alert changePassword = new Alert(Alert.AlertType.INFORMATION);
+                changePassword.setTitle("THIS IS YOUR PASSWORD");
+                String passwordInfo = "Your password is:\n\n"
+                + user.getPassword() + "\n\njust as it is shown.";
+                changePassword.setHeaderText(passwordInfo);
+                Optional<ButtonType> result = changePassword.showAndWait();
+                
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    mainApplication.showLoginScreen();
+                }
+            } else if (attempts > 0) {
+                answer.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+
+                alertMessage = "The password you entered "
+                    + "was wrong.\nYou have " + attempts
+                    + " out of 5 tries left.";
+                attempts--;
+                wrongAnswerAlert.setHeaderText(alertMessage);
+                wrongAnswerAlert.showAndWait();
+            } else {
+                //TODO send email to the user and notify the user
+                //TODO display partial email for users who may not remember the email
+                //change the alerttext
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Email sent");
+                alert.setHeaderText(
+                    "New password has been sent via your email : a***0@mail.com");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    mainApplication.showLoginScreen();
+                }
+            }
         }
     }
 
