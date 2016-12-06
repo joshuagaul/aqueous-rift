@@ -24,19 +24,16 @@ public class User {
      * @param   userId - new user ID
      * @param   name - new user Name object
      * @param   securityQuestion - the security question chosen
-     * @param   securityAnswer - the answer given for the security question
      * @param   userType - new user type (general user, manager, admin, worker)
      */
     public User(String password, String email, String phoneNum, String userId,
-            Name name, String securityQuestion, String securityAnswer,
-            String userType) {
+            Name name, String securityQuestion, String userType) {
         this.name = name;
         this.password.set(password);
         this.email.set(email);
         this.phoneNum.set(phoneNum);
         this.userId.set(userId);
         this.securityQuestion.set(securityQuestion);
-        this.securityAnswer.set(securityAnswer);
         this.userType.set(userType);
         this.isBanned.set("false");
         this.blocked.set("false");
@@ -49,13 +46,12 @@ public class User {
      * @param   phoneNum New user phone number
      * @param   userId New user ID
      * @param   securityQuestion - the security question chosen
-     * @param   securityAnswer - the answer given for the security question
      * @param   name New user Name object
      */
     public User(String password, String email, String phoneNum, String userId,
-            Name name, String securityQuestion, String securityAnswer) {
+            Name name, String securityQuestion) {
         this(password, email, phoneNum, userId, name,
-            securityQuestion, securityAnswer, "");
+            securityQuestion, "");
     }
 
     /**

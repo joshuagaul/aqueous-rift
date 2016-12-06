@@ -152,8 +152,8 @@ public class RegisterController implements IController {
                             email.getText(),
                             pNumber.getText(), "4", name,
                             securityQuestion.getValue(),
-                            securityAnswer.getText(),
                             userType.getValue().toString());
+                    testUser.setSecurityAnswer(securityAnswer.getText());
                     UserDataObject userDAO = UserDataObject.getInstance();
                     userDAO.addSingleUser(testUser, username.getText());
                     mainApplication.showLoginScreen();

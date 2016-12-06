@@ -115,7 +115,9 @@ public class EditProfileController implements IController {
                     User editedUser = new User(newPassword.getText(),
                             email.getText(), pNumber.getText(),
                             uId, name, prevUserInfo.getSecurityQuestion(),
-                            prevUserInfo.getSecurityAnswer(), userType);
+                            userType);
+                    editedUser.setSecurityAnswer(
+                            prevUserInfo.getSecurityAnswer());
                     userDAO.editSingleUser(editedUser, username.getText());
                     mainApplication.showMainScreen();
                 } else {
