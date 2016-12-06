@@ -114,7 +114,8 @@ public class EditProfileController implements IController {
                         lastName.getText(), prefix.getValue().toString());
                     User editedUser = new User(newPassword.getText(),
                             email.getText(), pNumber.getText(),
-                            uId, name, userType);
+                            uId, name, prevUserInfo.getSecurityQuestion(),
+                            prevUserInfo.getSecurityAnswer(), userType);
                     userDAO.editSingleUser(editedUser, username.getText());
                     mainApplication.showMainScreen();
                 } else {

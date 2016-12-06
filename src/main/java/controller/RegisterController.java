@@ -150,6 +150,8 @@ public class RegisterController implements IController {
                     User testUser = new User(password.getText(),
                             email.getText(),
                             pNumber.getText(), "4", name,
+                            securityQuestion.getValue(),
+                            securityAnswer.getText(),
                             userType.getValue().toString());
                     UserDataObject userDAO = UserDataObject.getInstance();
                     userDAO.addSingleUser(testUser, username.getText());
