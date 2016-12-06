@@ -7,7 +7,7 @@ repositories {
 }
 
 version = '1.0'
-defaultTasks 'clean', 'jar', 'check'
+defaultTasks 'clean', 'jar', 'check', 'run'
 mainClassName = 'main.MainFXApplication'
 
 dependencies {
