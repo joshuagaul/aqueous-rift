@@ -11,6 +11,10 @@ public class User {
     private StringProperty phoneNum = new SimpleStringProperty();
     private StringProperty userId = new SimpleStringProperty();
     private StringProperty userType  = new SimpleStringProperty();
+    private StringProperty isBanned = new SimpleStringProperty();
+    private StringProperty blocked = new SimpleStringProperty();
+    private StringProperty securityQuestion = new SimpleStringProperty();
+    private StringProperty securityAnswer = new SimpleStringProperty();
 
     /**
      * User object constructor
@@ -19,16 +23,23 @@ public class User {
      * @param   phoneNum - new user phone number
      * @param   userId - new user ID
      * @param   name - new user Name object
+     * @param   securityQuestion - the security question chosen
+     * @param   securityAnswer - the answer given for the security question
      * @param   userType - new user type (general user, manager, admin, worker)
      */
     public User(String password, String email, String phoneNum, String userId,
-            Name name, String userType) {
+            Name name, String securityQuestion, String securityAnswer,
+            String userType) {
         this.name = name;
         this.password.set(password);
         this.email.set(email);
         this.phoneNum.set(phoneNum);
         this.userId.set(userId);
+        this.securityQuestion.set(securityQuestion);
+        this.securityAnswer.set(securityAnswer);
         this.userType.set(userType);
+        this.isBanned.set("false");
+        this.blocked.set("false");
     }
 
     /**
@@ -37,11 +48,14 @@ public class User {
      * @param   email New user email
      * @param   phoneNum New user phone number
      * @param   userId New user ID
+     * @param   securityQuestion - the security question chosen
+     * @param   securityAnswer - the answer given for the security question
      * @param   name New user Name object
      */
     public User(String password, String email, String phoneNum, String userId,
-            Name name) {
-        this(password, email, phoneNum, userId, name, "");
+            Name name, String securityQuestion, String securityAnswer) {
+        this(password, email, phoneNum, userId, name,
+            securityQuestion, securityAnswer, "");
     }
 
     /**
@@ -74,6 +88,70 @@ public class User {
      */
     public void setPassword(String password) {
         this.password.set(password);
+    }
+
+    /**
+     * getter
+     * @return isBanned
+     */
+    public String getIsBanned() {
+        return isBanned.get();
+    }
+
+    /**
+     * Public setter for isBanned.
+     * @param isBanned "true" if user is bblocked "false" if not
+     */
+    public void setIsBanned(String isBanned) {
+        this.isBanned.set(isBanned);
+    }
+
+    /**
+     * getter
+     * @return blocked
+     */
+    public String getBlocked() {
+        return blocked.get();
+    }
+
+    /**
+     * Public setter for blocked.
+     * @param blocked "true" if user is blocked "false" if not
+     */
+    public void setBlocked(String blocked) {
+        this.blocked.set(blocked);
+    }
+
+    /**
+     * getter
+     * @return security question
+     */
+    public String getSecurityQuestion() {
+        return securityQuestion.get();
+    }
+
+    /**
+     * Public setter for security question
+     * @param securityQuestion of the given user
+     */
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion.set(securityQuestion);
+    }
+
+    /**
+     * getter
+     * @return security answer
+     */
+    public String getSecurityAnswer() {
+        return securityAnswer.get();
+    }
+
+    /**
+     * Public setter for security answer.
+     * @param securityAnswer of the given user
+     */
+    public void setSecurityAnswer(String securityAnswer) {
+        this.securityAnswer.set(securityAnswer);
     }
 
     /**

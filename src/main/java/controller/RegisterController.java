@@ -47,13 +47,21 @@ public class RegisterController implements IController {
 
     @FXML
     private ComboBox<String> prefix;
+
     @FXML
     private TextField email;
 
     @FXML
     private TextField pNumber;
+
     @FXML
     private ComboBox<UserType> userType = new ComboBox<>();
+
+    @FXML
+    private ComboBox<String> securityQuestion = new ComboBox<>();
+
+    @FXML
+    private TextField securityAnswer;
 
     /**
      * Initializes item (comboBox)
@@ -62,7 +70,13 @@ public class RegisterController implements IController {
     private void initialize() {
         userType.getItems().setAll(UserType.values());
         userType.setValue((UserType.GeneralUser));
-        prefix.getItems().setAll("Mr", "Ms", "Mrs");
+        prefix.getItems().setAll("Mr.", "Ms.", "Mrs.");
+        prefix.setValue("Mr.");
+        securityQuestion.getItems().setAll("What city were you born in?",
+            "What is your mother's maiden name?",
+            "What is the name of your first pet?",
+            "What is your father's middle name?",
+            "Who are your two favorite teachers from high school?");
     }
 
 
@@ -137,6 +151,8 @@ public class RegisterController implements IController {
                     User testUser = new User(password.getText(),
                             email.getText(),
                             pNumber.getText(), "4", name,
+                            securityQuestion.getValue(),
+                            securityAnswer.getText(),
                             userType.getValue().toString());
                     UserDataObject userDAO = UserDataObject.getInstance();
                     userDAO.addSingleUser(testUser, username.getText());
@@ -208,6 +224,14 @@ public class RegisterController implements IController {
             emptyFields++;
         } else {
             pNumber.setStyle("-fx-border-width: 0px ;");
+        }
+
+        if (securityAnswer.getText().length() == 0) {
+            securityAnswer.setStyle(
+                    "-fx-border-color: red ; -fx-border-width: 2px ;");
+            emptyFields++;
+        } else {
+            securityAnswer.setStyle("-fx-border-width: 0px ;");
         }
 
         return (emptyFields != 0);
