@@ -154,7 +154,7 @@ public class ViewMyReportsController implements IController {
         if (IS_AUTHORIZED.get() && SHOW_PURITY_REPORTS.get()) {
             reportView.getColumns().addAll(user, location, date,
                     overallCondition, contamination, virus);
-        } else if (showPurityReports.get()) {
+        } else if (SHOW_PURITY_REPORTS.get()) {
             reportView.getColumns().addAll(user, location, date,
                     overallCondition);
         } else {

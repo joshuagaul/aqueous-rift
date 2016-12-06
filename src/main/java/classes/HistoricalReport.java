@@ -105,15 +105,12 @@ public class HistoricalReport {
                 Location l = wpr.getLocation();
 
                 if (withinRadius(radiusCenter, l)) {
-                    double data;
+                    double data = 0;
 
                     if (type.equalsIgnoreCase("virusppm")) {
                         data = wpr.getVirusPPM();
                     } else if (type.equalsIgnoreCase("contaminantppm")) {
                         data = wpr.getContaminantPPM();
-                    } else {
-                        throw new IllegalArgumentException("Can't organize the"
-                            + " data by " + type);
                     }
 
                     Double[] monthData = monthDataMap.get(month.format(wpr
