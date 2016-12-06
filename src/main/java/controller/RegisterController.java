@@ -70,7 +70,8 @@ public class RegisterController implements IController {
     private void initialize() {
         userType.getItems().setAll(UserType.values());
         userType.setValue((UserType.GeneralUser));
-        prefix.getItems().setAll("Mr", "Ms", "Mrs");
+        prefix.getItems().setAll("Mr.", "Ms.", "Mrs.");
+        prefix.setValue("Mr.");
         securityQuestion.getItems().setAll("What city were you born in?",
             "What is your mother's maiden name?",
             "What is the name of your first pet?",
